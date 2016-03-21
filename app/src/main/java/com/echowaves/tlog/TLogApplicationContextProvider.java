@@ -4,7 +4,7 @@ import android.app.Application;
 import com.localytics.android.LocalyticsActivityLifecycleCallbacks;
 
 
-public class TLogApplication extends Application
+public class TLogApplicationContextProvider extends Application
 {
     @Override
     public void onCreate()
