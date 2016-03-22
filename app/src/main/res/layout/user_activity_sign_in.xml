@@ -1,20 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/TLUserColor"
+    android:orientation="vertical"
     tools:context="com.echowaves.tlog.controller.user.SignIn">
 
-    <TextView
+    <!-- Action Bar -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_marginBottom="10dip"
+        android:layout_height="@dimen/abs__action_bar_default_height"
+        android:background="@color/TLNavColor">
+
+        <!--<ImageButton-->
+        <!--android:id="@+id/home_searchButton"-->
+        <!--android:layout_width="48dp"-->
+        <!--android:layout_height="48dp"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_margin="5dp"-->
+        <!--android:padding="5dp"-->
+        <!--android:background="@mipmap/ic_search_black_48dp"-->
+        <!--android:backgroundTint="@android:color/holo_blue_dark" />-->
+
+        <!--<ImageButton-->
+        <!--android:id="@+id/home_createPostButton"-->
+        <!--android:layout_width="48dp"-->
+        <!--android:layout_height="48dp"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_margin="5dp"-->
+        <!--android:padding="5dp"-->
+        <!--android:background="@mipmap/ic_add_circle_outline_black_48dp"-->
+        <!--android:backgroundTint="@android:color/holo_blue_dark" />-->
+
+        <TextView
+            android:id="@+id/home_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="5dp"
+            android:minWidth="100dp"
+            android:padding="5dp"
+            android:text="sign in"
+            android:textColor="@color/TLTextColor"
+            android:textSize="20dp" />
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"
+        android:background="@drawable/rounded_edittext"
+        android:hint="email"
+        android:inputType="textEmailAddress"
+        android:padding="5dip"
+        android:textSize="35dp" />
+
+    <EditText
+        android:id="@+id/editText2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"
+        android:background="@drawable/rounded_edittext"
+        android:hint="password"
+        android:inputType="textPassword"
+        android:padding="5dip"
+        android:textSize="35dp" />
+
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Hello world"
-        android:id="@+id/textView"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-</RelativeLayout>
+        android:text="New Button"
+        android:id="@+id/button"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Button"
+        android:id="@+id/button2"
+        android:layout_gravity="center_horizontal" />
+
+
+</LinearLayout>
