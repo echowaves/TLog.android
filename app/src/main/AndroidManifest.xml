@@ -20,7 +20,9 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".controller.user.SignIn">
+        <activity
+            android:name=".controller.user.SignIn"
+            android:theme="@style/echowaves">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
