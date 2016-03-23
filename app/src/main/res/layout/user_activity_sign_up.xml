@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/TLUserColor"
     android:orientation="vertical"
-    tools:context="com.echowaves.tlog.controller.user.SignIn">
+    tools:context="com.echowaves.tlog.controller.user.SignUp">
 
     <!-- Action Bar -->
     <RelativeLayout
@@ -13,6 +14,18 @@
         android:layout_height="@dimen/abs__action_bar_default_height"
         android:layout_marginBottom="10dip"
         android:background="@color/TLNavColor">
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="10dp"
+            android:background="@android:color/transparent"
+            android:padding="5dip"
+            android:text="&lt; back"
+            android:textColor="@android:color/holo_blue_light" />
 
 
         <TextView
@@ -24,7 +37,7 @@
             android:layout_margin="5dp"
             android:minWidth="100dp"
             android:padding="5dp"
-            android:text="sign in"
+            android:text="sign up"
             android:textColor="@color/TLTextColor"
             android:textSize="20dp" />
     </RelativeLayout>
@@ -41,6 +54,7 @@
         android:padding="5dip"
         android:textSize="35dp" />
 
+
     <EditText
         android:id="@+id/editText2"
         android:layout_width="match_parent"
@@ -49,6 +63,18 @@
         android:layout_margin="10dp"
         android:background="@drawable/rounded_edittext"
         android:hint="password"
+        android:inputType="textPassword"
+        android:padding="5dip"
+        android:textSize="35dp" />
+
+    <EditText
+        android:id="@+id/editText3"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"
+        android:background="@drawable/rounded_edittext"
+        android:hint="password confirm"
         android:inputType="textPassword"
         android:padding="5dip"
         android:textSize="35dp" />
@@ -62,19 +88,8 @@
         android:background="@drawable/rounded_green_button"
         android:color="@android:color/holo_blue_bright"
         android:padding="5dip"
-        android:text="Sign In"
-        android:textColor="@android:color/white" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="10dp"
-        android:background="@android:color/transparent"
-        android:padding="5dip"
         android:text="Sign Up"
-        android:textColor="@android:color/holo_blue_light" />
+        android:textColor="@android:color/white" />
 
 
 </LinearLayout>
