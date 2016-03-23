@@ -10,5 +10,6 @@
 
     <color name="TLTextFieldBgColor">#FFFFFF</color>
     <color name="TLTextColor">#666666</color>
+    <color name="TLGreen">#00C333</color>
 
 </resources>

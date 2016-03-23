@@ -10,8 +10,8 @@
     <!-- Action Bar -->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_marginBottom="10dip"
         android:layout_height="@dimen/abs__action_bar_default_height"
+        android:layout_marginBottom="10dip"
         android:background="@color/TLNavColor">
 
         <!--<ImageButton-->
@@ -75,18 +75,27 @@
         android:textSize="35dp" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Button"
         android:id="@+id/button"
-        android:layout_gravity="center_horizontal" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"
+        android:background="@drawable/rounded_green_button"
+        android:color="@android:color/holo_blue_bright"
+        android:padding="5dip"
+        android:text="Sign In"
+        android:textColor="@android:color/white" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Button"
         android:id="@+id/button2"
-        android:layout_gravity="center_horizontal" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"
+        android:background="@android:color/transparent"
+        android:padding="5dip"
+        android:text="Sign Up"
+        android:textColor="@android:color/holo_blue_light" />
 
 
 </LinearLayout>
