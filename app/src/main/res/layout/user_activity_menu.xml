@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/TLUserColor"
     android:orientation="vertical"
-    tools:context="com.echowaves.tlog.controller.user.SignIn">
+    tools:context="com.echowaves.tlog.controller.user.Menu">
 
     <!-- Action Bar -->
     <RelativeLayout
@@ -14,9 +14,22 @@
         android:layout_marginBottom="10dip"
         android:background="@color/TLNavColor">
 
+        <Button
+            android:id="@+id/menu_signOutButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:background="@android:color/transparent"
+            android:padding="5dip"
+            android:text="&lt; sign out"
+            android:textAllCaps="false"
+            android:textColor="@android:color/holo_blue_light"
+            android:textSize="20dp" />
+
 
         <TextView
-            android:id="@+id/signin_title"
+            android:id="@+id/menu_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -24,37 +37,13 @@
             android:layout_margin="5dp"
             android:minWidth="100dp"
             android:padding="5dp"
-            android:text="sign in"
+            android:text="main menu"
             android:textColor="@color/TLTextColor"
             android:textSize="20dp" />
     </RelativeLayout>
 
-    <EditText
-        android:id="@+id/signin_emailText"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="10dp"
-        android:background="@drawable/rounded_edittext"
-        android:hint="email"
-        android:inputType="textEmailAddress"
-        android:padding="5dip"
-        android:textSize="30dp" />
-
-    <EditText
-        android:id="@+id/signin_passwordText"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="10dp"
-        android:background="@drawable/rounded_edittext"
-        android:hint="password"
-        android:inputType="textPassword"
-        android:padding="5dip"
-        android:textSize="30dp" />
-
     <Button
-        android:id="@+id/signin_signinButton"
+        android:id="@+id/menu_employeesButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -62,23 +51,23 @@
         android:background="@drawable/rounded_green_button"
         android:color="@android:color/holo_blue_bright"
         android:padding="5dip"
-        android:text="Sign In"
+        android:text="Employees"
         android:textAllCaps="false"
         android:textColor="@android:color/white"
         android:textSize="30dp" />
 
     <Button
-        android:id="@+id/signin_signupButton"
+        android:id="@+id/menu_reportsButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_margin="10dp"
-        android:background="@android:color/transparent"
+        android:background="@drawable/rounded_green_button"
+        android:color="@android:color/holo_blue_bright"
         android:padding="5dip"
-        android:text="Sign Up"
+        android:text="Reports"
         android:textAllCaps="false"
-        android:textColor="@android:color/holo_blue_light"
-        android:textSize="20dp" />
-
+        android:textColor="@android:color/white"
+        android:textSize="30dp" />
 
 </LinearLayout>

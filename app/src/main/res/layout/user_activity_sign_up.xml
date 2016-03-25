@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -16,21 +15,21 @@
         android:background="@color/TLNavColor">
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/signup_backButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_gravity="center_horizontal"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
             android:background="@android:color/transparent"
             android:padding="5dip"
             android:text="&lt; back"
             android:textAllCaps="false"
-
-            android:textColor="@android:color/holo_blue_light" />
+            android:textColor="@android:color/holo_blue_light"
+            android:textSize="20dp" />
 
 
         <TextView
-            android:id="@+id/home_title"
+            android:id="@+id/signup_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -44,7 +43,7 @@
     </RelativeLayout>
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/signup_emailText"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="center_horizontal"
@@ -57,7 +56,7 @@
 
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/signup_passwordText"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="center_horizontal"
@@ -69,7 +68,7 @@
         android:textSize="30dp" />
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/signup_passwordConfirmText"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="center_horizontal"
@@ -81,7 +80,7 @@
         android:textSize="30dp" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/signup_signupButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
