@@ -11,7 +11,7 @@ import android.widget.EditText;
 import com.echowaves.tlog.R;
 import com.echowaves.tlog.TLApplicationContextProvider;
 
-public class SignIn extends AppCompatActivity {
+public class SignInActivity extends AppCompatActivity {
 
     private EditText emailTextField;
     private EditText passwordTextFeild;
@@ -37,7 +37,7 @@ public class SignIn extends AppCompatActivity {
 
         signInButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
-                Intent menu = new Intent(TLApplicationContextProvider.getContext(), Menu.class);
+                Intent menu = new Intent(TLApplicationContextProvider.getContext(), MenuActivity.class);
                 startActivity(menu);
             }
         });
@@ -46,7 +46,7 @@ public class SignIn extends AppCompatActivity {
 
         signUpButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
-                Intent signUp = new Intent(TLApplicationContextProvider.getContext(), SignUp.class);
+                Intent signUp = new Intent(TLApplicationContextProvider.getContext(), SignUpActivity.class);
                 startActivity(signUp);
             }
         });

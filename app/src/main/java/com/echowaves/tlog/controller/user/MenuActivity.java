@@ -5,12 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 
 import com.echowaves.tlog.R;
 import com.echowaves.tlog.TLApplicationContextProvider;
 
-public class Menu extends AppCompatActivity {
+public class MenuActivity extends AppCompatActivity {
 
     private Button signoutButton;
     private Button employeesButton;
@@ -33,7 +32,7 @@ public class Menu extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent signIn = new Intent(TLApplicationContextProvider.getContext(), SignIn.class);
+        Intent signIn = new Intent(TLApplicationContextProvider.getContext(), SignInActivity.class);
         signIn.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         signIn.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 

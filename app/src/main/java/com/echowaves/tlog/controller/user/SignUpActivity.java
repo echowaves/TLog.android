@@ -11,7 +11,7 @@ import android.widget.EditText;
 import com.echowaves.tlog.R;
 import com.echowaves.tlog.TLApplicationContextProvider;
 
-public class SignUp extends AppCompatActivity {
+public class SignUpActivity extends AppCompatActivity {
 
     private Button backButton;
     private EditText emailTextField;
@@ -29,7 +29,7 @@ public class SignUp extends AppCompatActivity {
         backButton = (Button) findViewById(R.id.signup_backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(final View v) {
-                finish();
+                onBackPressed();
             }
         });
 
@@ -46,11 +46,17 @@ public class SignUp extends AppCompatActivity {
 
         signUpButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
-                Intent menu = new Intent(TLApplicationContextProvider.getContext(), Menu.class);
+                Intent menu = new Intent(TLApplicationContextProvider.getContext(), MenuActivity.class);
                 startActivity(menu);
             }
         });
 
 
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
 }
