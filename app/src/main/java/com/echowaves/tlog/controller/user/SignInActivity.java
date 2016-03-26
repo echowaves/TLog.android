@@ -1,8 +1,9 @@
 package com.echowaves.tlog.controller.user;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -10,6 +11,12 @@ import android.widget.EditText;
 
 import com.echowaves.tlog.R;
 import com.echowaves.tlog.TLApplicationContextProvider;
+import com.echowaves.tlog.model.TLUser;
+import com.echowaves.tlog.util.TLJsonHttpResponseHandler;
+
+import org.json.JSONObject;
+
+import cz.msebera.android.httpclient.Header;
 
 public class SignInActivity extends AppCompatActivity {
 
@@ -36,9 +43,32 @@ public class SignInActivity extends AppCompatActivity {
 
 
         signInButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View arg0) {
-                Intent menu = new Intent(TLApplicationContextProvider.getContext(), MenuActivity.class);
-                startActivity(menu);
+            public void onClick(View v) {
+
+                TLUser user = new TLUser(
+                        null,
+                        ((EditText) findViewById(R.id.signin_emailText)).getText().toString(),
+                        ((EditText) findViewById(R.id.signin_passwordText)).getText().toString()
+                );
+
+                user.signIn(
+                        new TLJsonHttpResponseHandler(v.getContext()) {
+                            @Override
+                            public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+                                Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponse.toString());
+
+//                                TLUser.storeJwtLocally();
+
+
+                                Intent menu = new Intent(TLApplicationContextProvider.getContext(), MenuActivity.class);
+                                startActivity(menu);
+                            }
+                        }
+
+                );
+
+
+
             }
         });
 
