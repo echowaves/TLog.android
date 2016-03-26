@@ -7,10 +7,17 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:buttonStyle">@style/Button</item>
+        <item name="android:textViewStyle">@style/EchowavesTextViewStyle</item>
+
+    </style>
+
+    <style name="EchowavesTextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">sans-serif-light</item>
     </style>
 
     <style name="Button" parent="Widget.AppCompat.Button">
         <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">sans-serif-light</item>
     </style>
 
 
