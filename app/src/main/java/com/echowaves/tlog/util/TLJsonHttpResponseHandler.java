@@ -25,7 +25,7 @@ public class TLJsonHttpResponseHandler extends JsonHttpResponseHandler {
     }
 
     @Override
-    final public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
+    public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
         if (headers != null) {
             for (Header h : headers) {
                 Log.d("................ failed   key: ", h.getName());
@@ -66,7 +66,7 @@ public class TLJsonHttpResponseHandler extends JsonHttpResponseHandler {
     }
 
     @Override
-    final public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Error2")
                 .setMessage(errorResponse.toString())

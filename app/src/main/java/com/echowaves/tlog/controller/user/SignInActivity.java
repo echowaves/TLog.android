@@ -1,5 +1,7 @@
 package com.echowaves.tlog.controller.user;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +16,8 @@ import com.echowaves.tlog.TLApplicationContextProvider;
 import com.echowaves.tlog.model.TLUser;
 import com.echowaves.tlog.util.TLJsonHttpResponseHandler;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
@@ -43,7 +47,7 @@ public class SignInActivity extends AppCompatActivity {
 
 
         signInButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+            public void onClick(final View v) {
 
                 TLUser user = new TLUser(
                         null,
@@ -55,13 +59,34 @@ public class SignInActivity extends AppCompatActivity {
                         new TLJsonHttpResponseHandler(v.getContext()) {
                             @Override
                             public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
-                                Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponse.toString());
+                                Log.d(">>>>>>>>>>>>>>>>>>>> JSONResponse", jsonResponse.toString());
 
-//                                TLUser.storeJwtLocally();
+                                try {
+                                    Log.d("token", jsonResponse.get("token").toString());
+                                    TLUser.storeJwtLocally(jsonResponse.get("token").toString());
 
 
-                                Intent menu = new Intent(TLApplicationContextProvider.getContext(), MenuActivity.class);
-                                startActivity(menu);
+                                    Intent menu = new Intent(TLApplicationContextProvider.getContext(), MenuActivity.class);
+                                    startActivity(menu);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+
+                            }
+
+                            @Override
+                            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                                builder
+                                        .setMessage("Unable to sign in, try again.")
+                                        .setCancelable(false)
+                                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                            }
+                                        });
+                                AlertDialog alert = builder.create();
+                                alert.show();
                             }
                         }
 
@@ -73,13 +98,31 @@ public class SignInActivity extends AppCompatActivity {
         });
 
 
-
         signUpButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
                 Intent signUp = new Intent(TLApplicationContextProvider.getContext(), SignUpActivity.class);
                 startActivity(signUp);
             }
         });
+
+
+
+
+//TODO:
+//        if(TLEmployee.retreiveActivationCodeFromLocalStorage() != nil) {
+//            dispatch_async(dispatch_get_main_queue()){
+//                self.performSegueWithIdentifier("employeeHomeSegue", sender: self)
+//            }
+//
+//        } else {
+
+            //auto sign in
+            if(TLUser.retreiveJwtFromLocalStorage() != null) {
+                Intent menu = new Intent(TLApplicationContextProvider.getContext(), MenuActivity.class);
+                startActivity(menu);
+            }
+//        }
+
 
 
     }

@@ -10,7 +10,8 @@ import java.text.SimpleDateFormat;
 
 public interface TLConstants {
 
-    public static final String BASE_URL = "http://192.168.1.145:3000";
+//    public static final String BASE_URL = "http://192.168.1.145:3000";
+    public static final String BASE_URL = "http://172.20.10.2:3000";
     public static final String TLAWSBucket = "http://staging-images.tlog.us";
 //    public static final String BASE_URL = "http://tlog.us:3000";
 //    public static final String TLAWSBucket = "http://images.tlog.us";

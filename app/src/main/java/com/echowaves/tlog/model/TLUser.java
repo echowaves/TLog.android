@@ -43,7 +43,7 @@ public class TLUser extends TLObject {
 
     public static String retreiveJwtFromLocalStorage() {
         SharedPreferences prefs = new SecurePreferences(TLApplicationContextProvider.getContext());
-        return prefs.getString(TLUser.JWT_KEY, "");
+        return prefs.getString(TLUser.JWT_KEY, null);
     }
 
     public static void clearJwtFromLocalStorage() {

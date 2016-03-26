@@ -1,13 +1,11 @@
 package com.echowaves.tlog;
 
-import android.app.Application;
 import android.content.Context;
 
 import com.localytics.android.LocalyticsActivityLifecycleCallbacks;
 
 
-public class TLApplicationContextProvider extends Application
-{
+public class TLApplicationContextProvider extends android.support.multidex.MultiDexApplication {
     /**
      * Keeps a reference of the application context
      */
@@ -30,8 +28,7 @@ public class TLApplicationContextProvider extends Application
     }
 
     @Override
-    public void onCreate()
-    {
+    public void onCreate() {
         super.onCreate();
 
         // Register LocalyticsActivityLifecycleCallbacks
@@ -40,3 +37,6 @@ public class TLApplicationContextProvider extends Application
     }
 
 }
+
+
+//http://mutualmobile.com/posts/dex-64k-limit-not-problem-anymore-almost
