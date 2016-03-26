@@ -8,6 +8,7 @@ import android.widget.Button;
 
 import com.echowaves.tlog.R;
 import com.echowaves.tlog.TLApplicationContextProvider;
+import com.echowaves.tlog.model.TLUser;
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -32,6 +33,8 @@ public class MenuActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        TLUser.clearJwtFromLocalStorage();
+
         Intent signIn = new Intent(TLApplicationContextProvider.getContext(), SignInActivity.class);
         signIn.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         signIn.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
