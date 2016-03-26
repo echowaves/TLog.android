@@ -38,7 +38,6 @@ public class MenuActivity extends AppCompatActivity {
         Intent signIn = new Intent(TLApplicationContextProvider.getContext(), SignInActivity.class);
         signIn.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         signIn.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-
         startActivity(signIn);
 
         return;

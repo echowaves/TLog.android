@@ -73,11 +73,35 @@ public class TLUser extends TLObject {
                     responseHandler);
 
         } catch (JSONException jsonException) {
-            Log.e(getClass().getName(),"jsonException", jsonException);
+            Log.e(getClass().getName(), "jsonException", jsonException);
         } catch (UnsupportedEncodingException unsupportedEncodingException) {
             Log.e(getClass().getName(), "unsupportedEncoding Exception", unsupportedEncodingException);
         }
-
-
     }
+
+    public void signUp(JsonHttpResponseHandler responseHandler) {
+        try {
+            JSONObject jsonParams = new JSONObject();
+            jsonParams.put("email", this.email);
+            jsonParams.put("password", this.password);
+            StringEntity entity = new StringEntity(jsonParams.toString());
+
+            Header[] headers = new Header[0];
+
+            HTTP_CLIENT.post(
+                    TLApplicationContextProvider.getContext(),
+                    getAbsoluteUrl("/users"),
+                    headers,
+                    entity,
+                    JSON_CONTENT_TYPE,
+                    responseHandler);
+
+        } catch (JSONException jsonException) {
+            Log.e(getClass().getName(), "jsonException", jsonException);
+        } catch (UnsupportedEncodingException unsupportedEncodingException) {
+            Log.e(getClass().getName(), "unsupportedEncoding Exception", unsupportedEncodingException);
+        }
+    }
+
+
 }
