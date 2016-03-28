@@ -16,8 +16,12 @@ import com.echowaves.tlog.TLApplicationContextProvider;
 import com.echowaves.tlog.model.TLUser;
 import com.echowaves.tlog.util.TLJsonHttpResponseHandler;
 
+import org.apache.commons.validator.GenericValidator;
+import org.apache.commons.validator.routines.EmailValidator;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -25,8 +29,8 @@ public class SignUpActivity extends AppCompatActivity {
 
     private Button backButton;
     private EditText emailTextField;
-    private EditText passwordTextFeild;
-    private EditText passwordConfirmTextFeild;
+    private EditText passwordTextField;
+    private EditText passwordConfirmTextField;
     private Button signUpButton;
 
 
@@ -45,8 +49,8 @@ public class SignUpActivity extends AppCompatActivity {
 
         // show soft keyboard automagically
         emailTextField = (EditText) findViewById(R.id.signup_emailText);
-        passwordTextFeild = (EditText) findViewById(R.id.signup_passwordText);
-        passwordConfirmTextFeild = (EditText) findViewById(R.id.signup_passwordConfirmText);
+        passwordTextField = (EditText) findViewById(R.id.signup_passwordText);
+        passwordConfirmTextField = (EditText) findViewById(R.id.signup_passwordConfirmText);
         signUpButton = (Button) findViewById(R.id.signup_signupButton);
 
 
@@ -56,60 +60,103 @@ public class SignUpActivity extends AppCompatActivity {
 
         signUpButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(final View v) {
+                // validating code
+                ArrayList<String> validationErrors = new ArrayList<>();
+                if ( GenericValidator.isBlankOrNull(emailTextField.toString())) {
+                    validationErrors.add("Email is required.");
+                }
+                if ( GenericValidator.isBlankOrNull(passwordTextField.toString())) {
+                    validationErrors.add("Password is required.");
+                }
+                if (!GenericValidator.isEmail(emailTextField.toString())) {
+                    validationErrors.add("Wrong email format.");
+                }
+                if (!GenericValidator.minLength(passwordTextField.toString(), 8)) {
+                    validationErrors.add("Password must be 8 or more characters.");
+                }
+                if (! passwordTextField.toString().equals(passwordConfirmTextField.toString())) {
+                    validationErrors.add("Password Confirm must match Password.");
+                }
+                if (GenericValidator.maxLength(passwordTextField.toString(), 50)) {
+                    validationErrors.add("Password can't be longer than 50.");
+                }
+                if (GenericValidator.maxLength(emailTextField.toString(), 100)) {
+                    validationErrors.add("Email can't be longer than 100.");
+                }
+                // validating code
 
-                final TLUser user = new TLUser(
-                        null,
-                        ((EditText) findViewById(R.id.signup_emailText)).getText().toString(),
-                        ((EditText) findViewById(R.id.signup_passwordText)).getText().toString()
-                );
 
-                user.signUp(
-                        new TLJsonHttpResponseHandler(v.getContext()) {
-                            @Override
-                            public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+                if (validationErrors.size() == 0) { // no validation errors, proceed
 
-                                user.signIn(
-                                        new TLJsonHttpResponseHandler(v.getContext()) {
-                                            @Override
-                                            public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
-                                                try {
+                    final TLUser user = new TLUser(
+                            null,
+                            ((EditText) findViewById(R.id.signup_emailText)).getText().toString(),
+                            ((EditText) findViewById(R.id.signup_passwordText)).getText().toString()
+                    );
 
-                                                    Log.d(">>>>>>>>>>>>>>>>>>>> JSONResponse", jsonResponse.toString());
+                    user.signUp(
+                            new TLJsonHttpResponseHandler(v.getContext()) {
+                                @Override
+                                public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+
+                                    user.signIn(
+                                            new TLJsonHttpResponseHandler(v.getContext()) {
+                                                @Override
+                                                public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+                                                    try {
+
+                                                        Log.d(">>>>>>>>>>>>>>>>>>>> JSONResponse", jsonResponse.toString());
 
 
-                                                    Log.d("token", jsonResponse.get("token").toString());
-                                                    TLUser.storeJwtLocally(jsonResponse.get("token").toString());
+                                                        Log.d("token", jsonResponse.get("token").toString());
+                                                        TLUser.storeJwtLocally(jsonResponse.get("token").toString());
 
 
-                                                    Intent menu = new Intent(TLApplicationContextProvider.getContext(), MenuActivity.class);
-                                                    startActivity(menu);
-                                                } catch (JSONException e) {
-                                                    e.printStackTrace();
+                                                        Intent menu = new Intent(TLApplicationContextProvider.getContext(), MenuActivity.class);
+                                                        startActivity(menu);
+                                                    } catch (JSONException e) {
+                                                        e.printStackTrace();
+                                                    }
+
                                                 }
-
                                             }
-                                        }
-                                );
+                                    );
+                                }
+
+
+                                @Override
+                                public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                                    builder
+                                            .setMessage("Unable to sign up, perhaps user with this email already exists.")
+                                            .setCancelable(false)
+                                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                }
+                                            });
+                                    AlertDialog alert = builder.create();
+                                    alert.show();
+                                }
                             }
 
+                    );
+                } else { // if validation errors
+                    String errorString = "";
+                    for (String error : validationErrors) {
+                        errorString += error + "\n\n";
+                    }
 
-                            @Override
-                            public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                                builder
-                                        .setMessage("Unable to sign up, perhaps user with this email already exists.")
-                                        .setCancelable(false)
-                                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int id) {
-                                            }
-                                        });
-                                AlertDialog alert = builder.create();
-                                alert.show();
-                            }
-                        }
-
-                );
-
+                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                    builder
+                            .setMessage(errorString)
+                            .setCancelable(false)
+                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                }
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                }
 
             }
         });
