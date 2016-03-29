@@ -8,6 +8,8 @@ import android.widget.Button;
 
 import com.echowaves.tlog.R;
 import com.echowaves.tlog.TLApplicationContextProvider;
+import com.echowaves.tlog.controller.user.employee.EmployeesActivity;
+import com.echowaves.tlog.controller.user.reports.YearPickerActivity;
 import com.echowaves.tlog.model.TLUser;
 
 public class MenuActivity extends AppCompatActivity {
@@ -29,6 +31,22 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
+        employeesButton = (Button) findViewById(R.id.menu_employeesButton);
+        employeesButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(final View v) {
+                Intent employees = new Intent(TLApplicationContextProvider.getContext(), EmployeesActivity.class);
+                startActivity(employees);
+            }
+        });
+
+        reportsButton = (Button) findViewById(R.id.menu_reportsButton);
+        reportsButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(final View v) {
+                Intent yearPicker = new Intent(TLApplicationContextProvider.getContext(), YearPickerActivity.class);
+                startActivity(yearPicker);
+            }
+        });
+
     }
 
     @Override
@@ -42,4 +60,7 @@ public class MenuActivity extends AppCompatActivity {
 
         return;
     }
+
+
+
 }

@@ -5,7 +5,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
     // optional but highly recommended
     <application
         android:name=".TLApplicationContextProvider"
@@ -13,8 +12,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        >
+        android:theme="@style/AppTheme">
         <meta-data
             android:name="LOCALYTICS_APP_KEY"
             android:value="3cedf51f841eedbbd254fbb-443b51e0-eb9c-11e5-4245-00adad38bc8d" />
@@ -30,7 +28,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".controller.user.SignUpActivity" />
-        <activity android:name=".controller.user.MenuActivity"></activity>
+        <activity android:name=".controller.user.MenuActivity" />
+        <activity android:name=".controller.user.employee.EmployeesActivity" />
+        <activity android:name=".controller.user.reports.YearPickerActivity"></activity>
     </application>
 
 </manifest>
