@@ -39,7 +39,7 @@ dependencies {
     compile 'io.jsonwebtoken:jjwt:0.6.0'
     compile 'com.android.support:multidex:'
     compile 'commons-validator:commons-validator:1.4.0'
-
+    compile 'info.hoang8f:android-segmented:1.0.6'
 }
 
 
