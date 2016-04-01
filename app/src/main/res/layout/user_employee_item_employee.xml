@@ -24,8 +24,8 @@
             android:id="@+id/user_employee_item_employee_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingStart="5dp"
             android:paddingBottom="10dp"
+            android:paddingStart="5dp"
             android:text="Medium Text"
             android:textSize="12dp" />
 
@@ -44,5 +44,14 @@
         android:textColor="#ffffff"
         android:textSize="10dp" />
 
+    <com.joanzapata.iconify.widget.IconTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="5dp"
+        android:text="{fa-chevron-right}"
+        android:padding="5dp"
+        android:textColor="#666666"
+        android:textSize="20sp" />
 
 </LinearLayout>

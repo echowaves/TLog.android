@@ -112,9 +112,6 @@ public class EmployeesActivity extends AppCompatActivity {
                                 }
                             }
 
-//                            allEmployeesAdapter.addAll(allEmployees);
-//                            activeEmployeesAdapter.addAll(activeEmployees);
-//                            inactiveEmployeesAdapter.addAll(inactiveEmployees);
 
                             listView.setAdapter(allEmployeesAdapter);
 
