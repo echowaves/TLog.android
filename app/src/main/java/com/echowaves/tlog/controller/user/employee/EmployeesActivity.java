@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.echowaves.tlog.R;
 import com.echowaves.tlog.model.TLEmployee;
@@ -103,8 +105,10 @@ public class EmployeesActivity extends AppCompatActivity {
                                                 jsonEmployee.getBoolean("is_subcontractor"),
                                                 jsonEmployee.getString("activation_code")
                                         );
+
                                 allEmployees.add(employee);
-                                if(employee.getActivationCode() == null) {
+
+                                if(employee.getActivationCode() == null || employee.getActivationCode().equals("") || employee.getActivationCode().equals("null") ) {
                                     inactiveEmployees.add(employee);
                                 } else {
                                     activeEmployees.add(employee);
@@ -114,6 +118,27 @@ public class EmployeesActivity extends AppCompatActivity {
                             allEmployeesAdapter.addAll(allEmployees);
                             activeEmployeesAdapter.addAll(activeEmployees);
                             inactiveEmployeesAdapter.addAll(inactiveEmployees);
+
+
+
+                            RadioGroup radioGroup = (RadioGroup) findViewById(R.id.user_employee_activity_employees_segmentedView);
+
+                            radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+                            {
+                                public void onCheckedChanged(RadioGroup group, int checkedId) {
+                                    // checkedId is the RadioButton selected
+
+                                    RadioButton rb=(RadioButton)findViewById(checkedId);
+                                    if(rb.getText().equals("all")) {
+                                        listView.setAdapter(allEmployeesAdapter);
+                                    } else if(rb.getText().equals("active")) {
+                                        listView.setAdapter(activeEmployeesAdapter);
+                                    } else if(rb.getText().equals("inactive")) {
+                                        listView.setAdapter(inactiveEmployeesAdapter);
+                                    }
+                                }
+                            });
+
 
                         } catch (JSONException exception) {
                             Log.e(getClass().getName(), exception.toString());
