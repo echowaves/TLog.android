@@ -41,3 +41,4 @@ public class TLApplicationContextProvider extends android.support.multidex.Multi
 
 //http://mutualmobile.com/posts/dex-64k-limit-not-problem-anymore-almost
 //https://github.com/Kaopiz/android-segmented-control
+//https://github.com/codepath/android_guides/wiki/Using-an-ArrayAdapter-with-ListView

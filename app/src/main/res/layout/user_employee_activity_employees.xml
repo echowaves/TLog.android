@@ -65,7 +65,7 @@
         segmentedgroup:sc_corner_radius="5dp">
 
         <RadioButton
-            android:id="@+id/button21"
+            android:id="@+id/user_employee_employees_segmented_1"
             style="@style/RadioButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
             android:text="all" />
 
         <RadioButton
-            android:id="@+id/button22"
+            android:id="@+id/user_employee_employees_segmented_2"
             style="@style/RadioButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
             android:text="active" />
 
         <RadioButton
-            android:id="@+id/button23"
+            android:id="@+id/user_employee_employees_segmented_3"
             style="@style/RadioButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -90,18 +90,11 @@
             android:text="inactive" />
     </info.hoang8f.android.segmented.SegmentedGroup>
 
-    <ScrollView
+    <ListView
+        android:id="@+id/user_employee_employees_listView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal" />
 
-        <TableLayout
-            android:id="@+id/user_employee_employees_tableLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:background="@android:color/white">
-
-        </TableLayout>
-    </ScrollView>
 
 </LinearLayout>

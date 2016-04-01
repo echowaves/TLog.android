@@ -22,9 +22,9 @@ public class TLUser extends TLObject {
     static String JWT_KEY = "TTLogJWT";
     static String ACTIVATION_CODE_KEY = "TTLogActivationCode";
 
-    Integer id;
-    String email;
-    String password;
+    private Integer id;
+    private String email;
+    private String password;
 
     public TLUser(Integer id, String email, String password) {
         this.id = id;

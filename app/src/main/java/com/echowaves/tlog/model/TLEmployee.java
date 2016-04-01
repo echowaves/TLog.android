@@ -12,6 +12,20 @@ import cz.msebera.android.httpclient.message.BasicHeader;
  */
 public class TLEmployee extends TLObject {
 
+    private Integer id;
+    private String name;
+    private String email;
+    private Boolean isSubcontractor;
+    private String activationCode;
+
+    public TLEmployee(Integer id, String name, String email, Boolean isSubcontractor) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.isSubcontractor = isSubcontractor;
+    }
+
+
 
     static public void loadAll(JsonHttpResponseHandler responseHandler) {
         Header[] headers = new Header[2];
