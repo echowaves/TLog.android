@@ -26,9 +26,9 @@ public class EmployeesActivity extends AppCompatActivity {
     private Context context;
 
     // Construct the data source
-    ArrayList<TLEmployee> allEmployees = new ArrayList<TLEmployee>();
-    ArrayList<TLEmployee> activeEmployees = new ArrayList<TLEmployee>();
-    ArrayList<TLEmployee> inactiveEmployees = new ArrayList<TLEmployee>();
+    ArrayList<TLEmployee> allEmployees;
+    ArrayList<TLEmployee> activeEmployees;
+    ArrayList<TLEmployee> inactiveEmployees;
 
     EmployeesAdapter allEmployeesAdapter;
     EmployeesAdapter activeEmployeesAdapter;
@@ -85,9 +85,6 @@ public class EmployeesActivity extends AppCompatActivity {
         inactiveEmployeesAdapter = new EmployeesAdapter(this, inactiveEmployees);
 
 
-        listView.setAdapter(allEmployeesAdapter);
-
-
         TLEmployee.loadAll(
                 new TLJsonHttpResponseHandler(context) {
                     @Override
@@ -115,10 +112,11 @@ public class EmployeesActivity extends AppCompatActivity {
                                 }
                             }
 
-                            allEmployeesAdapter.addAll(allEmployees);
-                            activeEmployeesAdapter.addAll(activeEmployees);
-                            inactiveEmployeesAdapter.addAll(inactiveEmployees);
+//                            allEmployeesAdapter.addAll(allEmployees);
+//                            activeEmployeesAdapter.addAll(activeEmployees);
+//                            inactiveEmployeesAdapter.addAll(inactiveEmployees);
 
+                            listView.setAdapter(allEmployeesAdapter);
 
 
                             RadioGroup radioGroup = (RadioGroup) findViewById(R.id.user_employee_activity_employees_segmentedView);
