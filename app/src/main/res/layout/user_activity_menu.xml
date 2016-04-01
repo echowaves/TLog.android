@@ -15,7 +15,7 @@
         android:background="@color/TLNavColor">
 
         <Button
-            android:id="@+id/menu_signOutButton"
+            android:id="@+id/user_activity_menu_signOutButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -29,7 +29,7 @@
 
 
         <TextView
-            android:id="@+id/menu_title"
+            android:id="@+id/user_activity_menu_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -43,7 +43,7 @@
     </RelativeLayout>
 
     <Button
-        android:id="@+id/menu_employeesButton"
+        android:id="@+id/user_activity_menu_employeesButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -57,7 +57,7 @@
         android:textSize="30dp" />
 
     <Button
-        android:id="@+id/menu_reportsButton"
+        android:id="@+id/user_activity_menu_reportsButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

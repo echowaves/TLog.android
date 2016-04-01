@@ -39,7 +39,7 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.user_activity_sign_up);
 
 
-        backButton = (Button) findViewById(R.id.signup_backButton);
+        backButton = (Button) findViewById(R.id.user_activity_sign_up_backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(final View v) {
                 onBackPressed();
@@ -47,10 +47,10 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
         // show soft keyboard automagically
-        emailTextField = (EditText) findViewById(R.id.signup_emailText);
-        passwordTextField = (EditText) findViewById(R.id.signup_passwordText);
-        passwordConfirmTextField = (EditText) findViewById(R.id.signup_passwordConfirmText);
-        signUpButton = (Button) findViewById(R.id.signup_signupButton);
+        emailTextField = (EditText) findViewById(R.id.user_activity_sign_up_emailText);
+        passwordTextField = (EditText) findViewById(R.id.user_activity_sign_up_passwordText);
+        passwordConfirmTextField = (EditText) findViewById(R.id.user_activity_sign_up_passwordConfirmText);
+        signUpButton = (Button) findViewById(R.id.user_activity_sign_up_signupButton);
 
 
         emailTextField.requestFocus();
@@ -90,8 +90,8 @@ public class SignUpActivity extends AppCompatActivity {
 
                     final TLUser user = new TLUser(
                             null,
-                            ((EditText) findViewById(R.id.signup_emailText)).getText().toString(),
-                            ((EditText) findViewById(R.id.signup_passwordText)).getText().toString()
+                            ((EditText) findViewById(R.id.user_activity_sign_up_emailText)).getText().toString(),
+                            ((EditText) findViewById(R.id.user_activity_sign_up_passwordText)).getText().toString()
                     );
 
                     user.signUp(

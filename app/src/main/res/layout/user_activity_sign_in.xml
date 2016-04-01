@@ -16,7 +16,7 @@
 
 
         <TextView
-            android:id="@+id/signin_title"
+            android:id="@+id/user_activity_sign_in_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -30,7 +30,7 @@
     </RelativeLayout>
 
     <EditText
-        android:id="@+id/signin_emailText"
+        android:id="@+id/user_activity_sign_in_emailText"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="center_horizontal"
@@ -42,7 +42,7 @@
         android:textSize="30dp" />
 
     <EditText
-        android:id="@+id/signin_passwordText"
+        android:id="@+id/user_activity_sign_in_passwordText"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="center_horizontal"
@@ -54,7 +54,7 @@
         android:textSize="30dp" />
 
     <Button
-        android:id="@+id/signin_signinButton"
+        android:id="@+id/user_activity_sign_in_signinButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -68,7 +68,7 @@
         android:textSize="30dp" />
 
     <Button
-        android:id="@+id/signin_signupButton"
+        android:id="@+id/user_activity_sign_in_signupButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

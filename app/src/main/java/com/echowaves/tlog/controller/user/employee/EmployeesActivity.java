@@ -32,13 +32,13 @@ public class EmployeesActivity extends AppCompatActivity {
 
         context = this;
 
-        backButton = (Button) findViewById(R.id.user_employee_employees_backButton);
+        backButton = (Button) findViewById(R.id.user_employee_activity_employees_backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(final View v) {
                 onBackPressed();
             }
         });
-        addButton = (Button) findViewById(R.id.user_employee_employees_addButton);
+        addButton = (Button) findViewById(R.id.user_employee_activity_employees_addButton);
         addButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(final View v) {
                 onBackPressed();

@@ -15,7 +15,7 @@
         android:background="@color/TLNavColor">
 
         <Button
-            android:id="@+id/signup_backButton"
+            android:id="@+id/user_activity_sign_up_backButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -29,7 +29,7 @@
 
 
         <TextView
-            android:id="@+id/signup_title"
+            android:id="@+id/user_activity_sign_up_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -43,7 +43,7 @@
     </RelativeLayout>
 
     <EditText
-        android:id="@+id/signup_emailText"
+        android:id="@+id/user_activity_sign_up_emailText"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="center_horizontal"
@@ -56,7 +56,7 @@
 
 
     <EditText
-        android:id="@+id/signup_passwordText"
+        android:id="@+id/user_activity_sign_up_passwordText"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="center_horizontal"
@@ -68,7 +68,7 @@
         android:textSize="30dp" />
 
     <EditText
-        android:id="@+id/signup_passwordConfirmText"
+        android:id="@+id/user_activity_sign_up_passwordConfirmText"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="center_horizontal"
@@ -80,7 +80,7 @@
         android:textSize="30dp" />
 
     <Button
-        android:id="@+id/signup_signupButton"
+        android:id="@+id/user_activity_sign_up_signupButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

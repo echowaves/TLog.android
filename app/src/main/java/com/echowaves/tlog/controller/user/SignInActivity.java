@@ -16,7 +16,6 @@ import com.echowaves.tlog.TLApplicationContextProvider;
 import com.echowaves.tlog.model.TLUser;
 import com.echowaves.tlog.util.TLJsonHttpResponseHandler;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -36,10 +35,10 @@ public class SignInActivity extends AppCompatActivity {
         setContentView(R.layout.user_activity_sign_in);
 
         // show soft keyboard automagically
-        emailTextField = (EditText) findViewById(R.id.signin_emailText);
-        passwordTextFeild = (EditText) findViewById(R.id.signin_passwordText);
-        signInButton = (Button) findViewById(R.id.signin_signinButton);
-        signUpButton = (Button) findViewById(R.id.signin_signupButton);
+        emailTextField = (EditText) findViewById(R.id.user_activity_sign_in_emailText);
+        passwordTextFeild = (EditText) findViewById(R.id.user_activity_sign_in_passwordText);
+        signInButton = (Button) findViewById(R.id.user_activity_sign_in_signinButton);
+        signUpButton = (Button) findViewById(R.id.user_activity_sign_in_signupButton);
 
         emailTextField.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
@@ -51,8 +50,8 @@ public class SignInActivity extends AppCompatActivity {
 
                 TLUser user = new TLUser(
                         null,
-                        ((EditText) findViewById(R.id.signin_emailText)).getText().toString(),
-                        ((EditText) findViewById(R.id.signin_passwordText)).getText().toString()
+                        ((EditText) findViewById(R.id.user_activity_sign_in_emailText)).getText().toString(),
+                        ((EditText) findViewById(R.id.user_activity_sign_in_passwordText)).getText().toString()
                 );
 
                 user.signIn(

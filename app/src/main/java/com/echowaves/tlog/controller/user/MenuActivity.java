@@ -24,14 +24,14 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_activity_menu);
 
-        signoutButton = (Button) findViewById(R.id.menu_signOutButton);
+        signoutButton = (Button) findViewById(R.id.user_activity_menu_signOutButton);
         signoutButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(final View v) {
                 onBackPressed();
             }
         });
 
-        employeesButton = (Button) findViewById(R.id.menu_employeesButton);
+        employeesButton = (Button) findViewById(R.id.user_activity_menu_employeesButton);
         employeesButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(final View v) {
                 Intent employees = new Intent(TLApplicationContextProvider.getContext(), EmployeesActivity.class);
@@ -39,7 +39,7 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
-        reportsButton = (Button) findViewById(R.id.menu_reportsButton);
+        reportsButton = (Button) findViewById(R.id.user_activity_menu_reportsButton);
         reportsButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(final View v) {
                 Intent yearPicker = new Intent(TLApplicationContextProvider.getContext(), YearPickerActivity.class);
