@@ -18,11 +18,29 @@ public class TLEmployee extends TLObject {
     private Boolean isSubcontractor;
     private String activationCode;
 
-    public TLEmployee(Integer id, String name, String email, Boolean isSubcontractor) {
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public Boolean getSubcontractor() {
+        return isSubcontractor;
+    }
+
+    public String getActivationCode() {
+        return activationCode;
+    }
+
+    public TLEmployee(Integer id, String name, String email, Boolean isSubcontractor, String activationCode) {
         this.id = id;
         this.name = name;
+
         this.email = email;
         this.isSubcontractor = isSubcontractor;
+        this.activationCode = activationCode;
     }
 
 
