@@ -40,6 +40,8 @@ public class EmployeesAdapter extends ArrayAdapter<TLEmployee> {
         email.setText(employee.getEmail());
         if (employee.getSubcontractor().booleanValue() == false) {
             sub.setVisibility(View.INVISIBLE);
+        } else {
+            sub.setVisibility(View.VISIBLE);
         }
         // Return the completed view to render on screen
         return convertView;

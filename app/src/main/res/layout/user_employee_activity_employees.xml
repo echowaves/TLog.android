@@ -62,7 +62,9 @@
         android:layout_margin="10dp"
         android:orientation="horizontal"
         segmentedgroup:sc_border_width="2dp"
-        segmentedgroup:sc_corner_radius="5dp">
+        segmentedgroup:sc_checked_text_color="#ffffff"
+        segmentedgroup:sc_corner_radius="5dp"
+        segmentedgroup:sc_tint_color="#007aff">
 
         <RadioButton
             android:id="@+id/user_employee_activity_employees_segment_1"
@@ -94,7 +96,10 @@
         android:id="@+id/user_employee_activity_employees_listView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:background="#ffffff"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp" />
 
 
 </LinearLayout>
