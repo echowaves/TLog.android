@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
 
@@ -17,8 +18,10 @@ import com.echowaves.tlog.TLApplicationContextProvider;
 import com.echowaves.tlog.model.TLEmployee;
 import com.echowaves.tlog.util.TLJsonHttpResponseHandler;
 
-import org.json.JSONException;
+import org.apache.commons.validator.GenericValidator;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -116,12 +119,6 @@ public class EmployeeDetails extends AppCompatActivity {
                 alert.show();
 
 
-
-
-
-
-
-
             }
         });
 
@@ -131,7 +128,6 @@ public class EmployeeDetails extends AppCompatActivity {
         nameTextFeild.setText(employee.getName());
         emailTextField = (EditText) findViewById(R.id.user_employee_activity_employee_details_email_EditText);
         emailTextField.setText(employee.getEmail());
-        saveButton = (Button) findViewById(R.id.user_employee_activity_employee_details_save_Button);
 
         nameTextFeild.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
@@ -139,15 +135,117 @@ public class EmployeeDetails extends AppCompatActivity {
 
         subContractorSwitch = (Switch) findViewById(R.id.user_employee_activity_employee_details_sub_Switch);
         subContractorSwitch.setChecked(employee.getSubcontractor());
+        subContractorSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                // do something, the isChecked will be
+                // true if the switch is in the On position
+                employee.setSubcontractor(isChecked);
+                saveButtonClicked(buttonView);
+            }
+        });
+
         isActiveSwitch = (Switch) findViewById(R.id.user_employee_activity_employee_details_active_Switch);
         isActiveSwitch.setChecked(employee.isActive());
-//
-        saveButton = (Button) findViewById(R.id.user_employee_activity_employee_details_save_Button);
-        actionCodesButton = (Button) findViewById(R.id.user_employee_activity_employee_details_actionCodes_Button);
 
+        saveButton = (Button) findViewById(R.id.user_employee_activity_employee_details_save_Button);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(final View v) {
+                saveButtonClicked(v);
+            }
+        });
+
+
+        actionCodesButton = (Button) findViewById(R.id.user_employee_activity_employee_details_actionCodes_Button);
 
     }
 
+
+    void saveButtonClicked(final View v) {
+        // validating code
+        ArrayList<String> validationErrors = new ArrayList<>();
+        if (GenericValidator.isBlankOrNull(emailTextField.getText().toString())) {
+            validationErrors.add("Email is required.");
+        }
+        if (GenericValidator.isBlankOrNull(nameTextFeild.getText().toString())) {
+            validationErrors.add("Name is required.");
+        }
+
+        if (!GenericValidator.isEmail(emailTextField.getText().toString())) {
+            validationErrors.add("Wrong email format.");
+        }
+
+        if (!GenericValidator.maxLength(nameTextFeild.getText().toString(), 100)) {
+            validationErrors.add("Name can't be longer than 100.");
+        }
+        if (!GenericValidator.maxLength(emailTextField.getText().toString(), 100)) {
+            validationErrors.add("Email can't be longer than 100.");
+        }
+        // validating code
+
+
+        if (validationErrors.size() == 0) { // no validation errors, proceed
+
+            employee.setName(nameTextFeild.getText().toString());
+            employee.setEmail(emailTextField.getText().toString());
+            employee.setSubcontractor(subContractorSwitch.isChecked());
+
+            employee.update(
+                    new TLJsonHttpResponseHandler(v.getContext()) {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+                            Log.d(">>>>>>>>>>>>>>>>>>>> JSONResponse", jsonResponse.toString());
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                            builder
+                                    .setMessage("Employee successfuly updated.")
+                                    .setCancelable(false)
+                                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+
+                                        }
+                                    });
+                            AlertDialog alert = builder.create();
+                            alert.show();
+
+
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                            builder
+                                    .setMessage("Error, perhaps an employee with the same email already exists.")
+                                    .setCancelable(false)
+                                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                        }
+                                    });
+                            AlertDialog alert = builder.create();
+                            alert.show();
+                        }
+                    }
+            );
+
+        } else { // validation failed
+            String errorString = "";
+            for (String error : validationErrors) {
+                errorString += error + "\n\n";
+            }
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+            builder
+                    .setMessage(errorString)
+                    .setCancelable(false)
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                        }
+                    });
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
+
+
+    }
 
     @Override
     public void onBackPressed() {

@@ -38,13 +38,22 @@ public class TLEmployee extends TLObject {
     public String getName() {
         return name;
     }
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getEmail() {
         return email;
     }
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public Boolean getSubcontractor() {
         return isSubcontractor;
+    }
+    public void setSubcontractor(Boolean subcontractor) {
+        isSubcontractor = subcontractor;
     }
 
     public String getActivationCode() {
@@ -111,6 +120,34 @@ public class TLEmployee extends TLObject {
             HTTP_CLIENT.post(
                     TLApplicationContextProvider.getContext(),
                     getAbsoluteUrl("/employees"),
+                    headers,
+                    entity,
+                    JSON_CONTENT_TYPE,
+                    responseHandler);
+        } catch (JSONException jsonException) {
+            Log.e(getClass().getName(), "jsonException", jsonException);
+        } catch (UnsupportedEncodingException unsupportedEncodingException) {
+            Log.e(getClass().getName(), "unsupportedEncoding Exception", unsupportedEncodingException);
+        }
+    }
+
+
+
+    public void update(JsonHttpResponseHandler responseHandler) {
+        try {
+            JSONObject jsonParams = new JSONObject();
+            jsonParams.put("name", this.getName());
+            jsonParams.put("email", this.getEmail());
+            jsonParams.put("is_subcontractor", this.getSubcontractor().toString());
+            StringEntity entity = new StringEntity(jsonParams.toString());
+
+            Header[] headers = new Header[2];
+            headers[0] = new BasicHeader("Content-Type", JSON_CONTENT_TYPE);
+            headers[1] = new BasicHeader("Authorization", "Bearer " + TLUser.retreiveJwtFromLocalStorage());
+
+            HTTP_CLIENT.put(
+                    TLApplicationContextProvider.getContext(),
+                    getAbsoluteUrl("/employees/" + this.getId().toString()),
                     headers,
                     entity,
                     JSON_CONTENT_TYPE,
