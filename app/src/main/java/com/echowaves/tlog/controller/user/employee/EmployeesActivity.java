@@ -1,16 +1,19 @@
 package com.echowaves.tlog.controller.user.employee;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.echowaves.tlog.R;
+import com.echowaves.tlog.TLApplicationContextProvider;
 import com.echowaves.tlog.model.TLEmployee;
 import com.echowaves.tlog.util.TLJsonHttpResponseHandler;
 
@@ -55,7 +58,9 @@ public class EmployeesActivity extends AppCompatActivity {
         addButton = (Button) findViewById(R.id.user_employee_activity_employees_addButton);
         addButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(final View v) {
-                onBackPressed();
+                Intent employeeCreate = new Intent(TLApplicationContextProvider.getContext(), EmployeeCreate.class);
+                startActivity(employeeCreate);
+
             }
         });
 
@@ -74,6 +79,8 @@ public class EmployeesActivity extends AppCompatActivity {
     private void loadEmployees() {
 // Attach the adapter to a ListView
 
+        RadioGroup radioGroup = (RadioGroup) findViewById(R.id.user_employee_activity_employees_segmentedView);
+        ((RadioButton)radioGroup.getChildAt(0)).setChecked(true);
 
         allEmployees = new ArrayList<TLEmployee>();
         activeEmployees = new ArrayList<TLEmployee>();
@@ -133,6 +140,34 @@ public class EmployeesActivity extends AppCompatActivity {
                                     }
                                 }
                             });
+
+
+
+                            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
+
+                                    TLEmployee employee = null;
+                                    RadioGroup radioGroup = (RadioGroup) findViewById(R.id.user_employee_activity_employees_segmentedView);
+
+                                    RadioButton rb=(RadioButton)findViewById(radioGroup.getCheckedRadioButtonId());
+
+                                    if(rb.getText().equals("all")) {
+                                        employee = allEmployees.get(position);
+                                    } else if(rb.getText().equals("active")) {
+                                        employee = activeEmployees.get(position);
+                                    } else if(rb.getText().equals("inactive")) {
+                                        employee = inactiveEmployees.get(position);
+                                    }
+
+                                    TLApplicationContextProvider.getContext().setCurrentActivityObject(employee);
+
+                                    Intent employeeDetails = new Intent(TLApplicationContextProvider.getContext(), EmployeeDetails.class);
+                                    startActivity(employeeDetails);
+
+                                }
+                            });
+
 
 
                         } catch (JSONException exception) {

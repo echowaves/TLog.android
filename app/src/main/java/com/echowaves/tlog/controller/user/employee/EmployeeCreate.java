@@ -1,4 +1,4 @@
-package com.echowaves.tlog.controller.user;
+package com.echowaves.tlog.controller.user.employee;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -13,7 +13,7 @@ import android.widget.EditText;
 
 import com.echowaves.tlog.R;
 import com.echowaves.tlog.TLApplicationContextProvider;
-import com.echowaves.tlog.model.TLUser;
+import com.echowaves.tlog.model.TLEmployee;
 import com.echowaves.tlog.util.TLJsonHttpResponseHandler;
 
 import org.apache.commons.validator.GenericValidator;
@@ -24,40 +24,38 @@ import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
-public class SignUpActivity extends AppCompatActivity {
+public class EmployeeCreate extends AppCompatActivity {
 
     private Button backButton;
+
+    private EditText nameTextFeild;
     private EditText emailTextField;
-    private EditText passwordTextField;
-    private EditText passwordConfirmTextField;
-    private Button signUpButton;
+    private Button createButton;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_activity_sign_up);
+        setContentView(R.layout.user_employee_activity_employee_create);
 
-
-        backButton = (Button) findViewById(R.id.user_activity_sign_up_backButton);
+        backButton = (Button) findViewById(R.id.user_employee_activity_employee_create_backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(final View v) {
                 onBackPressed();
             }
         });
 
+
         // show soft keyboard automagically
-        emailTextField = (EditText) findViewById(R.id.user_activity_sign_up_emailText);
-        passwordTextField = (EditText) findViewById(R.id.user_activity_sign_up_passwordText);
-        passwordConfirmTextField = (EditText) findViewById(R.id.user_activity_sign_up_passwordConfirmText);
-        signUpButton = (Button) findViewById(R.id.user_activity_sign_up_signupButton);
+        nameTextFeild = (EditText) findViewById(R.id.user_employee_activity_employee_create_name_EditText);
+        emailTextField = (EditText) findViewById(R.id.user_employee_activity_employee_create_email_EditText);
+        createButton = (Button) findViewById(R.id.user_employee_activity_employee_create_create_Button);
 
-
-        emailTextField.requestFocus();
+        nameTextFeild.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
 
-        signUpButton.setOnClickListener(new View.OnClickListener() {
+        createButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(final View v) {
 
                 // validating code
@@ -65,20 +63,17 @@ public class SignUpActivity extends AppCompatActivity {
                 if (GenericValidator.isBlankOrNull(emailTextField.getText().toString())) {
                     validationErrors.add("Email is required.");
                 }
-                if (GenericValidator.isBlankOrNull(passwordTextField.getText().toString())) {
-                    validationErrors.add("Password is required.");
+                if (GenericValidator.isBlankOrNull(nameTextFeild.getText().toString())) {
+                    validationErrors.add("Name is required.");
                 }
+
+
                 if (!GenericValidator.isEmail(emailTextField.getText().toString())) {
                     validationErrors.add("Wrong email format.");
                 }
-                if (!GenericValidator.minLength(passwordTextField.getText().toString(), 8)) {
-                    validationErrors.add("Password must be 8 or more characters.");
-                }
-                if (!passwordTextField.getText().toString().equals(passwordConfirmTextField.getText().toString())) {
-                    validationErrors.add("Password Confirm must match Password.");
-                }
-                if (!GenericValidator.maxLength(passwordTextField.getText().toString(), 50)) {
-                    validationErrors.add("Password can't be longer than 50.");
+
+                if (!GenericValidator.maxLength(nameTextFeild.getText().toString(), 100)) {
+                    validationErrors.add("Name can't be longer than 100.");
                 }
                 if (!GenericValidator.maxLength(emailTextField.getText().toString(), 100)) {
                     validationErrors.add("Email can't be longer than 100.");
@@ -88,47 +83,39 @@ public class SignUpActivity extends AppCompatActivity {
 
                 if (validationErrors.size() == 0) { // no validation errors, proceed
 
-                    final TLUser user = new TLUser(
+
+                    final TLEmployee employee = new TLEmployee(
                             null,
-                            ((EditText) findViewById(R.id.user_activity_sign_up_emailText)).getText().toString(),
-                            ((EditText) findViewById(R.id.user_activity_sign_up_passwordText)).getText().toString()
+                            nameTextFeild.getText().toString(),
+                            emailTextField.getText().toString(),
+                            false
                     );
 
-                    user.signUp(
+                    employee.create(
                             new TLJsonHttpResponseHandler(v.getContext()) {
                                 @Override
                                 public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+                                    Log.d(">>>>>>>>>>>>>>>>>>>> JSONResponse", jsonResponse.toString());
 
-                                    user.signIn(
-                                            new TLJsonHttpResponseHandler(v.getContext()) {
-                                                @Override
-                                                public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
-                                                    try {
+                                    try {
+                                        employee.setId(jsonResponse.getJSONObject("employee").getInt("id"));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
 
-                                                        Log.d(">>>>>>>>>>>>>>>>>>>> JSONResponse", jsonResponse.toString());
+                                    TLApplicationContextProvider.getContext().setCurrentActivityObject(employee);
+
+                                    Intent employeeDetails = new Intent(TLApplicationContextProvider.getContext(), EmployeeDetails.class);
+                                    startActivity(employeeDetails);
 
 
-                                                        Log.d("token", jsonResponse.get("token").toString());
-                                                        TLUser.storeJwtLocally(jsonResponse.get("token").toString());
-
-
-                                                        Intent menu = new Intent(TLApplicationContextProvider.getContext(), MenuActivity.class);
-                                                        startActivity(menu);
-                                                    } catch (JSONException e) {
-                                                        e.printStackTrace();
-                                                    }
-
-                                                }
-                                            }
-                                    );
                                 }
-
 
                                 @Override
                                 public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
                                     AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                                     builder
-                                            .setMessage("Unable to sign up, perhaps user with this email already exists.")
+                                            .setMessage("Unable to create an employee, perhaps an employee with this email already exists.")
                                             .setCancelable(false)
                                             .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                                                 public void onClick(DialogInterface dialog, int id) {
@@ -140,7 +127,8 @@ public class SignUpActivity extends AppCompatActivity {
                             }
 
                     );
-                } else { // if validation errors
+
+                } else { // validation failed
                     String errorString = "";
                     for (String error : validationErrors) {
                         errorString += error + "\n\n";
@@ -158,6 +146,7 @@ public class SignUpActivity extends AppCompatActivity {
                     alert.show();
                 }
 
+
             }
         });
 
@@ -169,5 +158,4 @@ public class SignUpActivity extends AppCompatActivity {
         super.onBackPressed();
         finish();
     }
-
 }

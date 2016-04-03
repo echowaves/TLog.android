@@ -22,12 +22,23 @@ public class TLApplicationContextProvider extends android.support.multidex.Multi
      *
      * @return application context
      */
-    public static Context getContext() {
+    public static TLApplicationContextProvider getContext() {
         if (context == null) {
             context = new TLApplicationContextProvider();
         }
         return context;
     }
+
+
+    //this is used to pass parameters between intents
+    private static Object currentActivityObject;
+    public void setCurrentActivityObject(Object o) {
+        currentActivityObject = o;
+    }
+    public Object getCurrentActivityObject() {
+        return currentActivityObject;
+    }
+
 
     @Override
     public void onCreate() {
