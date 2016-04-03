@@ -112,7 +112,7 @@ public class EmployeesActivity extends AppCompatActivity {
 
                                 allEmployees.add(employee);
 
-                                if(employee.getActivationCode() == null || employee.getActivationCode().equals("") || employee.getActivationCode().equals("null") ) {
+                                if(employee.isActive() == false) {
                                     inactiveEmployees.add(employee);
                                 } else {
                                     activeEmployees.add(employee);

@@ -51,6 +51,13 @@ public class TLEmployee extends TLObject {
         return activationCode;
     }
 
+    public Boolean isActive() {
+        if(this.getActivationCode() == null || this.getActivationCode().equals("") || this.getActivationCode().equals("null")) {
+            return false;
+        }
+        return true;
+    }
+
     public TLEmployee(Integer id, String name, String email, Boolean isSubcontractor) {
         this.id = id;
         this.name = name;
@@ -137,26 +144,19 @@ public class TLEmployee extends TLObject {
 //    }
 //
 //
-//    func delete(
-//            success:() -> (),
-//    failure:(error: NSError) -> ()) -> () {
-//        let headers = [
-//        "Authorization": "Bearer \(TLUser.retreiveJwtFromLocalStorage())",
-//                "Content-Type": "application/json"
-//        ]
-//        Alamofire.request(.DELETE, "\(TL_HOST)/employees/\(self.id!)" , encoding: ParameterEncoding.JSON, headers: headers)
-//        .validate(statusCode: 200..<300)
-//        .responseJSON { response in
-//            switch response.result {
-//                case .Success:
-//                self.id = nil
-//                success();
-//                case .Failure(let error):
-//                NSLog(error.description)
-//                failure(error: error)
-//            }
-//        }
-//    }
+
+    public void delete(JsonHttpResponseHandler responseHandler) {
+
+        Header[] headers = new Header[2];
+        headers[0] = new BasicHeader("Content-Type", JSON_CONTENT_TYPE);
+        headers[1] = new BasicHeader("Authorization", "Bearer " + TLUser.retreiveJwtFromLocalStorage());
+
+        HTTP_CLIENT.delete(
+                TLApplicationContextProvider.getContext(),
+                getAbsoluteUrl("/employees/" + this.getId().toString()),
+                headers,
+                responseHandler);
+    }
 //
 //
 //    func activate(
