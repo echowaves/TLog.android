@@ -251,6 +251,15 @@ public class EmployeeDetails extends AppCompatActivity {
 
 
         actionCodesButton = (Button) findViewById(R.id.user_employee_activity_employee_details_actionCodes_Button);
+        actionCodesButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(final View v) {
+                TLApplicationContextProvider.getContext().setCurrentActivityObject(employee);
+
+                Intent employeeActionCodes = new Intent(TLApplicationContextProvider.getContext(), EmployeeActionCodes.class);
+                startActivity(employeeActionCodes);
+            }
+        });
+
 
     }
 

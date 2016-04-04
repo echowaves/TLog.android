@@ -32,7 +32,8 @@
         <activity android:name=".controller.user.employee.EmployeesActivity" />
         <activity android:name=".controller.user.reports.YearPickerActivity" />
         <activity android:name=".controller.user.employee.EmployeeCreate" />
-        <activity android:name=".controller.user.employee.EmployeeDetails"></activity>
+        <activity android:name=".controller.user.employee.EmployeeDetails" />
+        <activity android:name=".controller.user.employee.EmployeeActionCodes"></activity>
     </application>
 
 </manifest>
