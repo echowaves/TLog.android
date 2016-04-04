@@ -31,6 +31,6 @@ public class TLObject implements TLConstants {
 
 
     protected static String getAbsoluteUrl(String relativeUrl) {
-        return BASE_URL + relativeUrl;
+        return TL_HOST + relativeUrl;
     }
 }

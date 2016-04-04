@@ -19,6 +19,7 @@ import com.echowaves.tlog.model.TLEmployee;
 import com.echowaves.tlog.util.TLJsonHttpResponseHandler;
 
 import org.apache.commons.validator.GenericValidator;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -146,6 +147,100 @@ public class EmployeeDetails extends AppCompatActivity {
 
         isActiveSwitch = (Switch) findViewById(R.id.user_employee_activity_employee_details_active_Switch);
         isActiveSwitch.setChecked(employee.isActive());
+
+        isActiveSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(final CompoundButton v, boolean isChecked) {
+                if(isChecked) {
+                    employee.activate(
+                            new TLJsonHttpResponseHandler(v.getContext()) {
+                                @Override
+                                public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+                                    Log.d(">>>>>>>>>>>>>>>>>>>> JSONResponse", jsonResponse.toString());
+
+                                    String activationCode = null;
+
+                                    try {
+                                        activationCode = jsonResponse.getString("activation_code");
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
+
+                                    Intent mailIntent = new Intent();
+                                    mailIntent.setAction(Intent.ACTION_SEND);
+                                    mailIntent.setType("message/rfc822");
+
+                                    mailIntent.putExtra(Intent.EXTRA_SUBJECT, "TLog actvation code");
+                                    mailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{employee.getEmail()});
+                                    mailIntent.putExtra(Intent.EXTRA_TEXT, "On your mobile device click the following link to be able to access your personal Trade Log: " + TLEmployee.TL_HOST + "/public/mobile_employee.html?activation_code=" + activationCode);
+
+                                    startActivity(Intent.createChooser(mailIntent, "Send mail"));
+
+
+                                }
+
+                                @Override
+                                public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                                    builder
+                                            .setMessage("Error activating employee, try again.")
+                                            .setCancelable(false)
+                                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                }
+                                            });
+                                    AlertDialog alert = builder.create();
+                                    alert.show();
+                                }
+                            }
+                    );
+                } else {
+                    employee.deactivate(
+                            new TLJsonHttpResponseHandler(v.getContext()) {
+                                @Override
+                                public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+                                    Log.d(">>>>>>>>>>>>>>>>>>>> JSONResponse", jsonResponse.toString());
+
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                                    builder
+                                            .setMessage("Employee successfuly deactivated.")
+                                            .setCancelable(false)
+                                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+
+                                                }
+                                            });
+                                    AlertDialog alert = builder.create();
+                                    alert.show();
+
+
+                                }
+
+                                @Override
+                                public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                                    builder
+                                            .setMessage("Error deactivating employee, try again.")
+                                            .setCancelable(false)
+                                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                }
+                                            });
+                                    AlertDialog alert = builder.create();
+                                    alert.show();
+                                }
+                            }
+                    );
+
+                }
+
+
+            }
+        });
+
+
+
+
 
         saveButton = (Button) findViewById(R.id.user_employee_activity_employee_details_save_Button);
         saveButton.setOnClickListener(new View.OnClickListener() {
