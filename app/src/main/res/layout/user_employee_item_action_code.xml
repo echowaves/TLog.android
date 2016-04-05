@@ -5,22 +5,16 @@
     android:orientation="horizontal">
 
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/user_employee_item_action_code_descr"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
         android:layout_weight="1"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/user_employee_item_action_code_descr"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:paddingStart="5dp"
-            android:text="Medium Text"
-            android:textSize="20sp" />
-
-    </LinearLayout>
+        android:gravity="center_vertical"
+        android:paddingStart="5dp"
+        android:layout_margin="10dp"
+        android:text="Medium Text"
+        android:textSize="25sp" />
 
 
     <com.joanzapata.iconify.widget.IconTextView
@@ -30,7 +24,7 @@
         android:layout_margin="5dp"
         android:padding="5dp"
         android:text="{fa-trash-o}"
-        android:textColor="#777777"
-        android:textSize="20sp" />
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="25sp" />
 
 </LinearLayout>
