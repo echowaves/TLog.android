@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
-public class EmployeesActivity extends AppCompatActivity {
+public class Employees extends AppCompatActivity {
     private Context context;
 
     // Construct the data source

@@ -355,7 +355,7 @@ public class EmployeeDetails extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
-        Intent employees = new Intent(TLApplicationContextProvider.getContext(), EmployeesActivity.class);
+        Intent employees = new Intent(TLApplicationContextProvider.getContext(), Employees.class);
         employees.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         employees.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(employees);

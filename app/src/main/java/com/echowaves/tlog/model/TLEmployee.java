@@ -162,7 +162,6 @@ public class TLEmployee extends TLObject {
     }
 
     public void delete(JsonHttpResponseHandler responseHandler) {
-
         Header[] headers = new Header[2];
         headers[0] = new BasicHeader("Content-Type", JSON_CONTENT_TYPE);
         headers[1] = new BasicHeader("Authorization", "Bearer " + TLUser.retreiveJwtFromLocalStorage());

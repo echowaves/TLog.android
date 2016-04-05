@@ -29,7 +29,7 @@
         </activity>
         <activity android:name=".controller.user.SignUpActivity" />
         <activity android:name=".controller.user.MenuActivity" />
-        <activity android:name=".controller.user.employee.EmployeesActivity" />
+        <activity android:name=".controller.user.employee.Employees" />
         <activity android:name=".controller.user.reports.YearPickerActivity" />
         <activity android:name=".controller.user.employee.EmployeeCreate" />
         <activity android:name=".controller.user.employee.EmployeeDetails" />

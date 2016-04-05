@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/TLUserColor"
     android:orientation="vertical"
-    tools:context="com.echowaves.tlog.controller.user.employee.EmployeesActivity">
+    tools:context=".controller.user.employee.Employees">
 
     <!-- Action Bar -->
     <RelativeLayout
