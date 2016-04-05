@@ -1,17 +1,14 @@
 package com.echowaves.tlog.controller.user.employee;
 
 import android.content.Context;
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.echowaves.tlog.R;
@@ -68,7 +65,6 @@ public class EmployeeActionCodes extends AppCompatActivity {
         actionCodeTextField = (EditText) findViewById(R.id.user_employee_activity_employee_action_codes_actionCode_EditText);
 
 
-
         listView = (ListView) findViewById(R.id.user_employee_activity_employee_action_codes_actionCode_listView);
 
         loadActionCodes();
@@ -91,9 +87,9 @@ public class EmployeeActionCodes extends AppCompatActivity {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
                         try {
-                            JSONArray jsonActionCodes = (JSONArray)jsonResponse.get("actionCodes");
+                            JSONArray jsonActionCodes = (JSONArray) jsonResponse.get("actionCodes");
 
-                            for (int i=0; i<jsonActionCodes.length(); i++) {
+                            for (int i = 0; i < jsonActionCodes.length(); i++) {
                                 JSONObject jsonActionCode = jsonActionCodes.getJSONObject(i);
                                 TLActionCode actionCode =
                                         new TLActionCode(
@@ -110,30 +106,41 @@ public class EmployeeActionCodes extends AppCompatActivity {
                             listView.setAdapter(actionCodesAdapter);
 
 
-
                             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
-                                public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                                     TLActionCode actionCode = null;
                                     actionCode = actionCodes.get(position);
 
 //                                    delete action code here
+                                    employee.deleteActionCode(actionCode, new TLJsonHttpResponseHandler(context) {
+                                        @Override
+                                        public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+                                            loadActionCodes();
+                                        }
+
+                                    });
                                 }
+
                             });
 
+                        } catch (
+                                JSONException exception
+                                )
 
-
-                        } catch (JSONException exception) {
+                        {
                             Log.e(getClass().getName(), exception.toString());
                         }
                     }
 
 
                     @Override
-                    public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
+                    public void onFailure(int statusCode, Header[] headers, String
+                            responseBody, Throwable error) {
                     }
                 }
+
         );
 
     }
