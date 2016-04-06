@@ -6,7 +6,7 @@
 
 
     <TextView
-        android:id="@+id/user_employee_item_action_code_descr"
+        android:id="@+id/user_employee_item_action_code_completions_descr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -14,7 +14,7 @@
         android:gravity="center_vertical"
         android:paddingStart="5dp"
         android:text="Medium Text"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="#FF7F00"
         android:textSize="25sp" />
 
 
@@ -24,8 +24,8 @@
         android:layout_gravity="center_vertical"
         android:layout_margin="5dp"
         android:padding="5dp"
-        android:text="{fa-trash-o}"
-        android:textColor="@color/colorPrimaryDark"
+        android:text="{fa-plus}"
+        android:textColor="#FF7F00"
         android:textSize="25sp" />
 
 </LinearLayout>

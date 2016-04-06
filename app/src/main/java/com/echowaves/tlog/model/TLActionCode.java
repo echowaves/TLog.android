@@ -35,6 +35,24 @@ public class TLActionCode extends TLObject {
     }
 
 
+    public static void autoComplete(String text, JsonHttpResponseHandler responseHandler) {
+        String searchText = text.toLowerCase();
+        if (searchText.equals("")) {
+            return;
+        } else {
+            Header[] headers = new Header[1];
+            headers[0] = new BasicHeader("Content-Type", JSON_CONTENT_TYPE);
+
+            HTTP_CLIENT.get(
+                    TLApplicationContextProvider.getContext(),
+                    getAbsoluteUrl("/actioncodes/lookup/" + searchText),
+                    headers,
+                    new RequestParams(),
+                    responseHandler);
+        }
+    }
+
+
     public static void allActionCodesForEmployee(
             TLEmployee employee,
             JsonHttpResponseHandler responseHandler) {
@@ -49,6 +67,4 @@ public class TLActionCode extends TLObject {
                 new RequestParams(),
                 responseHandler);
     }
-
-
 }

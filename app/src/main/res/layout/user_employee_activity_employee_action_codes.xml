@@ -42,25 +42,29 @@
             android:textSize="20dp" />
     </RelativeLayout>
 
-    <EditText
-        android:id="@+id/user_employee_activity_employee_action_codes_actionCode_EditText"
+    <AutoCompleteTextView
+        android:id="@+id/user_employee_activity_employee_action_codes_actionCode_AutoCompleteTextView"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_gravity="center_horizontal"
         android:layout_margin="5dp"
         android:background="@drawable/rounded_edittext"
+        android:ems="10"
         android:hint="type code or description"
-        android:inputType="textEmailAddress"
+        android:inputType="text"
         android:padding="5dip"
-        android:textSize="30dp" />
+        android:textSize="30dp">
+
+        <requestFocus />
+    </AutoCompleteTextView>
+
 
     <ListView
         android:id="@+id/user_employee_activity_employee_action_codes_actionCode_listView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:background="#ffffff"
         android:layout_margin="5dp"
+        android:background="#ffffff"
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp" />
 
