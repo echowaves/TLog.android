@@ -72,6 +72,7 @@ public class EmployeeActionCodes extends AppCompatActivity {
 
 
         actionCodeTextField = (AutoCompleteTextView) findViewById(R.id.user_employee_activity_employee_action_codes_actionCode_AutoCompleteTextView);
+        actionCodeTextField.setThreshold(1);//will start working from first character
 
 
         actionCodeTextField.addTextChangedListener(new TextWatcher() {
@@ -82,7 +83,6 @@ public class EmployeeActionCodes extends AppCompatActivity {
             public void beforeTextChanged(CharSequence s, int start,
                                           int count, int after) {
             }
-
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
 

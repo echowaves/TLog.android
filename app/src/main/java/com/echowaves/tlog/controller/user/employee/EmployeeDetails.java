@@ -1,10 +1,16 @@
 package com.echowaves.tlog.controller.user.employee;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -22,6 +28,9 @@ import org.apache.commons.validator.GenericValidator;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
@@ -150,32 +159,25 @@ public class EmployeeDetails extends AppCompatActivity {
 
         isActiveSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(final CompoundButton v, boolean isChecked) {
-                if(isChecked) {
+                if (isChecked) {
                     employee.activate(
                             new TLJsonHttpResponseHandler(v.getContext()) {
                                 @Override
                                 public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
                                     Log.d(">>>>>>>>>>>>>>>>>>>> JSONResponse", jsonResponse.toString());
 
-                                    String activationCode = null;
 
-                                    try {
-                                        activationCode = jsonResponse.getString("activation_code");
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                                    builder
+                                            .setMessage("Employee successfuly activated, activation email is sent.")
+                                            .setCancelable(false)
+                                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
 
-
-                                    Intent mailIntent = new Intent();
-                                    mailIntent.setAction(Intent.ACTION_SEND);
-                                    mailIntent.setType("message/rfc822");
-
-                                    mailIntent.putExtra(Intent.EXTRA_SUBJECT, "TLog actvation code");
-                                    mailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{employee.getEmail()});
-                                    mailIntent.putExtra(Intent.EXTRA_TEXT, "On your mobile device click the following link to be able to access your personal Trade Log: " + TLEmployee.TL_HOST + "/public/mobile_employee.html?activation_code=" + activationCode);
-
-                                    startActivity(Intent.createChooser(mailIntent, "Send mail"));
-
+                                                }
+                                            });
+                                    AlertDialog alert = builder.create();
+                                    alert.show();
 
                                 }
 
@@ -237,9 +239,6 @@ public class EmployeeDetails extends AppCompatActivity {
 
             }
         });
-
-
-
 
 
         saveButton = (Button) findViewById(R.id.user_employee_activity_employee_details_save_Button);

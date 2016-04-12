@@ -3,6 +3,7 @@ package com.echowaves.tlog.controller.user;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -13,6 +14,8 @@ import android.widget.EditText;
 
 import com.echowaves.tlog.R;
 import com.echowaves.tlog.TLApplicationContextProvider;
+import com.echowaves.tlog.controller.employee.EmployeeHome;
+import com.echowaves.tlog.model.TLEmployee;
 import com.echowaves.tlog.model.TLUser;
 import com.echowaves.tlog.util.TLJsonHttpResponseHandler;
 
@@ -106,21 +109,28 @@ public class SignInActivity extends AppCompatActivity {
 
 
 
+        Intent intent = getIntent();
+        String action = intent.getAction();
+        Uri data = intent.getData();
+        if(data != null) {
+            String activationCode = data.getQueryParameter("activation_code");
+            if (activationCode != null) {
+                TLEmployee.storeActivationCodeLocally(activationCode);
+            }
+        }
 
-//TODO:
-//        if(TLEmployee.retreiveActivationCodeFromLocalStorage() != nil) {
-//            dispatch_async(dispatch_get_main_queue()){
-//                self.performSegueWithIdentifier("employeeHomeSegue", sender: self)
-//            }
-//
-//        } else {
+
+        if(TLEmployee.retreiveActivationCodeFromLocalStorage() != null) {
+            Intent menu = new Intent(TLApplicationContextProvider.getContext(), EmployeeHome.class);
+            startActivity(menu);
+        } else {
 
             //auto sign in
             if(TLUser.retreiveJwtFromLocalStorage() != null) {
                 Intent menu = new Intent(TLApplicationContextProvider.getContext(), MenuActivity.class);
                 startActivity(menu);
             }
-//        }
+        }
 
 
 

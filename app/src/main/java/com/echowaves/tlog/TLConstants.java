@@ -10,11 +10,12 @@ import java.text.SimpleDateFormat;
 
 public interface TLConstants {
 
-//    public static final String TL_HOST = "http://tlog.us:3000";
+    //    public static final String TL_HOST = "http://tlog.us:3000";
     public static final String TL_HOST = "http://192.168.1.145:3000";
-//    public static final String TL_HOST = "http://172.20.10.2:3000";
+    //    public static final String TL_HOST = "http://localhost:3000";
+    //    public static final String TL_HOST = "http://172.20.10.2:3000";
     public static final String TLAWSBucket = "http://staging-images.tlog.us";
-//    public static final String TLAWSBucket = "http://images.tlog.us";
+    //    public static final String TLAWSBucket = "http://images.tlog.us";
     public static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmssSSSS");
     public static SimpleDateFormat naturalDateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 
