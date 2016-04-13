@@ -119,20 +119,16 @@ public class SignInActivity extends AppCompatActivity {
             }
         }
 
-
+        //auto sign in
         if(TLEmployee.retreiveActivationCodeFromLocalStorage() != null) {
-            Intent menu = new Intent(TLApplicationContextProvider.getContext(), EmployeeHome.class);
-            startActivity(menu);
+            Intent employee = new Intent(TLApplicationContextProvider.getContext(), EmployeeHome.class);
+            startActivity(employee);
         } else {
-
-            //auto sign in
             if(TLUser.retreiveJwtFromLocalStorage() != null) {
                 Intent menu = new Intent(TLApplicationContextProvider.getContext(), MenuActivity.class);
                 startActivity(menu);
             }
         }
-
-
 
     }
 }

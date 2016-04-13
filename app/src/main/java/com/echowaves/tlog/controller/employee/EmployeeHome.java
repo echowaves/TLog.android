@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.echowaves.tlog.R;
 
-public class EmployeeHome extends AppCompatActivity {
+public class    EmployeeHome extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
