@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/TLUserColor"
     android:orientation="vertical"
-    tools:context=".controller.user.SignInActivity">
+    tools:context=".controller.user.SignIn">
 
     <!-- Action Bar -->
     <RelativeLayout

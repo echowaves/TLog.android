@@ -24,7 +24,7 @@ import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 
-public class SignInActivity extends AppCompatActivity {
+public class SignIn extends AppCompatActivity {
 
     private EditText emailTextField;
     private EditText passwordTextFeild;
@@ -68,7 +68,7 @@ public class SignInActivity extends AppCompatActivity {
                                     TLUser.storeJwtLocally(jsonResponse.get("token").toString());
 
 
-                                    Intent menu = new Intent(TLApplicationContextProvider.getContext(), MenuActivity.class);
+                                    Intent menu = new Intent(TLApplicationContextProvider.getContext(), Menu.class);
                                     startActivity(menu);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -102,7 +102,7 @@ public class SignInActivity extends AppCompatActivity {
 
         signUpButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
-                Intent signUp = new Intent(TLApplicationContextProvider.getContext(), SignUpActivity.class);
+                Intent signUp = new Intent(TLApplicationContextProvider.getContext(), SignUp.class);
                 startActivity(signUp);
             }
         });
@@ -125,7 +125,7 @@ public class SignInActivity extends AppCompatActivity {
             startActivity(employee);
         } else {
             if(TLUser.retreiveJwtFromLocalStorage() != null) {
-                Intent menu = new Intent(TLApplicationContextProvider.getContext(), MenuActivity.class);
+                Intent menu = new Intent(TLApplicationContextProvider.getContext(), Menu.class);
                 startActivity(menu);
             }
         }

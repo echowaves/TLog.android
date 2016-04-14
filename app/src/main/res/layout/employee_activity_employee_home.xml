@@ -15,7 +15,7 @@ tools:context=".controller.employee.EmployeeHome">
         android:background="@color/TLNavColor">
 
         <Button
-            android:id="@+id/user_activity_menu_signOutButton"
+            android:id="@+id/employee_activity_employee_home_signOutButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -29,7 +29,7 @@ tools:context=".controller.employee.EmployeeHome">
 
 
         <TextView
-            android:id="@+id/user_activity_menu_title"
+            android:id="@+id/employee_activity_employee_home_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -42,32 +42,5 @@ tools:context=".controller.employee.EmployeeHome">
             android:textSize="20dp" />
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/user_activity_menu_employeesButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="10dp"
-        android:background="@drawable/rounded_green_button"
-        android:color="@android:color/holo_blue_bright"
-        android:padding="5dip"
-        android:text="Employees"
-        android:textAllCaps="false"
-        android:textColor="@android:color/white"
-        android:textSize="30dp" />
-
-    <Button
-        android:id="@+id/user_activity_menu_reportsButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="10dp"
-        android:background="@drawable/rounded_green_button"
-        android:color="@android:color/holo_blue_bright"
-        android:padding="5dip"
-        android:text="Reports"
-        android:textAllCaps="false"
-        android:textColor="@android:color/white"
-        android:textSize="30dp" />
 
 </LinearLayout>

@@ -41,6 +41,7 @@ dependencies {
     compile 'commons-validator:commons-validator:1.4.0'
     compile 'info.hoang8f:android-segmented:1.0.6'
     compile 'com.joanzapata.iconify:android-iconify-fontawesome:2.2.2'
+    compile 'net.danlew:android.joda:2.9.3'
 
 }
 

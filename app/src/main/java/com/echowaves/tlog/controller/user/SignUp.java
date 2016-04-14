@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
-public class SignUpActivity extends AppCompatActivity {
+public class SignUp extends AppCompatActivity {
 
     private Button backButton;
     private EditText emailTextField;
@@ -112,7 +112,7 @@ public class SignUpActivity extends AppCompatActivity {
                                                         TLUser.storeJwtLocally(jsonResponse.get("token").toString());
 
 
-                                                        Intent menu = new Intent(TLApplicationContextProvider.getContext(), MenuActivity.class);
+                                                        Intent menu = new Intent(TLApplicationContextProvider.getContext(), Menu.class);
                                                         startActivity(menu);
                                                     } catch (JSONException e) {
                                                         e.printStackTrace();

@@ -12,7 +12,7 @@ import com.echowaves.tlog.controller.user.employee.Employees;
 import com.echowaves.tlog.controller.user.reports.YearPickerActivity;
 import com.echowaves.tlog.model.TLUser;
 
-public class MenuActivity extends AppCompatActivity {
+public class Menu extends AppCompatActivity {
 
     private Button signoutButton;
     private Button employeesButton;
@@ -55,7 +55,7 @@ public class MenuActivity extends AppCompatActivity {
 
         TLUser.clearJwtFromLocalStorage();
 
-        Intent signIn = new Intent(TLApplicationContextProvider.getContext(), SignInActivity.class);
+        Intent signIn = new Intent(TLApplicationContextProvider.getContext(), SignIn.class);
         signIn.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         signIn.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(signIn);
