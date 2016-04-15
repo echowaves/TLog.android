@@ -48,6 +48,16 @@ public class TLCheckin extends TLObject {
         return duration;
     }
 
+    public String getDurationText() {
+//            return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
+            return (duration/3600) + ":" + (duration % 3600) / 60;
+    }
+    public String getDurationExtendedText() {
+        return (duration/3600) + " hours : " + (duration % 3600) / 60 + " minutes";
+    }
+
+
+
     public TLActionCode getActionCode() {
         return actionCode;
     }

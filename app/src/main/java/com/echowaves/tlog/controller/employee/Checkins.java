@@ -11,12 +11,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.echowaves.tlog.R;
 import com.echowaves.tlog.TLApplicationContextProvider;
 import com.echowaves.tlog.TLConstants;
 import com.echowaves.tlog.controller.user.SignIn;
+import com.echowaves.tlog.controller.user.employee.EmployeesAdapter;
 import com.echowaves.tlog.model.TLActionCode;
 import com.echowaves.tlog.model.TLCheckin;
 import com.echowaves.tlog.model.TLEmployee;
@@ -47,10 +49,14 @@ public class Checkins extends AppCompatActivity {
     private TextView sinceLabel;
     private TextView actionCodeLabel;
 
-
+    // Construct the data source
     private TLEmployee currentEmployee;
     private ArrayList<TLCheckin> currentCheckins;
+    private CheckinsAdapter currentCheckinsAdapter;
+    private ListView listView;
+
     private TLCheckin currentCheckin;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -190,11 +196,12 @@ public class Checkins extends AppCompatActivity {
             this.sinceLabel.setVisibility(View.INVISIBLE);
             this.actionCodeLabel.setVisibility(View.INVISIBLE);
         }
-//
-//        dispatch_async(dispatch_get_main_queue(),{ ()->() in
-//                self.tableView.reloadData()
-//        })
-//        //        self.tableView.reloadInputViews()
+
+        listView = (ListView) findViewById(R.id.employee_activity_checkins_listView);
+        currentCheckinsAdapter = new CheckinsAdapter(this, currentCheckins);
+
+        listView.setAdapter(currentCheckinsAdapter );
+
     }
 
 
