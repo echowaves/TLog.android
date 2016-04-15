@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.echowaves.tlog.R;
 import com.echowaves.tlog.TLApplicationContextProvider;
+import com.echowaves.tlog.TLConstants;
 import com.echowaves.tlog.controller.user.SignIn;
 import com.echowaves.tlog.model.TLActionCode;
 import com.echowaves.tlog.model.TLCheckin;
@@ -24,6 +25,8 @@ import com.echowaves.tlog.util.TLJsonHttpResponseHandler;
 import net.danlew.android.joda.JodaTimeAndroid;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -179,8 +182,8 @@ public class Checkins extends AppCompatActivity {
             this.checkinButton.setBackground(ContextCompat.getDrawable(context, R.drawable.rounded_red_button));  //red
             this.sinceLabel.setVisibility(View.VISIBLE);
             this.actionCodeLabel.setVisibility(View.VISIBLE);
-//            self.sinceLabel.text = "Since:\n\(defaultDateFormatter.stringFromDate((self.currentCheckin.checkedInAt)!))"
-//            self.actionCodeLabel.text = "\((self.currentCheckin.actionCode?.code)!):\((self.currentCheckin.actionCode?.descr)!)"
+            this.sinceLabel.setText("Since:\n" + new DateTime(this.currentCheckin.getCheckedInAt()).toString(TLConstants.defaultDateFormat));
+            this.actionCodeLabel.setText(this.currentCheckin.getActionCode().getCode() + ":" + this.currentCheckin.getActionCode().getDescr());
         } else {
             this.checkinButton.setText("Check In");
             this.checkinButton.setBackground(ContextCompat.getDrawable(context, R.drawable.rounded_green_button));  //green

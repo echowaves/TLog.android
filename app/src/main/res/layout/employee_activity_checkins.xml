@@ -51,9 +51,12 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
+            android:layout_gravity="center|left"
             android:layout_weight="100"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp">
 
             <TextView
                 android:id="@+id/employee_activity_checkins_sinceLabel"
@@ -74,10 +77,6 @@
             android:id="@+id/employee_activity_checkins_checkInButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
             android:layout_weight="1"
             android:background="@drawable/rounded_green_button"
             android:color="@android:color/holo_blue_bright"
@@ -85,7 +84,8 @@
             android:text="Check In"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:layout_margin="5dp" />
 
 
     </LinearLayout>
