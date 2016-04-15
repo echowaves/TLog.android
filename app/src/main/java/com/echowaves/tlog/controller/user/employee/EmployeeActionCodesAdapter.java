@@ -18,8 +18,8 @@ import java.util.ArrayList;
  */
 
 
-public class ActionCodesAdapter extends ArrayAdapter<TLActionCode> {
-    public ActionCodesAdapter(Context context, ArrayList<TLActionCode> actionCodes) {
+public class EmployeeActionCodesAdapter extends ArrayAdapter<TLActionCode> {
+    public EmployeeActionCodesAdapter(Context context, ArrayList<TLActionCode> actionCodes) {
         super(context, 0, actionCodes);
     }
 

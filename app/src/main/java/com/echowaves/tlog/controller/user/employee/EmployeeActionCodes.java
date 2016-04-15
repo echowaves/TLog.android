@@ -41,10 +41,10 @@ public class EmployeeActionCodes extends AppCompatActivity {
 
     ArrayList<TLActionCode> actionCodes;
 
-    ActionCodesAdapter actionCodesAdapter;
+    EmployeeActionCodesAdapter employeeActionCodesAdapter;
 
     ArrayList<TLActionCode> completionsActionCodes;
-    ActionCodesCompletionsAdapter completionsAdapter;
+    EmployeeActionCodesCompletionsAdapter completionsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,7 +108,7 @@ public class EmployeeActionCodes extends AppCompatActivity {
 
                                     }
 
-                                    completionsAdapter = new ActionCodesCompletionsAdapter(context, completionsActionCodes);
+                                    completionsAdapter = new EmployeeActionCodesCompletionsAdapter(context, completionsActionCodes);
 
 
                                     actionCodeTextField.setThreshold(1);//will start working from first character
@@ -177,7 +177,7 @@ public class EmployeeActionCodes extends AppCompatActivity {
 
         // Create the adapter to convert the array to views
 
-        actionCodesAdapter = new ActionCodesAdapter(this, actionCodes);
+        employeeActionCodesAdapter = new EmployeeActionCodesAdapter(this, actionCodes);
 
         TLActionCode.allActionCodesForEmployee(
                 employee,
@@ -198,7 +198,7 @@ public class EmployeeActionCodes extends AppCompatActivity {
                                 actionCodes.add(actionCode);
                             }
 
-                            listView.setAdapter(actionCodesAdapter);
+                            listView.setAdapter(employeeActionCodesAdapter);
 
 
                             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

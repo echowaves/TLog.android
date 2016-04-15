@@ -31,7 +31,7 @@ import java.util.Date;
 
 import cz.msebera.android.httpclient.Header;
 
-public class EmployeeHome extends AppCompatActivity {
+public class Checkins extends AppCompatActivity {
     private Context context;
 
     private Button signoutButton;
@@ -45,11 +45,11 @@ public class EmployeeHome extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.employee_activity_employee_home);
+        setContentView(R.layout.employee_activity_checkins);
         context = this;
         JodaTimeAndroid.init(this);
 
-        signoutButton = (Button) findViewById(R.id.employee_activity_employee_home_signOutButton);
+        signoutButton = (Button) findViewById(R.id.employee_activity_checkins_signOutButton);
         signoutButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(final View v) {
                 onBackPressed();
@@ -157,7 +157,7 @@ public class EmployeeHome extends AppCompatActivity {
     }
 
     void updateViews() {
-        title = (TextView) findViewById(R.id.employee_activity_employee_home_title);
+        title = (TextView) findViewById(R.id.employee_activity_checkins_title);
         title.setText(currentEmployee.getName());
 
 //        navBar.topItem?.title = employee.name

@@ -19,11 +19,11 @@ import java.util.List;
  */
 
 
-public class ActionCodesCompletionsAdapter extends ArrayAdapter<TLActionCode> {
+public class EmployeeActionCodesCompletionsAdapter extends ArrayAdapter<TLActionCode> {
 
     ArrayList<TLActionCode> actionCodes, tempActionCodes, suggestions;
 
-    public ActionCodesCompletionsAdapter(Context context, ArrayList<TLActionCode> actionCodes) {
+    public EmployeeActionCodesCompletionsAdapter(Context context, ArrayList<TLActionCode> actionCodes) {
         super(context, 0, actionCodes);
         this.actionCodes = actionCodes;
 

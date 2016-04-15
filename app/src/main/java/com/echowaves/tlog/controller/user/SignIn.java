@@ -14,7 +14,7 @@ import android.widget.EditText;
 
 import com.echowaves.tlog.R;
 import com.echowaves.tlog.TLApplicationContextProvider;
-import com.echowaves.tlog.controller.employee.EmployeeHome;
+import com.echowaves.tlog.controller.employee.Checkins;
 import com.echowaves.tlog.model.TLEmployee;
 import com.echowaves.tlog.model.TLUser;
 import com.echowaves.tlog.util.TLJsonHttpResponseHandler;
@@ -121,7 +121,7 @@ public class SignIn extends AppCompatActivity {
 
         //auto sign in
         if(TLEmployee.retreiveActivationCodeFromLocalStorage() != null) {
-            Intent employee = new Intent(TLApplicationContextProvider.getContext(), EmployeeHome.class);
+            Intent employee = new Intent(TLApplicationContextProvider.getContext(), Checkins.class);
             startActivity(employee);
         } else {
             if(TLUser.retreiveJwtFromLocalStorage() != null) {
