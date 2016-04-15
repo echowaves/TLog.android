@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:background="@color/TLEmployeeColor"
-android:orientation="vertical"
-tools:context=".controller.employee.EmployeeHome">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/TLEmployeeColor"
+    android:orientation="vertical"
+    tools:context=".controller.employee.EmployeeHome">
 
     <!-- Action Bar -->
     <RelativeLayout
@@ -25,7 +25,7 @@ tools:context=".controller.employee.EmployeeHome">
             android:text="&lt; sign out"
             android:textAllCaps="false"
             android:textColor="@android:color/holo_blue_light"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
 
 
         <TextView
@@ -39,8 +39,55 @@ tools:context=".controller.employee.EmployeeHome">
             android:padding="5dp"
             android:text="Employee Name"
             android:textColor="@color/TLTextColor"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
     </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_weight="100"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/employee_activity_employee_home_sinceLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Since:\nDate Time"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/employee_activity_employee_home_actionCodeLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Action Code"
+                android:textSize="16sp" />
+        </LinearLayout>
+        <Button
+            android:layout_weight="1"
+            android:id="@+id/employee_activity_employee_home_checkInButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rounded_green_button"
+            android:color="@android:color/holo_blue_bright"
+            android:padding="5dip"
+            android:text="Check In"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:layout_gravity="right" />
+
+
+    </LinearLayout>
 
 
 </LinearLayout>
