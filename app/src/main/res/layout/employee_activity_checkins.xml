@@ -69,22 +69,23 @@
                 android:text="Action Code"
                 android:textSize="16sp" />
         </LinearLayout>
+
         <Button
-            android:layout_weight="1"
             android:id="@+id/employee_activity_checkins_checkInButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="right"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
+            android:layout_weight="1"
             android:background="@drawable/rounded_green_button"
             android:color="@android:color/holo_blue_bright"
             android:padding="5dip"
             android:text="Check In"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:layout_gravity="right" />
+            android:textSize="18sp" />
 
 
     </LinearLayout>

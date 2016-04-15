@@ -4,7 +4,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -37,6 +39,11 @@ public class Checkins extends AppCompatActivity {
     private Button signoutButton;
     private TextView title;
 
+    private Button checkinButton;
+
+    private TextView sinceLabel;
+    private TextView actionCodeLabel;
+
 
     private TLEmployee currentEmployee;
     private ArrayList<TLCheckin> currentCheckins;
@@ -55,6 +62,12 @@ public class Checkins extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
+        sinceLabel = (TextView) findViewById(R.id.employee_activity_checkins_sinceLabel);
+        actionCodeLabel = (TextView) findViewById(R.id.employee_activity_checkins_actionCodeLabel);
+
+        checkinButton = (Button) findViewById(R.id.employee_activity_checkins_checkInButton);
+
 
 
         loadCheckins();
@@ -160,20 +173,20 @@ public class Checkins extends AppCompatActivity {
         title = (TextView) findViewById(R.id.employee_activity_checkins_title);
         title.setText(currentEmployee.getName());
 
-//        navBar.topItem?.title = employee.name
-//        if (self.currentCheckin != nil) {
-//            self.checkinButton!.setTitle("Check Out", forState: .Normal)
-//            self.checkinButton.backgroundColor = UIColor(rgb: 0xFF0000) //red
-//            self.sinceLabel.hidden = false
-//            self.actionCodeLabel.hidden = false
+
+        if (this.currentCheckin != null) {
+            this.checkinButton.setText("Check Out");
+            this.checkinButton.setBackground(ContextCompat.getDrawable(context, R.drawable.rounded_red_button));  //red
+            this.sinceLabel.setVisibility(View.VISIBLE);
+            this.actionCodeLabel.setVisibility(View.VISIBLE);
 //            self.sinceLabel.text = "Since:\n\(defaultDateFormatter.stringFromDate((self.currentCheckin.checkedInAt)!))"
 //            self.actionCodeLabel.text = "\((self.currentCheckin.actionCode?.code)!):\((self.currentCheckin.actionCode?.descr)!)"
-//        } else {
-//            self.checkinButton!.setTitle("Check In", forState: .Normal)
-//            self.checkinButton.backgroundColor = UIColor(rgb: 0x00C333) //green
-//            self.sinceLabel.hidden = true
-//            self.actionCodeLabel.hidden = true
-//        }
+        } else {
+            this.checkinButton.setText("Check In");
+            this.checkinButton.setBackground(ContextCompat.getDrawable(context, R.drawable.rounded_green_button));  //green
+            this.sinceLabel.setVisibility(View.INVISIBLE);
+            this.actionCodeLabel.setVisibility(View.INVISIBLE);
+        }
 //
 //        dispatch_async(dispatch_get_main_queue(),{ ()->() in
 //                self.tableView.reloadData()
