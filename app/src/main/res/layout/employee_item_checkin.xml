@@ -40,9 +40,9 @@
             android:id="@+id/employee_item_checkin_durationLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
             android:layout_weight="1"
             android:padding="5dip"
+            android:layout_gravity="top"
             android:text="duration"
             android:textSize="12sp" />
 
