@@ -5,7 +5,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
     // optional but highly recommended
     <application
         android:name=".TLApplicationContextProvider"
@@ -29,13 +28,13 @@
             </intent-filter>
             <intent-filter android:label="tlog">
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <!-- Accepts URIs that begin with "tlog://employees” -->
                 <data
-                    android:scheme="tlog"
                     android:host="employee"
-                    />
+                    android:scheme="tlog" />
             </intent-filter>
         </activity>
         <activity android:name=".controller.user.SignUp" />
@@ -45,7 +44,8 @@
         <activity android:name=".controller.user.employee.EmployeeCreate" />
         <activity android:name=".controller.user.employee.EmployeeDetails" />
         <activity android:name=".controller.user.employee.EmployeeActionCodes" />
-        <activity android:name=".controller.employee.Checkins"></activity>
+        <activity android:name=".controller.employee.Checkins" />
+        <activity android:name=".controller.employee.PickActionCode"></activity>
     </application>
 
 </manifest>

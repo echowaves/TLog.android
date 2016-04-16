@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/TLEmployeeColor"
+    android:orientation="vertical"
+    tools:context="com.echowaves.tlog.controller.employee.PickActionCode">
+
+    <!-- Action Bar -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/abs__action_bar_default_height"
+        android:layout_marginBottom="10dip"
+        android:background="@color/TLNavColor">
+
+        <Button
+            android:id="@+id/employee_activity_pick_action_code_backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:background="@android:color/transparent"
+            android:padding="5dp"
+            android:text="&lt; back"
+            android:textAllCaps="false"
+            android:textColor="@android:color/holo_blue_light"
+            android:textSize="20sp" />
+
+
+        <TextView
+            android:id="@+id/employee_activity_pick_action_code_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="5dp"
+            android:minWidth="100dp"
+            android:padding="5dp"
+            android:text="Pick Action Code"
+            android:textColor="@color/TLTextColor"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/employee_activity_pick_action_code_checkoutButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="@android:color/transparent"
+            android:padding="5dp"
+            android:text="checkout &gt;"
+            android:textAllCaps="false"
+            android:textColor="@android:color/holo_blue_light"
+            android:textSize="20sp"
+            android:alpha="0.5"
+            android:clickable="false"
+            android:layout_marginRight="10dp" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>
