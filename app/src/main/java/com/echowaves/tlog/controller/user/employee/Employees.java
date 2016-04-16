@@ -39,6 +39,8 @@ public class Employees extends AppCompatActivity {
 
     ListView listView;
 
+    int selectedSegment = 0;
+
     private Button backButton;
     private Button addButton;
 
@@ -80,7 +82,7 @@ public class Employees extends AppCompatActivity {
 // Attach the adapter to a ListView
 
         RadioGroup radioGroup = (RadioGroup) findViewById(R.id.user_employee_activity_employees_segmentedView);
-        ((RadioButton)radioGroup.getChildAt(0)).setChecked(true);
+        ((RadioButton)radioGroup.getChildAt(selectedSegment)).setChecked(true);
 
         allEmployees = new ArrayList<TLEmployee>();
         activeEmployees = new ArrayList<TLEmployee>();
@@ -120,7 +122,13 @@ public class Employees extends AppCompatActivity {
                             }
 
 
-                            listView.setAdapter(allEmployeesAdapter);
+                            if(selectedSegment == 0) {
+                                listView.setAdapter(allEmployeesAdapter);
+                            } else if(selectedSegment == 1) {
+                                listView.setAdapter(activeEmployeesAdapter);
+                            } else if(selectedSegment == 2) {
+                                listView.setAdapter(inactiveEmployeesAdapter);
+                            }
 
 
                             RadioGroup radioGroup = (RadioGroup) findViewById(R.id.user_employee_activity_employees_segmentedView);
@@ -133,10 +141,13 @@ public class Employees extends AppCompatActivity {
                                     RadioButton rb=(RadioButton)findViewById(checkedId);
                                     if(rb.getText().equals("all")) {
                                         listView.setAdapter(allEmployeesAdapter);
+                                        selectedSegment = 0;
                                     } else if(rb.getText().equals("active")) {
                                         listView.setAdapter(activeEmployeesAdapter);
+                                        selectedSegment = 1;
                                     } else if(rb.getText().equals("inactive")) {
                                         listView.setAdapter(inactiveEmployeesAdapter);
+                                        selectedSegment = 2;
                                     }
                                 }
                             });
