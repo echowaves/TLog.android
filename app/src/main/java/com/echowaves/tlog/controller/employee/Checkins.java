@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -18,7 +17,6 @@ import com.echowaves.tlog.R;
 import com.echowaves.tlog.TLApplicationContextProvider;
 import com.echowaves.tlog.TLConstants;
 import com.echowaves.tlog.controller.user.SignIn;
-import com.echowaves.tlog.controller.user.employee.EmployeesAdapter;
 import com.echowaves.tlog.model.TLActionCode;
 import com.echowaves.tlog.model.TLCheckin;
 import com.echowaves.tlog.model.TLEmployee;
@@ -27,8 +25,7 @@ import com.echowaves.tlog.util.TLJsonHttpResponseHandler;
 import net.danlew.android.joda.JodaTimeAndroid;
 
 import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.Interval;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -76,8 +73,66 @@ public class Checkins extends AppCompatActivity {
         actionCodeLabel = (TextView) findViewById(R.id.employee_activity_checkins_actionCodeLabel);
 
         checkinButton = (Button) findViewById(R.id.employee_activity_checkins_checkInButton);
+        checkinButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(final View v) {
+                if (currentCheckin == null) {
+//                    dispatch_async(dispatch_get_main_queue()){
+//                        self.performSegueWithIdentifier("PickActionCodeViewController", sender: self)
+//                    }
+                } else {
+                    //checkout here
 
+                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                    builder
+                            .setMessage("Sure to checkout?")
+                            .setCancelable(true)
+                            .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                }
+                            })
+                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    Interval interv = new Interval(new DateTime(currentCheckin.getCheckedInAt()), DateTime.now());
 
+                                    int elapsedTime = (int) (interv.toDurationMillis() / 1000);
+                                    if (elapsedTime > 8 * 60 * 60) { // greater then 8 hours
+                                        elapsedTime = 8 * 60 * 60;
+                                    }
+
+                                    currentCheckin.setDuration(elapsedTime);
+
+                                    currentCheckin.update(
+                                            new TLJsonHttpResponseHandler(v.getContext()) {
+                                                @Override
+                                                public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+                                                    Log.d(">>>>>>>>>>>>>>>>>>>> JSONResponse", jsonResponse.toString());
+                                                    loadCheckins();
+                                                }
+
+                                                @Override
+                                                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                                                    loadCheckins();
+
+                                                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                                                    builder
+                                                            .setMessage("Error checking out. Try again.")
+                                                            .setCancelable(false)
+                                                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                                                public void onClick(DialogInterface dialog, int id) {
+                                                                }
+                                                            });
+                                                    AlertDialog alert = builder.create();
+                                                    alert.show();
+                                                }
+                                            }
+                                    );
+                                }
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                }
+            }
+        });
 
         loadCheckins();
     }
@@ -197,10 +252,11 @@ public class Checkins extends AppCompatActivity {
             this.actionCodeLabel.setVisibility(View.INVISIBLE);
         }
 
+
         listView = (ListView) findViewById(R.id.employee_activity_checkins_listView);
         currentCheckinsAdapter = new CheckinsAdapter(this, currentCheckins);
 
-        listView.setAdapter(currentCheckinsAdapter );
+        listView.setAdapter(currentCheckinsAdapter);
 
     }
 
@@ -217,6 +273,12 @@ public class Checkins extends AppCompatActivity {
         startActivity(signIn);
 
         return;
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        loadCheckins();
     }
 
 }
