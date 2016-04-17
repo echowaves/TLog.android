@@ -18,6 +18,7 @@ import com.echowaves.tlog.TLApplicationContextProvider;
 import com.echowaves.tlog.TLConstants;
 import com.echowaves.tlog.controller.user.SignIn;
 import com.echowaves.tlog.controller.user.SignUp;
+import com.echowaves.tlog.controller.user.employee.EmployeeDetails;
 import com.echowaves.tlog.model.TLActionCode;
 import com.echowaves.tlog.model.TLCheckin;
 import com.echowaves.tlog.model.TLEmployee;
@@ -77,6 +78,8 @@ public class Checkins extends AppCompatActivity {
         checkinButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(final View v) {
                 if (currentCheckin == null) {
+
+                    TLApplicationContextProvider.getContext().setCurrentActivityObject(currentEmployee);
                     Intent pickActionCode = new Intent(TLApplicationContextProvider.getContext(), PickActionCode.class);
                     startActivity(pickActionCode);
                 } else {

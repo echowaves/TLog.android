@@ -43,7 +43,7 @@
     </RelativeLayout>
 
     <AutoCompleteTextView
-        android:id="@+id/user_employee_activity_employee_action_codes_actionCode_AutoCompleteTextView"
+        android:id="@+id/user_employee_activity_employee_action_codes_actionCode_autoCompleteTextView"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_margin="5dp"

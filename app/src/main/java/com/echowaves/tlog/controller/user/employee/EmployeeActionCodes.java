@@ -71,7 +71,7 @@ public class EmployeeActionCodes extends AppCompatActivity {
         loadActionCodes();
 
 
-        actionCodeTextField = (AutoCompleteTextView) findViewById(R.id.user_employee_activity_employee_action_codes_actionCode_AutoCompleteTextView);
+        actionCodeTextField = (AutoCompleteTextView) findViewById(R.id.user_employee_activity_employee_action_codes_actionCode_autoCompleteTextView);
         actionCodeTextField.setThreshold(1);//will start working from first character
 
 

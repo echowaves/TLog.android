@@ -59,5 +59,31 @@
 
     </RelativeLayout>
 
+    <AutoCompleteTextView
+        android:id="@+id/employee_activity_pick_action_code_autoCompleteTextView"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="5dp"
+        android:background="@drawable/rounded_edittext"
+        android:ems="10"
+        android:hint="type code or description"
+        android:inputType="text"
+        android:padding="5dip"
+        android:textSize="30dp">
+
+        <requestFocus />
+    </AutoCompleteTextView>
+
+
+    <ListView
+        android:id="@+id/employee_activity_pick_action_code_listView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="5dp"
+        android:background="#ffffff"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp" />
+
 
 </LinearLayout>
