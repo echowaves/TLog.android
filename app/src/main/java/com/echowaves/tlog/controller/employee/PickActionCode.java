@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -42,6 +43,7 @@ public class PickActionCode extends AppCompatActivity {
     private Button backButton;
     private Button checkoutButton;
 
+    private AutoCompleteTextView actionCodeTextField;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +63,7 @@ public class PickActionCode extends AppCompatActivity {
 
         employee = (TLEmployee) TLApplicationContextProvider.getContext().getCurrentActivityObject();
 
+        actionCodeTextField = (AutoCompleteTextView) findViewById(R.id.employee_activity_pick_action_code_autoCompleteTextView);
 
         TLActionCode.allActionCodesForEmployee(employee,
                 new TLJsonHttpResponseHandler(context) {
@@ -82,6 +85,12 @@ public class PickActionCode extends AppCompatActivity {
                                 employeesActionCodes.add(actionCode);
 
                             }
+
+                            if(employeesActionCodes.size() > 0) {
+                                actionCodeTextField.setEnabled(false);
+                                actionCodeTextField.setHint("pick from the list");
+                            }
+
 
                             listView = (ListView) findViewById(R.id.employee_activity_pick_action_code_listView);
                             actionCodeAdapter = new PickActionCodeAdapter(context, employeesActionCodes);
