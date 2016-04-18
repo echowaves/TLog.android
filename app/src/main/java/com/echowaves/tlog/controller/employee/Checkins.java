@@ -9,8 +9,11 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.echowaves.tlog.R;
@@ -260,6 +263,33 @@ public class Checkins extends AppCompatActivity {
         currentCheckinsAdapter = new CheckinsAdapter(this, currentCheckins);
 
         listView.setAdapter(currentCheckinsAdapter);
+
+
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
+//
+//                TLEmployee employee = null;
+//                RadioGroup radioGroup = (RadioGroup) findViewById(R.id.user_employee_activity_employees_segmentedView);
+//
+//                RadioButton rb=(RadioButton)findViewById(radioGroup.getCheckedRadioButtonId());
+//
+//                if(rb.getText().equals("all")) {
+//                    employee = allEmployees.get(position);
+//                } else if(rb.getText().equals("active")) {
+//                    employee = activeEmployees.get(position);
+//                } else if(rb.getText().equals("inactive")) {
+//                    employee = inactiveEmployees.get(position);
+//                }
+//
+//                TLApplicationContextProvider.getContext().setCurrentActivityObject(employee);
+//
+//                Intent employeeDetails = new Intent(TLApplicationContextProvider.getContext(), EmployeeDetails.class);
+//                startActivity(employeeDetails);
+//
+//            }
+//        });
+
 
     }
 
