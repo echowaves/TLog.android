@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import com.echowaves.tlog.R;
 
-public class YearPickerActivity extends AppCompatActivity {
+public class YearPicker extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
