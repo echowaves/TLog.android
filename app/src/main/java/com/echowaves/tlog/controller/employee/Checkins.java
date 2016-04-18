@@ -12,16 +12,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.echowaves.tlog.R;
 import com.echowaves.tlog.TLApplicationContextProvider;
 import com.echowaves.tlog.TLConstants;
 import com.echowaves.tlog.controller.user.SignIn;
-import com.echowaves.tlog.controller.user.SignUp;
-import com.echowaves.tlog.controller.user.employee.EmployeeDetails;
 import com.echowaves.tlog.model.TLActionCode;
 import com.echowaves.tlog.model.TLCheckin;
 import com.echowaves.tlog.model.TLEmployee;
@@ -267,14 +263,33 @@ public class Checkins extends AppCompatActivity {
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 TLCheckin checkin = currentCheckins.get(position);
 
-                TLApplicationContextProvider.getContext().setCurrentActivityObject(checkin);
+                Interval interv = new Interval(new DateTime(checkin.getCheckedInAt()), DateTime.now());
 
-                Intent checkinDetails = new Intent(TLApplicationContextProvider.getContext(), CheckinDetails.class);
-                startActivity(checkinDetails);
+                int elapsedTime = (int) (interv.toDurationMillis() / 1000);
+
+                if (elapsedTime > 7 * 24 * 60 * 60) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder
+                            .setMessage("Can not update checkins older then 7 days.")
+                            .setCancelable(false)
+                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                }
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+
+                } else {
+
+                    TLApplicationContextProvider.getContext().setCurrentActivityObject(checkin);
+
+                    Intent checkinDetails = new Intent(TLApplicationContextProvider.getContext(), CheckinDetails.class);
+                    startActivity(checkinDetails);
+                }
             }
         });
 
