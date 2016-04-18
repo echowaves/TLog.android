@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/TLEmployeeColor"
+    android:orientation="vertical"
+    tools:context="com.echowaves.tlog.controller.employee.CheckinDetails">
+
+    <!-- Action Bar -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/abs__action_bar_default_height"
+        android:layout_marginBottom="10dip"
+        android:background="@color/TLNavColor">
+
+        <Button
+            android:id="@+id/employee_activity_checkin_details_backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:background="@android:color/transparent"
+            android:padding="5dip"
+            android:text="&lt; back"
+            android:textAllCaps="false"
+            android:textColor="@android:color/holo_blue_light"
+            android:textSize="20sp" />
+
+
+        <TextView
+            android:id="@+id/employee_activity_checkin_details_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="5dp"
+            android:minWidth="100dp"
+            android:padding="5dp"
+            android:text="checkin details"
+            android:textColor="@color/TLTextColor"
+            android:textSize="20sp" />
+
+        <com.joanzapata.iconify.widget.IconButton
+            android:id="@+id/employee_activity_checkin_details_deleteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="@android:color/transparent"
+            android:padding="0dip"
+            android:text="{fa-trash-o}"
+            android:textAllCaps="false"
+            android:textColor="@android:color/holo_blue_light"
+            android:textSize="35dp" />
+
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/employee_activity_checkin_details_checkInAtText"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"
+        android:background="@drawable/rounded_edittext"
+        android:padding="5dip"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/employee_activity_checkin_details_durationText"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"
+        android:background="@drawable/rounded_edittext"
+        android:padding="5dip"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/employee_activity_checkin_details_actionCodeText"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"
+        android:background="@drawable/rounded_edittext"
+        android:padding="5dip"
+        android:textSize="14sp" />
+
+
+</LinearLayout>

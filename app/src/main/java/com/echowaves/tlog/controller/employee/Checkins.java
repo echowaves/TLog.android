@@ -265,30 +265,18 @@ public class Checkins extends AppCompatActivity {
         listView.setAdapter(currentCheckinsAdapter);
 
 
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
-//
-//                TLEmployee employee = null;
-//                RadioGroup radioGroup = (RadioGroup) findViewById(R.id.user_employee_activity_employees_segmentedView);
-//
-//                RadioButton rb=(RadioButton)findViewById(radioGroup.getCheckedRadioButtonId());
-//
-//                if(rb.getText().equals("all")) {
-//                    employee = allEmployees.get(position);
-//                } else if(rb.getText().equals("active")) {
-//                    employee = activeEmployees.get(position);
-//                } else if(rb.getText().equals("inactive")) {
-//                    employee = inactiveEmployees.get(position);
-//                }
-//
-//                TLApplicationContextProvider.getContext().setCurrentActivityObject(employee);
-//
-//                Intent employeeDetails = new Intent(TLApplicationContextProvider.getContext(), EmployeeDetails.class);
-//                startActivity(employeeDetails);
-//
-//            }
-//        });
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
+
+                TLCheckin checkin = currentCheckins.get(position);
+
+                TLApplicationContextProvider.getContext().setCurrentActivityObject(checkin);
+
+                Intent checkinDetails = new Intent(TLApplicationContextProvider.getContext(), CheckinDetails.class);
+                startActivity(checkinDetails);
+            }
+        });
 
 
     }
