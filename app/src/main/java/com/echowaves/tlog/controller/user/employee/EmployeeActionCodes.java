@@ -83,6 +83,7 @@ public class EmployeeActionCodes extends AppCompatActivity {
             public void beforeTextChanged(CharSequence s, int start,
                                           int count, int after) {
             }
+
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
 
@@ -152,18 +153,8 @@ public class EmployeeActionCodes extends AppCompatActivity {
                         }
 
                 );
-
-
-
-
-
-
-
             }
         });
-
-
-
 
 
     }
@@ -171,7 +162,6 @@ public class EmployeeActionCodes extends AppCompatActivity {
 
     private void loadActionCodes() {
 // Attach the adapter to a ListView
-
 
         actionCodes = new ArrayList<TLActionCode>();
 

@@ -3,23 +3,19 @@ package com.echowaves.tlog.controller.employee;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.TextView;
 
 import com.echowaves.tlog.R;
 import com.echowaves.tlog.TLApplicationContextProvider;
-import com.echowaves.tlog.controller.user.employee.EmployeeActionCodesCompletionsAdapter;
-import com.echowaves.tlog.controller.user.employee.EmployeeDetails;
 import com.echowaves.tlog.model.TLActionCode;
 import com.echowaves.tlog.model.TLCheckin;
 import com.echowaves.tlog.model.TLEmployee;
@@ -72,6 +68,116 @@ public class PickActionCode extends AppCompatActivity {
 
         actionCodeTextField = (AutoCompleteTextView) findViewById(R.id.employee_activity_pick_action_code_autoCompleteTextView);
 
+
+        actionCodeTextField.setThreshold(1);//will start working from first character
+
+
+        actionCodeTextField.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+            }
+
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+
+                TLActionCode.autoComplete(s.toString(),
+                        new TLJsonHttpResponseHandler(context) {
+                            @Override
+                            public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+                                try {
+                                    JSONArray jsonActionCodes = (JSONArray) jsonResponse.get("actionCodes");
+                                    employeesActionCodes = new ArrayList<TLActionCode>();
+
+                                    for (int i = 0; i < jsonActionCodes.length(); i++) {
+                                        JSONObject jsonActionCode = jsonActionCodes.getJSONObject(i);
+                                        TLActionCode actionCode =
+                                                new TLActionCode(
+                                                        jsonActionCode.getInt("id"),
+                                                        jsonActionCode.getString("code"),
+                                                        jsonActionCode.getString("description")
+                                                );
+                                        // Create the adapter to convert the array to views
+                                        employeesActionCodes.add(actionCode);
+
+                                    }
+
+
+                                    listView = (ListView) findViewById(R.id.employee_activity_pick_action_code_listView);
+                                    actionCodeAdapter = new PickActionCodeAdapter(context, employeesActionCodes);
+                                    listView.setAdapter(actionCodeAdapter);
+
+                                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                                            selectedActionCode = employeesActionCodes.get(position);
+                                            actionCodeTextField.setText(selectedActionCode.getCode() + ":" + selectedActionCode.getDescr());
+
+                                            checkoutButton.setEnabled(true);
+                                            checkoutButton.setClickable(true);
+                                            checkoutButton.setAlpha(1.0f);
+
+                                            checkoutButton.setOnClickListener(new View.OnClickListener() {
+                                                public void onClick(final View v) {
+                                                    TLCheckin checkin = new TLCheckin(
+                                                            checkinTime,
+                                                            selectedActionCode);
+                                                    checkin.create(new TLJsonHttpResponseHandler(v.getContext()) {
+                                                        @Override
+                                                        public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+                                                            Log.d(">>>>>>>>>>>>>>>>>>>> JSONResponse", jsonResponse.toString());
+                                                            finish();
+                                                        }
+
+                                                        @Override
+                                                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+
+
+                                                            AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                                                            builder
+                                                                    .setMessage("Unable to check in, Try again.")
+                                                                    .setCancelable(false)
+                                                                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                                                        public void onClick(DialogInterface dialog, int id) {
+                                                                        }
+                                                                    });
+                                                            AlertDialog alert = builder.create();
+                                                            alert.show();
+                                                        }
+                                                    });
+
+                                                }
+                                            });
+
+                                        }
+                                    });
+
+                                } catch (
+                                        JSONException exception
+                                        )
+
+                                {
+                                    Log.e(getClass().getName(), exception.toString());
+                                }
+
+                            }
+
+
+                            @Override
+                            public void onFailure(int statusCode, Header[] headers, String
+                                    responseBody, Throwable error) {
+                            }
+                        }
+
+                );
+            }
+        });
+
+
         TLActionCode.allActionCodesForEmployee(employee,
                 new TLJsonHttpResponseHandler(context) {
                     @Override
@@ -93,7 +199,7 @@ public class PickActionCode extends AppCompatActivity {
 
                             }
 
-                            if(employeesActionCodes.size() > 0) {
+                            if (employeesActionCodes.size() > 0) {
                                 actionCodeTextField.setEnabled(false);
                                 actionCodeTextField.setHint("pick from the list");
                             }
@@ -105,7 +211,7 @@ public class PickActionCode extends AppCompatActivity {
 
                             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
-                                public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                                     selectedActionCode = employeesActionCodes.get(position);
                                     actionCodeTextField.setText(selectedActionCode.getCode() + ":" + selectedActionCode.getDescr());
@@ -119,7 +225,7 @@ public class PickActionCode extends AppCompatActivity {
                                             TLCheckin checkin = new TLCheckin(
                                                     checkinTime,
                                                     selectedActionCode);
-                                            checkin.create( new TLJsonHttpResponseHandler(v.getContext()) {
+                                            checkin.create(new TLJsonHttpResponseHandler(v.getContext()) {
                                                 @Override
                                                 public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
                                                     Log.d(">>>>>>>>>>>>>>>>>>>> JSONResponse", jsonResponse.toString());
@@ -148,32 +254,6 @@ public class PickActionCode extends AppCompatActivity {
 
                                 }
                             });
-
-
-
-//                            actionCodeTextField.setThreshold(1);//will start working from first character
-//                            actionCodeTextField.setAdapter(completionsAdapter);//setting the adapter data into the AutoCompleteTextView
-//
-//
-//                            actionCodeTextField.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                                @Override
-//                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//                                    TLActionCode actionCode = null;
-//                                    actionCode = completionsActionCodes.get(position);
-//
-////                                    add action code here
-//                                    employee.addActionCode(actionCode, new TLJsonHttpResponseHandler(context) {
-//                                        @Override
-//                                        public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
-//                                            actionCodeTextField.clearListSelection();
-//                                            actionCodeTextField.setText("");
-//                                            loadActionCodes();
-//                                        }
-//                                    });
-//                                }
-//
-//                            });
 
                         } catch (
                                 JSONException exception
