@@ -274,7 +274,7 @@ public class Checkins extends AppCompatActivity {
                 if (elapsedTime > 7 * 24 * 60 * 60) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
                     builder
-                            .setMessage("Can not update checkins older then 7 days.")
+                            .setMessage("Can not update checkins older than 7 days.")
                             .setCancelable(false)
                             .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
