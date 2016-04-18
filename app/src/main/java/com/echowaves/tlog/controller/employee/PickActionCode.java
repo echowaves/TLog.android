@@ -1,6 +1,9 @@
 package com.echowaves.tlog.controller.employee;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,12 +12,16 @@ import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.echowaves.tlog.R;
 import com.echowaves.tlog.TLApplicationContextProvider;
 import com.echowaves.tlog.controller.user.employee.EmployeeActionCodesCompletionsAdapter;
+import com.echowaves.tlog.controller.user.employee.EmployeeDetails;
 import com.echowaves.tlog.model.TLActionCode;
+import com.echowaves.tlog.model.TLCheckin;
 import com.echowaves.tlog.model.TLEmployee;
 import com.echowaves.tlog.util.TLJsonHttpResponseHandler;
 
@@ -34,7 +41,7 @@ public class PickActionCode extends AppCompatActivity {
     private ArrayList<TLActionCode> employeesActionCodes;
     private ArrayList<TLActionCode> completions;
     private TLActionCode selectedActionCode;
-    private Date checkinTime;
+    private Date checkinTime = new Date();
 
     private PickActionCodeAdapter actionCodeAdapter;
 
@@ -95,6 +102,53 @@ public class PickActionCode extends AppCompatActivity {
                             listView = (ListView) findViewById(R.id.employee_activity_pick_action_code_listView);
                             actionCodeAdapter = new PickActionCodeAdapter(context, employeesActionCodes);
                             listView.setAdapter(actionCodeAdapter);
+
+                            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
+
+                                    selectedActionCode = employeesActionCodes.get(position);
+                                    actionCodeTextField.setText(selectedActionCode.getCode() + ":" + selectedActionCode.getDescr());
+
+                                    checkoutButton.setEnabled(true);
+                                    checkoutButton.setClickable(true);
+                                    checkoutButton.setAlpha(1.0f);
+
+                                    checkoutButton.setOnClickListener(new View.OnClickListener() {
+                                        public void onClick(final View v) {
+                                            TLCheckin checkin = new TLCheckin(
+                                                    checkinTime,
+                                                    selectedActionCode);
+                                            checkin.create( new TLJsonHttpResponseHandler(v.getContext()) {
+                                                @Override
+                                                public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+                                                    Log.d(">>>>>>>>>>>>>>>>>>>> JSONResponse", jsonResponse.toString());
+                                                    finish();
+                                                }
+
+                                                @Override
+                                                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+
+
+                                                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                                                    builder
+                                                            .setMessage("Unable to check in, Try again.")
+                                                            .setCancelable(false)
+                                                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                                                public void onClick(DialogInterface dialog, int id) {
+                                                                }
+                                                            });
+                                                    AlertDialog alert = builder.create();
+                                                    alert.show();
+                                                }
+                                            });
+
+                                        }
+                                    });
+
+                                }
+                            });
+
 
 
 //                            actionCodeTextField.setThreshold(1);//will start working from first character
