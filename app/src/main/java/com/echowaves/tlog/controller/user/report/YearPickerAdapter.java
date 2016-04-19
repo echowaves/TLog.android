@@ -1,6 +1,7 @@
 package com.echowaves.tlog.controller.user.report;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +26,7 @@ public class YearPickerAdapter extends ArrayAdapter<String> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
-        String year = getItem(position);
+        final String year = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.user_report_item_year, parent, false);
@@ -35,6 +36,15 @@ public class YearPickerAdapter extends ArrayAdapter<String> {
 
         // Populate the data into the template view using the data object
         yearButton.setText(year);
+
+        yearButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(final View v) {
+                Log.d("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$",  "year clicked: " + year);
+
+                
+
+            }
+        });
 
         return convertView;
     }
