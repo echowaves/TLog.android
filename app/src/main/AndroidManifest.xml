@@ -40,7 +40,7 @@
         <activity android:name=".controller.user.SignUp" />
         <activity android:name=".controller.user.Menu" />
         <activity android:name=".controller.user.employee.Employees" />
-        <activity android:name=".controller.user.reports.YearPicker" />
+        <activity android:name=".controller.user.report.YearPicker" />
         <activity android:name=".controller.user.employee.EmployeeCreate" />
         <activity android:name=".controller.user.employee.EmployeeDetails" />
         <activity android:name=".controller.user.employee.EmployeeActionCodes" />
