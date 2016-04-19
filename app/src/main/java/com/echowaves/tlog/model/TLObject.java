@@ -6,6 +6,8 @@ import com.echowaves.tlog.TLConstants;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.SyncHttpClient;
 
+import java.util.ArrayList;
+
 /**
  * copyright echowaves
  * Created by dmitry
@@ -32,5 +34,16 @@ public class TLObject implements TLConstants {
 
     protected static String getAbsoluteUrl(String relativeUrl) {
         return TL_HOST + relativeUrl;
+    }
+
+
+    // this is a bit hacky, but it allows the object to store arbitrary values to be used with the ArrayAdapter
+    private ArrayList<Object> values = new ArrayList<>();
+
+    public void setValue(int i, Object o) {
+        values.add(i, o);
+    }
+    public Object getValue(int i) {
+        return values.get(i);
     }
 }

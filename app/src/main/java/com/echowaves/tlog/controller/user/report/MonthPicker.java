@@ -73,7 +73,7 @@ public class MonthPicker extends AppCompatActivity {
                                 months.add(month);
                             }
 
-                            monthPickerAdapter = new MonthPickerAdapter(context, months);
+                            monthPickerAdapter = new MonthPickerAdapter(context, months, year);
                             listView.setAdapter(monthPickerAdapter);
 
                         } catch (JSONException exception) {

@@ -48,6 +48,7 @@
         <activity android:name=".controller.employee.PickActionCode" />
         <activity android:name=".controller.employee.CheckinDetails" />
         <activity android:name=".controller.user.report.MonthPicker"></activity>
+        <activity android:name=".controller.user.report.ActionCodesReport"></activity>
     </application>
 
 </manifest>
