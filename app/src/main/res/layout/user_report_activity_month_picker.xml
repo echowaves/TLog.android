@@ -15,7 +15,7 @@ tools:context="com.echowaves.tlog.controller.user.report.MonthPicker">
     android:background="@color/TLNavColor">
 
     <Button
-        android:id="@+id/user_reports_activity_month_picker_backButton"
+        android:id="@+id/user_report_activity_month_picker_backButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -29,7 +29,7 @@ tools:context="com.echowaves.tlog.controller.user.report.MonthPicker">
 
 
     <TextView
-        android:id="@+id/user_reports_activity_month_picker_title"
+        android:id="@+id/user_report_activity_month_picker_titleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -39,14 +39,15 @@ tools:context="com.echowaves.tlog.controller.user.report.MonthPicker">
         android:padding="5dp"
         android:text="year"
         android:textColor="@color/TLTextColor"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        android:gravity="center" />
 
 
 </RelativeLayout>
 
 
 <ListView
-    android:id="@+id/user_reports_activity_month_picker_listView"
+    android:id="@+id/user_report_activity_month_picker_listView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"

@@ -11,6 +11,10 @@ import android.widget.TextView;
 
 import com.echowaves.tlog.R;
 
+import org.joda.time.DateTime;
+import org.joda.time.Months;
+import org.joda.time.YearMonth;
+
 import java.util.ArrayList;
 
 /**
@@ -39,7 +43,9 @@ public class MonthPickerAdapter extends ArrayAdapter<String> {
 
 
         // Populate the data into the template view using the data object
-        monthText.setText(month);
+
+        YearMonth jodaMonth = new YearMonth(0, new Integer(month).intValue());
+        monthText.setText(jodaMonth.toString("MMMM"));
 
         actionCodesButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(final View v) {
