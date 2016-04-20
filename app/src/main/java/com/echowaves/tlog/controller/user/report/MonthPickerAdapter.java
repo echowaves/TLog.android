@@ -72,7 +72,7 @@ public class MonthPickerAdapter extends ArrayAdapter<String> {
                 String[] params = {year, month};
                 TLApplicationContextProvider.getContext().setCurrentActivityObject(params);
 
-                Intent employeesReport = new Intent(TLApplicationContextProvider.getContext(), ActionCodesReport.class);
+                Intent employeesReport = new Intent(TLApplicationContextProvider.getContext(), EmployeesReport.class);
                 context.startActivity(employeesReport);
 
             }

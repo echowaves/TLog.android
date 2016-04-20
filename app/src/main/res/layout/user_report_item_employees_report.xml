@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/user_report_item_employees_report_nameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:layout_margin="5dp"
+        android:layout_weight="1"
+        android:gravity="center_horizontal|right"
+        android:padding="5dp"
+        android:text="Name"
+        android:textColor="@color/colorBlack"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/user_report_item_employees_report_durationText"
+        android:layout_width="124dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:layout_margin="5dp"
+        android:gravity="center_horizontal|left"
+        android:padding="5dp"
+        android:textStyle="bold"
+        android:text="Duration"
+        android:textColor="@color/colorBlack"
+        android:textSize="25sp" />
+
+
+</LinearLayout>

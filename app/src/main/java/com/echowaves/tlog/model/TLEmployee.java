@@ -91,7 +91,6 @@ public class TLEmployee extends TLObject {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(TLUser.ACTIVATION_CODE_KEY, activationCode);
         editor.commit();
-
     }
 
     public static String retreiveActivationCodeFromLocalStorage() {
