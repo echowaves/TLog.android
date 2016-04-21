@@ -45,7 +45,15 @@
             android:layout_gravity="top"
             android:text="duration"
             android:textSize="12sp" />
-
+        <com.joanzapata.iconify.widget.IconTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="5dp"
+            android:text="{fa-chevron-right}"
+            android:padding="5dp"
+            android:textColor="#777777"
+            android:textSize="20sp" />
     </LinearLayout>
 
 </LinearLayout>
