@@ -1,7 +1,5 @@
 package com.echowaves.tlog;
 
-import android.content.Context;
-
 import com.joanzapata.iconify.Iconify;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
 import com.localytics.android.LocalyticsActivityLifecycleCallbacks;
@@ -32,9 +30,11 @@ public class TLApplicationContextProvider extends android.support.multidex.Multi
 
     //this is used to pass parameters between intents
     private static Object currentActivityObject;
+
     public void setCurrentActivityObject(Object o) {
         currentActivityObject = o;
     }
+
     public Object getCurrentActivityObject() {
         return currentActivityObject;
     }
@@ -51,6 +51,7 @@ public class TLApplicationContextProvider extends android.support.multidex.Multi
         Iconify
                 .with(new FontAwesomeModule());
     }
+
 
 }
 

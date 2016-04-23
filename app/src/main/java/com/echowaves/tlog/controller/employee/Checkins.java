@@ -21,6 +21,7 @@ import com.echowaves.tlog.controller.user.SignIn;
 import com.echowaves.tlog.model.TLActionCode;
 import com.echowaves.tlog.model.TLCheckin;
 import com.echowaves.tlog.model.TLEmployee;
+import com.echowaves.tlog.model.TLUser;
 import com.echowaves.tlog.util.TLJsonHttpResponseHandler;
 
 import net.danlew.android.joda.JodaTimeAndroid;
@@ -64,6 +65,9 @@ public class Checkins extends AppCompatActivity {
         JodaTimeAndroid.init(this);
 
         signoutButton = (Button) findViewById(R.id.employee_activity_checkins_signOutButton);
+        if(TLUser.isUserLogin() == true) {
+            signoutButton.setText("< back");
+        }
         signoutButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(final View v) {
                 onBackPressed();
@@ -303,10 +307,14 @@ public class Checkins extends AppCompatActivity {
 
         TLEmployee.clearActivationCodeFromLocalStorage();
 
-        Intent signIn = new Intent(TLApplicationContextProvider.getContext(), SignIn.class);
-        signIn.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        signIn.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        startActivity(signIn);
+        if(TLUser.isUserLogin() == false) {
+            Intent signIn = new Intent(TLApplicationContextProvider.getContext(), SignIn.class);
+            signIn.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            signIn.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(signIn);
+        } else {
+            finish();
+        }
 
         return;
     }

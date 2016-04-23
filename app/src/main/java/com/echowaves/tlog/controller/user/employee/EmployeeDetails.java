@@ -1,19 +1,14 @@
 package com.echowaves.tlog.controller.user.employee;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Html;
-import android.text.SpannableString;
-import android.text.SpannableStringBuilder;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -21,21 +16,22 @@ import android.widget.Switch;
 
 import com.echowaves.tlog.R;
 import com.echowaves.tlog.TLApplicationContextProvider;
+import com.echowaves.tlog.controller.employee.Checkins;
 import com.echowaves.tlog.model.TLEmployee;
+import com.echowaves.tlog.model.TLUser;
 import com.echowaves.tlog.util.TLJsonHttpResponseHandler;
+import com.echowaves.tlog.util.TLUtil;
 
 import org.apache.commons.validator.GenericValidator;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
 public class EmployeeDetails extends AppCompatActivity {
+    private Context context;
+    private Activity activity;
 
     private TLEmployee employee;
 
@@ -51,12 +47,15 @@ public class EmployeeDetails extends AppCompatActivity {
 
     private Button saveButton;
     private Button actionCodesButton;
+    private Button checkinsButton;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_employee_activity_employee_details);
+        this.context = this;
+        this.activity = this;
 
         employee = (TLEmployee) TLApplicationContextProvider.getContext().getCurrentActivityObject();
 
@@ -68,6 +67,37 @@ public class EmployeeDetails extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
+        saveButton = (Button) findViewById(R.id.user_employee_activity_employee_details_save_Button);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(final View v) {
+                saveButtonClicked(v);
+            }
+        });
+
+
+        actionCodesButton = (Button) findViewById(R.id.user_employee_activity_employee_details_actionCodes_Button);
+        actionCodesButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(final View v) {
+                TLApplicationContextProvider.getContext().setCurrentActivityObject(employee);
+
+                Intent employeeActionCodes = new Intent(TLApplicationContextProvider.getContext(), EmployeeActionCodes.class);
+                startActivity(employeeActionCodes);
+            }
+        });
+
+        checkinsButton = (Button) findViewById(R.id.user_employee_activity_employee_details_checkins_Button);
+        checkinsButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(final View v) {
+
+                TLUser.setUserLogin();
+                TLEmployee.storeActivationCodeLocally(employee.getActivationCode());
+
+                Intent checkins = new Intent(TLApplicationContextProvider.getContext(), Checkins.class);
+                startActivity(checkins);
+            }
+        });
+
 
         deleteButton = (Button) findViewById(R.id.user_employee_activity_employee_details_deleteButton);
         deleteButton.setOnClickListener(new View.OnClickListener() {
@@ -139,8 +169,9 @@ public class EmployeeDetails extends AppCompatActivity {
         emailTextField = (EditText) findViewById(R.id.user_employee_activity_employee_details_email_EditText);
         emailTextField.setText(employee.getEmail());
 
-        nameTextFeild.requestFocus();
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        TLUtil.hideKeyboard(activity);
+//        nameTextFeild.requestFocus();
+//        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
 
         subContractorSwitch = (Switch) findViewById(R.id.user_employee_activity_employee_details_sub_Switch);
@@ -157,14 +188,23 @@ public class EmployeeDetails extends AppCompatActivity {
         isActiveSwitch = (Switch) findViewById(R.id.user_employee_activity_employee_details_active_Switch);
         isActiveSwitch.setChecked(employee.isActive());
 
+        if (employee.isActive()) {
+            this.checkinsButton.setVisibility(View.VISIBLE);
+        } else {
+            this.checkinsButton.setVisibility(View.INVISIBLE);
+        }
+
+
         isActiveSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(final CompoundButton v, boolean isChecked) {
+                TLUtil.hideKeyboard(activity);
                 if (isChecked) {
                     employee.activate(
                             new TLJsonHttpResponseHandler(v.getContext()) {
                                 @Override
                                 public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
                                     Log.d(">>>>>>>>>>>>>>>>>>>> JSONResponse", jsonResponse.toString());
+                                    checkinsButton.setVisibility(View.VISIBLE);
 
 
                                     AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
@@ -202,6 +242,7 @@ public class EmployeeDetails extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
                                     Log.d(">>>>>>>>>>>>>>>>>>>> JSONResponse", jsonResponse.toString());
+                                    checkinsButton.setVisibility(View.INVISIBLE);
 
                                     AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                                     builder
@@ -241,29 +282,11 @@ public class EmployeeDetails extends AppCompatActivity {
         });
 
 
-        saveButton = (Button) findViewById(R.id.user_employee_activity_employee_details_save_Button);
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(final View v) {
-                saveButtonClicked(v);
-            }
-        });
-
-
-        actionCodesButton = (Button) findViewById(R.id.user_employee_activity_employee_details_actionCodes_Button);
-        actionCodesButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(final View v) {
-                TLApplicationContextProvider.getContext().setCurrentActivityObject(employee);
-
-                Intent employeeActionCodes = new Intent(TLApplicationContextProvider.getContext(), EmployeeActionCodes.class);
-                startActivity(employeeActionCodes);
-            }
-        });
-
-
     }
 
 
     void saveButtonClicked(final View v) {
+        TLUtil.hideKeyboard(activity);
         // validating code
         ArrayList<String> validationErrors = new ArrayList<>();
         if (GenericValidator.isBlankOrNull(emailTextField.getText().toString())) {

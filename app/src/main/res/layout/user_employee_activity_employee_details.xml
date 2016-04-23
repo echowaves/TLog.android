@@ -81,24 +81,41 @@
         android:padding="5dip"
         android:textSize="30dp" />
 
+    <Button
+        android:id="@+id/user_employee_activity_employee_details_save_Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/rounded_green_button"
+        android:color="@android:color/holo_blue_bright"
+        android:padding="5dip"
+        android:text="Save"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textSize="30dp" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="5dip">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <Switch
                 android:id="@+id/user_employee_activity_employee_details_sub_Switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#c62020"
-                 />
+                android:backgroundTint="#c62020" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -156,34 +173,39 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/user_employee_activity_employee_details_save_Button"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/rounded_green_button"
-        android:color="@android:color/holo_blue_bright"
-        android:padding="5dip"
-        android:text="Save"
-        android:textAllCaps="false"
-        android:textColor="@android:color/white"
-        android:textSize="30dp" />
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/user_employee_activity_employee_details_actionCodes_Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
+        <Button
+            android:id="@+id/user_employee_activity_employee_details_actionCodes_Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:gravity="center_vertical|start"
+            android:padding="5dip"
+            android:text="Action Codes"
+            android:textAllCaps="false"
+            android:textColor="@android:color/holo_blue_light"
+            android:textSize="20dp" />
 
-        android:background="@android:color/transparent"
-        android:padding="5dip"
-        android:text="Action Codes"
-        android:textAllCaps="false"
-        android:textColor="@android:color/holo_blue_light"
-        android:textSize="20dp" />
+        <Button
+            android:id="@+id/user_employee_activity_employee_details_checkins_Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:gravity="center_vertical|end"
+            android:padding="5dip"
+            android:text="Chekins"
+            android:textAllCaps="false"
+            android:textColor="@android:color/holo_blue_light"
+            android:textSize="20dp" />
 
-
+    </LinearLayout>
 </LinearLayout>

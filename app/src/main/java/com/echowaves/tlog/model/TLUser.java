@@ -21,6 +21,7 @@ public class TLUser extends TLObject {
 
     static String JWT_KEY = "TTLogJWT";
     static String ACTIVATION_CODE_KEY = "TTLogActivationCode";
+    static String LOGIN_TYPE = "LOGIN_TYPE"; // potential type values "user|employee"
 
     private Integer id;
     private String email;
@@ -33,9 +34,33 @@ public class TLUser extends TLObject {
     }
 
 
+
+
+
+
+    public static Boolean isUserLogin() {
+        SharedPreferences prefs = new SecurePreferences(TLApplicationContextProvider.getContext());
+        String loginType = prefs.getString(TLUser.LOGIN_TYPE, "user");
+        return loginType.equals("user") ? true: false;
+    }
+
+    public static void setUserLogin() {
+        SharedPreferences prefs = new SecurePreferences(TLApplicationContextProvider.getContext());
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(TLUser.LOGIN_TYPE, "user");
+        editor.commit();
+    }
+    public static void setEmployeeLogin() {
+        SharedPreferences prefs = new SecurePreferences(TLApplicationContextProvider.getContext());
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(TLUser.LOGIN_TYPE, "employee");
+        editor.commit();
+    }
+
+
+
     public static void storeJwtLocally(String jwt) {
         SharedPreferences prefs = new SecurePreferences(TLApplicationContextProvider.getContext());
-
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(TLUser.JWT_KEY, jwt);
         editor.commit();
