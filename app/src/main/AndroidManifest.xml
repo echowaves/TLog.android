@@ -47,9 +47,10 @@
         <activity android:name=".controller.employee.Checkins" />
         <activity android:name=".controller.employee.PickActionCode" />
         <activity android:name=".controller.employee.CheckinDetails" />
-        <activity android:name=".controller.user.report.MonthPicker"></activity>
-        <activity android:name=".controller.user.report.ActionCodesReport"></activity>
-        <activity android:name=".controller.user.report.EmployeesReport"></activity>
+        <activity android:name=".controller.user.report.MonthPicker" />
+        <activity android:name=".controller.user.report.ActionCodesReport" />
+        <activity android:name=".controller.user.report.EmployeesReport" />
+        <activity android:name=".controller.user.OutdatedVersion"></activity>
     </application>
 
 </manifest>

@@ -13,6 +13,9 @@ import java.text.SimpleDateFormat;
 
 public interface TLConstants {
 
+    public static String API_VERSION = "1.0.0";
+
+
     //    public static final String TL_HOST = "http://tlog.us:3000";
     public static final String TL_HOST = "http://192.168.1.145:3000";
     //    public static final String TL_HOST = "http://localhost:3000";

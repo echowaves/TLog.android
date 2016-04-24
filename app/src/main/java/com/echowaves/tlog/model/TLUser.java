@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.echowaves.tlog.TLApplicationContextProvider;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,6 +14,7 @@ import java.io.UnsupportedEncodingException;
 
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
+import cz.msebera.android.httpclient.message.BasicHeader;
 
 /**
  * Created by dmitry on 3/24/16.
@@ -130,5 +132,17 @@ public class TLUser extends TLObject {
         }
     }
 
+
+    public static void checkApiVersion(JsonHttpResponseHandler responseHandler) {
+        Header[] headers = new Header[1];
+        headers[0] = new BasicHeader("Content-Type", JSON_CONTENT_TYPE);
+
+        HTTP_CLIENT.get(
+                TLApplicationContextProvider.getContext(),
+                getAbsoluteUrl("/api_version/android"),
+                headers,
+                new RequestParams(),
+                responseHandler);
+    }
 
 }
