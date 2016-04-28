@@ -12,6 +12,7 @@ import com.echowaves.tlog.R;
 import com.echowaves.tlog.controller.employee.CheckinsAdapter;
 import com.echowaves.tlog.model.TLReport;
 import com.echowaves.tlog.util.TLJsonHttpResponseHandler;
+import com.localytics.android.Localytics;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,6 +35,8 @@ public class YearPicker extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Localytics.tagEvent("YearPicker");
+
         setContentView(R.layout.user_report_activity_year_picker);
         context = this;
 

@@ -23,6 +23,7 @@ import com.echowaves.tlog.model.TLCheckin;
 import com.echowaves.tlog.model.TLEmployee;
 import com.echowaves.tlog.model.TLUser;
 import com.echowaves.tlog.util.TLJsonHttpResponseHandler;
+import com.localytics.android.Localytics;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
@@ -60,6 +61,8 @@ public class Checkins extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Localytics.tagEvent("Checkins");
+
         setContentView(R.layout.employee_activity_checkins);
         context = this;
         JodaTimeAndroid.init(this);

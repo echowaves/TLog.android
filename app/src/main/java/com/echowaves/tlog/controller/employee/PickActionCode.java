@@ -20,6 +20,7 @@ import com.echowaves.tlog.model.TLActionCode;
 import com.echowaves.tlog.model.TLCheckin;
 import com.echowaves.tlog.model.TLEmployee;
 import com.echowaves.tlog.util.TLJsonHttpResponseHandler;
+import com.localytics.android.Localytics;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,6 +52,8 @@ public class PickActionCode extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Localytics.tagEvent("PickActionCode");
+
         setContentView(R.layout.employee_activity_pick_action_code);
 
         context = this;

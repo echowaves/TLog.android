@@ -3,8 +3,6 @@ package com.echowaves.tlog;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import java.text.SimpleDateFormat;
-
 /**
  * copyright echowaves
  * Created by dmitry
@@ -16,8 +14,8 @@ public interface TLConstants {
     public static String API_VERSION = "1.0.0";
 
 
-    //    public static final String TL_HOST = "http://tlog.us:3000";
-    public static final String TL_HOST = "http://192.168.1.145:3000";
+    public static final String TL_HOST = "http://app.tlog.us";
+    //    public static final String TL_HOST = "http://192.168.1.145:3000";
     //    public static final String TL_HOST = "http://localhost:3000";
     //    public static final String TL_HOST = "http://172.20.10.2:3000";
     public static final String TLAWSBucket = "http://staging-images.tlog.us";

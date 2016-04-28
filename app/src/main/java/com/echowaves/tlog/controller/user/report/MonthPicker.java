@@ -13,6 +13,7 @@ import com.echowaves.tlog.R;
 import com.echowaves.tlog.TLApplicationContextProvider;
 import com.echowaves.tlog.model.TLReport;
 import com.echowaves.tlog.util.TLJsonHttpResponseHandler;
+import com.localytics.android.Localytics;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,6 +38,8 @@ public class MonthPicker extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Localytics.tagEvent("MonthPicker");
+
         setContentView(R.layout.user_report_activity_month_picker);
 
         year = (String) TLApplicationContextProvider.getContext().getCurrentActivityObject();

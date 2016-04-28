@@ -21,6 +21,7 @@ import com.echowaves.tlog.model.TLEmployee;
 import com.echowaves.tlog.model.TLUser;
 import com.echowaves.tlog.util.TLJsonHttpResponseHandler;
 import com.echowaves.tlog.util.TLUtil;
+import com.localytics.android.Localytics;
 
 import org.apache.commons.validator.GenericValidator;
 import org.json.JSONObject;
@@ -53,6 +54,8 @@ public class EmployeeDetails extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Localytics.tagEvent("EmployeeDetails");
+
         setContentView(R.layout.user_employee_activity_employee_details);
         this.context = this;
         this.activity = this;

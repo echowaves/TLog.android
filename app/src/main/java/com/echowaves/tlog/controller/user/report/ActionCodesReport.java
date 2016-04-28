@@ -14,6 +14,7 @@ import com.echowaves.tlog.TLApplicationContextProvider;
 import com.echowaves.tlog.model.TLActionCode;
 import com.echowaves.tlog.model.TLReport;
 import com.echowaves.tlog.util.TLJsonHttpResponseHandler;
+import com.localytics.android.Localytics;
 
 import org.joda.time.YearMonth;
 import org.json.JSONArray;
@@ -40,6 +41,8 @@ public class ActionCodesReport extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Localytics.tagEvent("ActionCodesReport");
+
         setContentView(R.layout.user_report_activity_action_codes_report);
 
         year = ((String[]) TLApplicationContextProvider.getContext().getCurrentActivityObject())[0];

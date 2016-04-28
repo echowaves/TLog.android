@@ -11,6 +11,7 @@ import com.echowaves.tlog.TLApplicationContextProvider;
 import com.echowaves.tlog.controller.user.employee.Employees;
 import com.echowaves.tlog.controller.user.report.YearPicker;
 import com.echowaves.tlog.model.TLUser;
+import com.localytics.android.Localytics;
 
 public class Menu extends AppCompatActivity {
 
@@ -22,6 +23,8 @@ public class Menu extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Localytics.tagEvent("Menu");
+
         setContentView(R.layout.user_activity_menu);
 
         signoutButton = (Button) findViewById(R.id.user_activity_menu_signOutButton);

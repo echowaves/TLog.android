@@ -14,6 +14,7 @@ import com.echowaves.tlog.TLApplicationContextProvider;
 import com.echowaves.tlog.TLConstants;
 import com.echowaves.tlog.model.TLCheckin;
 import com.echowaves.tlog.util.TLJsonHttpResponseHandler;
+import com.localytics.android.Localytics;
 
 import org.joda.time.DateTime;
 import org.json.JSONObject;
@@ -35,6 +36,8 @@ public class CheckinDetails extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Localytics.tagEvent("CheckinDetails");
+
         setContentView(R.layout.employee_activity_checkin_details);
 
         checkin = (TLCheckin) TLApplicationContextProvider.getContext().getCurrentActivityObject();

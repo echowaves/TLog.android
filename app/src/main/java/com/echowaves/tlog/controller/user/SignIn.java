@@ -18,6 +18,7 @@ import com.echowaves.tlog.controller.employee.Checkins;
 import com.echowaves.tlog.model.TLEmployee;
 import com.echowaves.tlog.model.TLUser;
 import com.echowaves.tlog.util.TLJsonHttpResponseHandler;
+import com.localytics.android.Localytics;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,6 +36,8 @@ public class SignIn extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Localytics.tagEvent("SignIn");
+
         setContentView(R.layout.user_activity_sign_in);
 
         // show soft keyboard automagically

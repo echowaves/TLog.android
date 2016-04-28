@@ -15,6 +15,7 @@ import com.echowaves.tlog.R;
 import com.echowaves.tlog.TLApplicationContextProvider;
 import com.echowaves.tlog.model.TLUser;
 import com.echowaves.tlog.util.TLJsonHttpResponseHandler;
+import com.localytics.android.Localytics;
 
 import org.apache.commons.validator.GenericValidator;
 import org.json.JSONException;
@@ -36,6 +37,8 @@ public class SignUp extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Localytics.tagEvent("SignUp");
+
         setContentView(R.layout.user_activity_sign_up);
 
 
