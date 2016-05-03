@@ -207,58 +207,45 @@ public class CheckinDetails extends AppCompatActivity {
                 timePicker.setCurrentMinute((checkin.getDuration()% 3600) / 60);
 
                 final AlertDialog alertDialog = new AlertDialog.Builder(context).create();
-//                dateTimePickerDialog.findViewById(R.id.dialog_date_time_picker_setbutton).setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(final View view) {
-//                        Calendar calendar = new GregorianCalendar(datePicker.getYear(),
-//                                datePicker.getMonth(),
-//                                datePicker.getDayOfMonth(),
-//                                timePicker.getCurrentHour(),
-//                                timePicker.getCurrentMinute());
-//
-//                        checkin.setCheckedInAt(calendar.getTime());
-//                        checkin.update(
-//                                new TLJsonHttpResponseHandler(view.getContext()) {
-//                                    @Override
-//                                    public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
-//                                        Log.d(">>>>>>>>>>>>>>>>>>>> JSONResponse", jsonResponse.toString());
-//                                        checkInAtText.setText(new DateTime(checkin.getCheckedInAt()).toString(TLConstants.defaultDateFormat));
-//                                        alertDialog.dismiss();
-//                                    }
-//
-//                                    @Override
-//                                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-//                                        //reset the pickerss
-//                                        cal.setTime(originalDate);
-//                                        datePicker.updateDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DATE));
-//                                        timePicker.setCurrentHour(cal.get(Calendar.HOUR_OF_DAY));
-//                                        timePicker.setCurrentMinute(cal.get(Calendar.MINUTE));
-//
-//
-//                                        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-//                                        builder
-//                                                .setMessage("Unable to update date, can only update to no more than 7 days ago, try again.")
-//                                                .setCancelable(false)
-//                                                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-//                                                    public void onClick(DialogInterface dialog, int id) {
-//                                                    }
-//                                                });
-//                                        AlertDialog alert = builder.create();
-//                                        alert.show();
-//                                    }
-//                                }
-//                        );
-//                    }
-//                });
+                durationPickerDialog.findViewById(R.id.dialog_duration_picker_setbutton).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(final View view) {
+
+                        checkin.setDuration(timePicker.getCurrentHour()*3600 + timePicker.getCurrentMinute()*60);
+                        checkin.update(
+                                new TLJsonHttpResponseHandler(view.getContext()) {
+                                    @Override
+                                    public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+                                        Log.d(">>>>>>>>>>>>>>>>>>>> JSONResponse", jsonResponse.toString());
+                                        durationText.setText(checkin.getDurationExtendedText());
+                                        alertDialog.dismiss();
+                                    }
+
+                                    @Override
+                                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                                        //reset the pickerss
+
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                                        builder
+                                                .setMessage("Unable to update duration, try again.")
+                                                .setCancelable(false)
+                                                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                                    public void onClick(DialogInterface dialog, int id) {
+                                                    }
+                                                });
+                                        AlertDialog alert = builder.create();
+                                        alert.show();
+                                    }
+                                }
+                        );
+                    }
+                });
                 alertDialog.setView(durationPickerDialog);
                 alertDialog.show();
             }
         });
 
-
-
-
-
+        
 
         actionCodeText = (EditText) findViewById(R.id.employee_activity_checkin_details_actionCodeText);
         actionCodeText.setText(checkin.getActionCode().getCode() + ":" + checkin.getActionCode().getDescr());
