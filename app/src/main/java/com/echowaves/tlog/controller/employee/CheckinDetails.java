@@ -245,7 +245,7 @@ public class CheckinDetails extends AppCompatActivity {
             }
         });
 
-        
+
 
         actionCodeText = (EditText) findViewById(R.id.employee_activity_checkin_details_actionCodeText);
         actionCodeText.setText(checkin.getActionCode().getCode() + ":" + checkin.getActionCode().getDescr());
