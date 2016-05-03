@@ -1,7 +1,6 @@
 package com.echowaves.tlog.controller.employee;
 
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -23,7 +22,6 @@ import com.localytics.android.Localytics;
 import org.joda.time.DateTime;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -125,44 +123,82 @@ public class CheckinDetails extends AppCompatActivity {
 
         checkInAtText = (EditText) findViewById(R.id.employee_activity_checkin_details_checkInAtText);
         checkInAtText.setText(new DateTime(checkin.getCheckedInAt()).toString(TLConstants.defaultDateFormat));
-
         checkInAtText.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
 
-                    final View dialogView = View.inflate(context, R.layout.dialog_date_time_picker, null);
-                    final AlertDialog alertDialog = new AlertDialog.Builder(context).create();
-                    dialogView.findViewById(R.id.dialog_date_time_picker_setbutton).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            DatePicker datePicker = (DatePicker) dialogView.findViewById(R.id.dialog_date_time_picker_date);
-                            TimePicker timePicker = (TimePicker) dialogView.findViewById(R.id.dialog_date_time_picker_time);
-                            Calendar calendar = new GregorianCalendar(datePicker.getYear(),
-                                    datePicker.getMonth(),
-                                    datePicker.getDayOfMonth(),
-                                    timePicker.getCurrentHour(),
-                                    timePicker.getCurrentMinute());
-                            SimpleDateFormat mSDF = new SimpleDateFormat("HH:mm:ss");
-                            String time = mSDF.format(calendar.getTime());
-                            int day = datePicker.getDayOfMonth();
-                            int month = datePicker.getMonth();
-                            int year = datePicker.getYear();
-                            SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
-                            String formatedDate = sdf.format(new Date(year-1900, month, day));
+                final Date originalDate = checkin.getCheckedInAt();
+
+                final View dateTimePickerDialog = View.inflate(context, R.layout.dialog_date_time_picker, null);
+                final DatePicker datePicker = (DatePicker) dateTimePickerDialog.findViewById(R.id.dialog_date_time_picker_date);
+                final TimePicker timePicker = (TimePicker) dateTimePickerDialog.findViewById(R.id.dialog_date_time_picker_time);
+
+                final Calendar cal = Calendar.getInstance();
+                cal.setTime(checkin.getCheckedInAt());
+                datePicker.updateDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DATE));
+                timePicker.setCurrentHour(cal.get(Calendar.HOUR_OF_DAY));
+                timePicker.setCurrentMinute(cal.get(Calendar.MINUTE));
+
+                final AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+                dateTimePickerDialog.findViewById(R.id.dialog_date_time_picker_setbutton).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(final View view) {
+                        Calendar calendar = new GregorianCalendar(datePicker.getYear(),
+                                datePicker.getMonth(),
+                                datePicker.getDayOfMonth(),
+                                timePicker.getCurrentHour(),
+                                timePicker.getCurrentMinute());
+
+                        checkin.setCheckedInAt(calendar.getTime());
+                        checkin.update(
+                                new TLJsonHttpResponseHandler(view.getContext()) {
+                                    @Override
+                                    public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+                                        Log.d(">>>>>>>>>>>>>>>>>>>> JSONResponse", jsonResponse.toString());
+                                        checkInAtText.setText(new DateTime(checkin.getCheckedInAt()).toString(TLConstants.defaultDateFormat));
+                                        alertDialog.dismiss();
+                                    }
+
+                                    @Override
+                                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                                        //reset the pickerss
+                                        cal.setTime(originalDate);
+                                        datePicker.updateDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DATE));
+                                        timePicker.setCurrentHour(cal.get(Calendar.HOUR_OF_DAY));
+                                        timePicker.setCurrentMinute(cal.get(Calendar.MINUTE));
+
+
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                                        builder
+                                                .setMessage("Unable to update date, try again.")
+                                                .setCancelable(false)
+                                                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                                    public void onClick(DialogInterface dialog, int id) {
+                                                    }
+                                                });
+                                        AlertDialog alert = builder.create();
+                                        alert.show();
+                                    }
+                                }
+                        );
+//                            SimpleDateFormat mSDF = new SimpleDateFormat("HH:mm:ss");
+//                            String time = mSDF.format(calendar.getTime());
+//                            int day = datePicker.getDayOfMonth();
+//                            int month = datePicker.getMonth();
+//                            int year = datePicker.getYear();
+//                            SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
+//                            String formatedDate = sdf.format(new Date(year-1900, month, day));
 //                            editText_datetime.setText(formatedDate + ' ' + time);
-                            alertDialog.dismiss();
-                        }
-                    });
-                    alertDialog.setView(dialogView);
-                    alertDialog.show();
+
+                    }
+                });
+                alertDialog.setView(dateTimePickerDialog);
+                alertDialog.show();
 
 
             }
         });
-
-
 
 
         durationText = (EditText) findViewById(R.id.employee_activity_checkin_details_durationText);
@@ -170,7 +206,6 @@ public class CheckinDetails extends AppCompatActivity {
 
         actionCodeText = (EditText) findViewById(R.id.employee_activity_checkin_details_actionCodeText);
         actionCodeText.setText(checkin.getActionCode().getCode() + ":" + checkin.getActionCode().getDescr());
-
 
 
     }

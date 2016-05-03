@@ -44,6 +44,10 @@ public class TLCheckin extends TLObject {
         return checkedInAt;
     }
 
+    public void setCheckedInAt(Date checkedInAt) {
+        this.checkedInAt = checkedInAt;
+    }
+
     public Integer getDuration() {
         return duration;
     }

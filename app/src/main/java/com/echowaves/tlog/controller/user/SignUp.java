@@ -108,7 +108,7 @@ public class SignUp extends AppCompatActivity {
                                                 public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
                                                     try {
 
-                                                        Log.d(">>>>>>>>>>>>>>>>>>>> JSONResponse", jsonResponse.toString());
+//                                                        Log.d(">>>>>>>>>>>>>>>>>>>> JSONResponse", jsonResponse.toString());
 
 
                                                         Log.d("token", jsonResponse.get("token").toString());

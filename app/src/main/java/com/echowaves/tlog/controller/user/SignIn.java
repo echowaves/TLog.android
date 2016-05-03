@@ -64,7 +64,7 @@ public class SignIn extends AppCompatActivity {
                         new TLJsonHttpResponseHandler(v.getContext()) {
                             @Override
                             public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
-                                Log.d(">>>>>>>>>>>>>>>>>>>> JSONResponse", jsonResponse.toString());
+//                                Log.d(">>>>>>>>>>>>>>>>>>>> JSONResponse", jsonResponse.toString());
 
                                 try {
                                     Log.d("token", jsonResponse.get("token").toString());
