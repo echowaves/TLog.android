@@ -99,7 +99,7 @@
         android:layout_marginTop="5dp"
         android:background="#ffffff"
         android:divider="@color/TLLightGreyColor"
-        android:dividerHeight="1dp"
+        android:dividerHeight="0.5dp"
         android:drawSelectorOnTop="true" />
 
 </LinearLayout>
