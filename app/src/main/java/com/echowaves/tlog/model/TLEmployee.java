@@ -59,6 +59,10 @@ public class TLEmployee extends TLObject {
         isSubcontractor = subcontractor;
     }
 
+    public void setActivationCode(String activationCode) {
+        this.activationCode = activationCode;
+    }
+
     public String getActivationCode() {
         return activationCode;
     }

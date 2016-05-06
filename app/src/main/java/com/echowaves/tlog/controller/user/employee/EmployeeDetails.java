@@ -24,6 +24,7 @@ import com.echowaves.tlog.util.TLUtil;
 import com.localytics.android.Localytics;
 
 import org.apache.commons.validator.GenericValidator;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -209,6 +210,12 @@ public class EmployeeDetails extends AppCompatActivity {
                                     Log.d(">>>>>>>>>>>>>>>>>>>> JSONResponse", jsonResponse.toString());
                                     checkinsButton.setVisibility(View.VISIBLE);
 
+                                    try {
+                                        String activationCode = jsonResponse.getString("activation_code");
+                                        employee.setActivationCode(activationCode);
+                                    } catch(JSONException exception) {
+                                        Log.e("json exception", exception.toString());
+                                    }
 
                                     AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                                     builder
