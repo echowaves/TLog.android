@@ -202,7 +202,7 @@
             android:background="@android:color/transparent"
             android:gravity="center_vertical|end"
             android:padding="5dip"
-            android:text="Chekins"
+            android:text="Checkins"
             android:textAllCaps="false"
             android:textColor="@android:color/holo_blue_light"
             android:textSize="20dp" />
