@@ -1,6 +1,8 @@
 package com.echowaves.tlog.controller.user.employee;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -103,6 +105,20 @@ public class Employees extends AppCompatActivity {
                     public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
                         try {
                             JSONArray employees = (JSONArray)jsonResponse.get("employees");
+
+                            if(employees.length() == 0 ) {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                                builder
+                                        .setMessage("No employees yet? Start adding employees before you can see something here.")
+                                        .setCancelable(false)
+                                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                            }
+                                        });
+                                AlertDialog alert = builder.create();
+                                alert.show();
+                            }
+
 
                             for (int i=0; i<employees.length(); i++) {
                                 JSONObject jsonEmployee = employees.getJSONObject(i);

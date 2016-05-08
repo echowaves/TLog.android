@@ -1,6 +1,8 @@
 package com.echowaves.tlog.controller.user.report;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -59,7 +61,24 @@ public class YearPicker extends AppCompatActivity {
 
                                           JSONArray jsonYears = jsonResponse.getJSONArray("years");
 
+
+                                          if(jsonYears.length() == 0 ) {
+                                              AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                                              builder
+                                                      .setMessage("No any reports yet? Have your employees start checking in and checking out every day -- then you will be able to see the beautiful reports here.")
+                                                      .setCancelable(false)
+                                                      .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                                          public void onClick(DialogInterface dialog, int id) {
+                                                          }
+                                                      });
+                                              AlertDialog alert = builder.create();
+                                              alert.show();
+                                          }
+
+
+
                                           years = new ArrayList<String>();
+
 
                                           for (int i = 0; i < jsonYears.length(); i++) {
                                               String year = jsonYears.getJSONObject(i).getString("date_part");
