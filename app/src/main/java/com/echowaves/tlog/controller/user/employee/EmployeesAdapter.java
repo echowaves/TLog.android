@@ -38,7 +38,7 @@ public class EmployeesAdapter extends ArrayAdapter<TLEmployee> {
         // Populate the data into the template view using the data object
         name.setText(employee.getName());
         email.setText(employee.getEmail());
-        if (employee.getSubcontractor().booleanValue() == false) {
+        if (employee.getSubcontractorId() == null) {
             sub.setVisibility(View.INVISIBLE);
         } else {
             sub.setVisibility(View.VISIBLE);

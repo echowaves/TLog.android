@@ -179,12 +179,12 @@ public class EmployeeDetails extends AppCompatActivity {
 
 
         subContractorSwitch = (Switch) findViewById(R.id.user_employee_activity_employee_details_sub_Switch);
-        subContractorSwitch.setChecked(employee.getSubcontractor());
+        subContractorSwitch.setChecked(employee.getSubcontractorId()!= null?true:false);
         subContractorSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 // do something, the isChecked will be
                 // true if the switch is in the On position
-                employee.setSubcontractor(isChecked);
+//                employee.setSubcontractorId(isChecked);
                 saveButtonClicked(buttonView);
             }
         });
@@ -323,7 +323,7 @@ public class EmployeeDetails extends AppCompatActivity {
 
             employee.setName(nameTextFeild.getText().toString());
             employee.setEmail(emailTextField.getText().toString());
-            employee.setSubcontractor(subContractorSwitch.isChecked());
+//            employee.setSubcontractor(subContractorSwitch.isChecked());
 
             employee.update(
                     new TLJsonHttpResponseHandler(v.getContext()) {

@@ -160,7 +160,7 @@ public class Checkins extends AppCompatActivity {
                                             jsonEmployee.getInt("id"),
                                             jsonEmployee.getString("name"),
                                             jsonEmployee.getString("email"),
-                                            jsonEmployee.getBoolean("is_subcontractor")
+                                            jsonEmployee.getString("activation_code")
                                     );
 
 

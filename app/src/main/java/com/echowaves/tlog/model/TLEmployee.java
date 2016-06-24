@@ -24,8 +24,8 @@ public class TLEmployee extends TLObject {
     private Integer id;
     private String name;
     private String email;
-    private Boolean isSubcontractor;
     private String activationCode;
+    private Integer subcontractorId;
 
     public Integer getId() {
         return id;
@@ -51,12 +51,12 @@ public class TLEmployee extends TLObject {
         this.email = email;
     }
 
-    public Boolean getSubcontractor() {
-        return isSubcontractor;
+    public Integer getSubcontractorId() {
+        return subcontractorId;
     }
 
-    public void setSubcontractor(Boolean subcontractor) {
-        isSubcontractor = subcontractor;
+    public void setSubcontractorId(Integer subcontractorId) {
+        this.subcontractorId = subcontractorId;
     }
 
     public void setActivationCode(String activationCode) {
@@ -74,17 +74,14 @@ public class TLEmployee extends TLObject {
         return true;
     }
 
-    public TLEmployee(Integer id, String name, String email, Boolean isSubcontractor) {
+    public TLEmployee(Integer id, String name, String email) {
         this.id = id;
         this.name = name;
-
         this.email = email;
-        this.isSubcontractor = isSubcontractor;
-
     }
 
-    public TLEmployee(Integer id, String name, String email, Boolean isSubcontractor, String activationCode) {
-        this(id, name, email, isSubcontractor);
+    public TLEmployee(Integer id, String name, String email, String activationCode) {
+        this(id, name, email);
         this.activationCode = activationCode;
     }
 
@@ -116,7 +113,7 @@ public class TLEmployee extends TLObject {
             JSONObject jsonParams = new JSONObject();
             jsonParams.put("name", this.getName());
             jsonParams.put("email", this.getEmail());
-            jsonParams.put("is_subcontractor", this.getSubcontractor().toString());
+            jsonParams.put("subcontractor_id", this.getSubcontractorId());
             StringEntity entity = new StringEntity(jsonParams.toString());
 
             Header[] headers = new Header[2];
@@ -143,7 +140,7 @@ public class TLEmployee extends TLObject {
             JSONObject jsonParams = new JSONObject();
             jsonParams.put("name", this.getName());
             jsonParams.put("email", this.getEmail());
-            jsonParams.put("is_subcontractor", this.getSubcontractor().toString());
+            jsonParams.put("subcontractor_id", this.getSubcontractorId());
             StringEntity entity = new StringEntity(jsonParams.toString());
 
             Header[] headers = new Header[2];

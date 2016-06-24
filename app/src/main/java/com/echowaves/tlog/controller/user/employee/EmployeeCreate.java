@@ -90,8 +90,7 @@ public class EmployeeCreate extends AppCompatActivity {
                     final TLEmployee employee = new TLEmployee(
                             null,
                             nameTextFeild.getText().toString(),
-                            emailTextField.getText().toString(),
-                            false
+                            emailTextField.getText().toString()
                     );
 
                     employee.create(
