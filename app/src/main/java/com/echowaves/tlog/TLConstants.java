@@ -23,6 +23,7 @@ public interface TLConstants {
 //    public static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmssSSSS");
 //    public static SimpleDateFormat naturalDateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
     public static DateTimeFormatter defaultDateFormat = DateTimeFormat.forPattern("EEEE, MMMM d, yyyy, 'at' hh:mm a");
+    public static DateTimeFormatter shortDateFormat = DateTimeFormat.forPattern("MMMM d, yyyy");
 
 
 }

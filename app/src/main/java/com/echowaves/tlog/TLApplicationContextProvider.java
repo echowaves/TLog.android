@@ -10,6 +10,8 @@ import com.joanzapata.iconify.Iconify;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
 import com.localytics.android.LocalyticsActivityLifecycleCallbacks;
 
+import net.danlew.android.joda.JodaTimeAndroid;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -54,6 +56,8 @@ public class TLApplicationContextProvider extends android.support.multidex.Multi
     @Override
     public void onCreate() {
         super.onCreate();
+
+        JodaTimeAndroid.init(this);
 
         // Register LocalyticsActivityLifecycleCallbacks
         registerActivityLifecycleCallbacks(

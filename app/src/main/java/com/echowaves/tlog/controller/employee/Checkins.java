@@ -65,7 +65,7 @@ public class Checkins extends AppCompatActivity {
 
         setContentView(R.layout.employee_activity_checkins);
         context = this;
-        JodaTimeAndroid.init(this);
+//        JodaTimeAndroid.init(this);
 
         signoutButton = (Button) findViewById(R.id.employee_activity_checkins_signOutButton);
         if(TLUser.isUserLogin() == true) {
