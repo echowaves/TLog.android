@@ -1,6 +1,10 @@
 package com.echowaves.tlog.controller.user.subcontractor;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +14,16 @@ import android.widget.TextView;
 import com.echowaves.tlog.R;
 import com.echowaves.tlog.TLConstants;
 import com.echowaves.tlog.model.TLSubcontractor;
+import com.echowaves.tlog.util.TLJsonHttpResponseHandler;
 
 import org.joda.time.DateTime;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+
+import cz.msebera.android.httpclient.Header;
 
 /**
  * Created by dmitry on 6/26/16.
@@ -26,26 +36,54 @@ public class SubcontractorsAdapter extends ArrayAdapter<TLSubcontractor> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View view, ViewGroup parent) {
         // Get the data item for this position
         TLSubcontractor subcontractor = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
-        if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.user_subcontractor_item_subcontractor, parent, false);
+        if (view == null) {
+            view = LayoutInflater.from(getContext()).inflate(R.layout.user_subcontractor_item_subcontractor, parent, false);
         }
         // Lookup view for data population
-        TextView name = (TextView) convertView.findViewById(R.id.user_subcontractor_item_subcontractor_name);
-        TextView coiExpirationDate = (TextView) convertView.findViewById(R.id.user_subcontractor_item_subcontractor_coi_expiration_date);
+        final TextView name = (TextView) view.findViewById(R.id.user_subcontractor_item_subcontractor_name);
+        final TextView coiExpirationDate = (TextView) view.findViewById(R.id.user_subcontractor_item_subcontractor_coi_expiration_date);
 
         // Populate the data into the template view using the data object
         name.setText(subcontractor.getName());
-        coiExpirationDate.setText(new DateTime(subcontractor.getCoiExpiresAt()).toString(TLConstants.shortDateFormat));
-//        if (subcontractor.getSubcontractorId() == null) {
-//            sub.setVisibility(View.INVISIBLE);
-//        } else {
-//            sub.setVisibility(View.VISIBLE);
+
+        if (subcontractor.getCoiExpiresAt() != null && subcontractor.getCoiExpiresAt().getTime() > new Date().getTime()) {
+            coiExpirationDate.setText(new DateTime(subcontractor.getCoiExpiresAt()).toString(TLConstants.shortDateFormat));
+            view.setBackgroundColor(Color.WHITE);
+            coiExpirationDate.setTextColor(Color.parseColor("#666666"));
+        } else {
+            coiExpirationDate.setText("COI expiration date is invalid");
+            view.setBackgroundColor(Color.RED);
+            coiExpirationDate.setTextColor(Color.BLACK);
+        }
+
+
+        final View subView = view;
+        subcontractor.hasCOI(
+                new TLJsonHttpResponseHandler(view.getContext()) {
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                        coiExpirationDate.setText("COI is missing");
+                        subView.setBackgroundColor(Color.RED);
+                        coiExpirationDate.setTextColor(Color.BLACK);
+                    }
+                }
+
+        );
+//
+//                {
+//                print("has COI uploaded")
+//        }) { (error) in
+//            print("COI is missing")
+//            cell!.coiExpiresAtLabel?.text = "COI is missing"
+//            cell!.backgroundColor = UIColor.redColor()
+//            cell!.coiExpiresAtLabel?.textColor = UIColor.blackColor()
 //        }
+
         // Return the completed view to render on screen
-        return convertView;
+        return view;
     }
 }

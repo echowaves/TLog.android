@@ -2,6 +2,7 @@ package com.echowaves.tlog.model;
 
 import android.graphics.Bitmap;
 import android.util.Log;
+import android.view.View;
 
 import com.echowaves.tlog.TLApplicationContextProvider;
 import com.loopj.android.http.FileAsyncHttpResponseHandler;
