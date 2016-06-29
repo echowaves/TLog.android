@@ -73,16 +73,6 @@ public class SubcontractorsAdapter extends ArrayAdapter<TLSubcontractor> {
                 }
 
         );
-//
-//                {
-//                print("has COI uploaded")
-//        }) { (error) in
-//            print("COI is missing")
-//            cell!.coiExpiresAtLabel?.text = "COI is missing"
-//            cell!.backgroundColor = UIColor.redColor()
-//            cell!.coiExpiresAtLabel?.textColor = UIColor.blackColor()
-//        }
-
         // Return the completed view to render on screen
         return view;
     }

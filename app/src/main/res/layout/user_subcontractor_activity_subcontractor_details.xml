@@ -99,31 +99,31 @@
         >
 
         <ImageView
-            android:id="@+id/user_subcontractor_activity_subcontractor_detailsImageView"
+            android:id="@+id/user_subcontractor_activity_subcontractor_details_imageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true" />
 
-        <Button
+        <com.joanzapata.iconify.widget.IconButton
             android:id="@+id/user_subcontractor_activity_subcontractor_details_downloadButton"
             android:layout_width="80dp"
             android:layout_height="50dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
             android:background="@drawable/rounded_grey_button"
-            android:text="download"
+            android:text="{fa-download}"
             android:textColor="@android:color/white"
             android:textSize="20dp" />
 
-        <Button
+        <com.joanzapata.iconify.widget.IconButton
             android:id="@+id/user_subcontractor_activity_subcontractor_details_photoButton"
             android:layout_width="80dp"
             android:layout_height="50dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:background="@drawable/rounded_grey_button"
-            android:text="photo"
+            android:text="{fa-camera}"
             android:textColor="@android:color/white"
             android:textSize="20dp" />
 

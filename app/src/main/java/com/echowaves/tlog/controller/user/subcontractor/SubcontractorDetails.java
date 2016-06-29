@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -17,6 +18,7 @@ import android.widget.Switch;
 
 import com.echowaves.tlog.R;
 import com.echowaves.tlog.TLApplicationContextProvider;
+import com.echowaves.tlog.TLConstants;
 import com.echowaves.tlog.controller.employee.Checkins;
 import com.echowaves.tlog.controller.user.employee.EmployeeActionCodes;
 import com.echowaves.tlog.controller.user.employee.Employees;
@@ -28,10 +30,12 @@ import com.echowaves.tlog.util.TLUtil;
 import com.localytics.android.Localytics;
 
 import org.apache.commons.validator.GenericValidator;
+import org.joda.time.DateTime;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -145,6 +149,17 @@ public class SubcontractorDetails extends AppCompatActivity {
 
         TLUtil.hideKeyboard(activity);
 
+        coiExpiresAtTextFeild = (EditText) findViewById(R.id.user_subcontractor_activity_subcontractor_details_coiExpiresAtEditText);
+
+        if (subcontractor.getCoiExpiresAt() != null) {
+            coiExpiresAtTextFeild.setText(new DateTime(subcontractor.getCoiExpiresAt()).toString(TLConstants.shortDateFormat));
+        }
+
+
+        imageView = (ImageView) findViewById(R.id.user_subcontractor_activity_subcontractor_details_imageView);
+
+        downloadButton = (Button) findViewById(R.id.user_subcontractor_activity_subcontractor_details_downloadButton);
+        photoButton = (Button) findViewById(R.id.user_subcontractor_activity_subcontractor_details_photoButton);
 
 
     }
