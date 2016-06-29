@@ -54,6 +54,7 @@
         <activity android:name=".controller.user.OutdatedVersion"></activity>
         <activity android:name=".controller.user.subcontractor.Subcontractors"></activity>
         <activity android:name=".controller.user.subcontractor.SubcontractorDetails"></activity>
+        <activity android:name=".controller.user.subcontractor.SubcontractorCreate"></activity>
     </application>
 
 </manifest>

@@ -58,12 +58,12 @@ public class Subcontractors extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
         addButton = (Button) findViewById(R.id.user_subcontractor_activity_subcontractors_addButton);
         addButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(final View v) {
-                Intent subcontractorCreate = new Intent(TLApplicationContextProvider.getContext(), null);
+                Intent subcontractorCreate = new Intent(TLApplicationContextProvider.getContext(), SubcontractorCreate.class);
                 startActivity(subcontractorCreate);
-
             }
         });
 

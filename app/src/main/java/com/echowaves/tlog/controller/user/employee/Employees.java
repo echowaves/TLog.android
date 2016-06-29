@@ -62,6 +62,7 @@ public class Employees extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
         addButton = (Button) findViewById(R.id.user_employee_activity_employees_addButton);
         addButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(final View v) {
