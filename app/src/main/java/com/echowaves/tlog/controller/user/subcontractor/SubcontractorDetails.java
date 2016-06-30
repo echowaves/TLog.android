@@ -161,8 +161,8 @@ public class SubcontractorDetails extends AppCompatActivity {
         coiExpiresAtTextFeild .setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (subcontractor.getCoiExpiresAt() != null) {
-                    subcontractor.setCoiExpiresAt(new Date());
+                if (subcontractor.getCoiExpiresAt() == null) {
+                    subcontractor.setCoiExpiresAt(new DateTime().plusYears(1).toDate());
                 }
                 final Date originalDate = subcontractor.getCoiExpiresAt();
 
