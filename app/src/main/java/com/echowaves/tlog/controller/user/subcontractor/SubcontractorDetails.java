@@ -12,9 +12,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Switch;
+import android.widget.TimePicker;
 
 import com.echowaves.tlog.R;
 import com.echowaves.tlog.TLApplicationContextProvider;
@@ -35,7 +37,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -150,10 +154,72 @@ public class SubcontractorDetails extends AppCompatActivity {
         TLUtil.hideKeyboard(activity);
 
         coiExpiresAtTextFeild = (EditText) findViewById(R.id.user_subcontractor_activity_subcontractor_details_coiExpiresAtEditText);
-
         if (subcontractor.getCoiExpiresAt() != null) {
             coiExpiresAtTextFeild.setText(new DateTime(subcontractor.getCoiExpiresAt()).toString(TLConstants.shortDateFormat));
         }
+
+        coiExpiresAtTextFeild .setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (subcontractor.getCoiExpiresAt() != null) {
+                    subcontractor.setCoiExpiresAt(new Date());
+                }
+                final Date originalDate = subcontractor.getCoiExpiresAt();
+
+
+                final View datePickerDialog = View.inflate(context, R.layout.dialog_date_picker, null);
+                final DatePicker datePicker = (DatePicker) datePickerDialog.findViewById(R.id.dialog_date_picker_date);
+
+                datePicker.setMaxDate(new DateTime().plusYears(10).toDate().getTime());
+                datePicker.setMinDate(new Date().getTime());
+
+                final Calendar cal = Calendar.getInstance();
+                cal.setTime(subcontractor.getCoiExpiresAt());
+                datePicker.updateDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DATE));
+
+                final AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+                datePickerDialog.findViewById(R.id.dialog_date_picker_setbutton).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(final View view) {
+                        Calendar calendar = new GregorianCalendar(datePicker.getYear(),
+                                datePicker.getMonth(),
+                                datePicker.getDayOfMonth());
+
+                        subcontractor.setCoiExpiresAt(calendar.getTime());
+                        subcontractor.update(
+                                new TLJsonHttpResponseHandler(view.getContext()) {
+                                    @Override
+                                    public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+                                        Log.d(">>>>>>>>>>>>>>>>>>>> JSONResponse", jsonResponse.toString());
+                                        coiExpiresAtTextFeild.setText(new DateTime(subcontractor.getCoiExpiresAt()).toString(TLConstants.shortDateFormat));
+                                        alertDialog.dismiss();
+                                    }
+
+                                    @Override
+                                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                                        //reset the pickerss
+                                        cal.setTime(originalDate);
+                                        datePicker.updateDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DATE));
+
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                                        builder
+                                                .setMessage("Unable to update date, try again.")
+                                                .setCancelable(false)
+                                                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                                    public void onClick(DialogInterface dialog, int id) {
+                                                    }
+                                                });
+                                        AlertDialog alert = builder.create();
+                                        alert.show();
+                                    }
+                                }
+                        );
+                    }
+                });
+                alertDialog.setView(datePickerDialog);
+                alertDialog.show();
+            }
+        });
 
 
         imageView = (ImageView) findViewById(R.id.user_subcontractor_activity_subcontractor_details_imageView);
