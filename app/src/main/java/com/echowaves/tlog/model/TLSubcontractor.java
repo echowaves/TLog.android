@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.echowaves.tlog.TLApplicationContextProvider;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.FileAsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -207,7 +208,7 @@ public class TLSubcontractor extends TLObject {
 
     }
 
-    public void downloadCOI(FileAsyncHttpResponseHandler responseHandler) {
+    public void downloadCOI(AsyncHttpResponseHandler responseHandler) {
         Header[] headers = new Header[2];
         headers[0] = new BasicHeader("Content-Type", "image/png");
         headers[1] = new BasicHeader("Authorization", "Bearer " + TLUser.retreiveJwtFromLocalStorage());

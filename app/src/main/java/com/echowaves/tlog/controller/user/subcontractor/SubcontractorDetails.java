@@ -5,7 +5,10 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -29,13 +32,19 @@ import com.echowaves.tlog.model.TLSubcontractor;
 import com.echowaves.tlog.model.TLUser;
 import com.echowaves.tlog.util.TLJsonHttpResponseHandler;
 import com.echowaves.tlog.util.TLUtil;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.localytics.android.Localytics;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.FileAsyncHttpResponseHandler;
 
 import org.apache.commons.validator.GenericValidator;
 import org.joda.time.DateTime;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -61,6 +70,11 @@ public class SubcontractorDetails extends AppCompatActivity {
 
     private Button downloadButton;
     private Button photoButton;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
 
     @Override
@@ -92,59 +106,59 @@ public class SubcontractorDetails extends AppCompatActivity {
 
 
         deleteButton = (Button) findViewById(R.id.user_subcontractor_activity_subcontractor_details_deleteButton);
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(final View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                builder
-                        .setMessage("Are you sure want to delete the subcontractor?")
-                        .setCancelable(true)
-                        .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                            }
-                        })
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-
-                                subcontractor.delete(
-                                        new TLJsonHttpResponseHandler(v.getContext()) {
-                                            @Override
-                                            public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
-                                                Log.d(">>>>>>>>>>>>>>>>>>>> JSONResponse", jsonResponse.toString());
-
-                                                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                                                builder
-                                                        .setMessage("Subcontractor successfuly deleted.")
-                                                        .setCancelable(false)
-                                                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                                            public void onClick(DialogInterface dialog, int id) {
-                                                                onBackPressed();
-                                                            }
-                                                        });
-                                                AlertDialog alert = builder.create();
-                                                alert.show();
-                                            }
-
-                                            @Override
-                                            public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
-                                                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                                                builder
-                                                        .setMessage("Error deleting subcontractor, try again.")
-                                                        .setCancelable(false)
-                                                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                                            public void onClick(DialogInterface dialog, int id) {
-                                                            }
-                                                        });
-                                                AlertDialog alert = builder.create();
-                                                alert.show();
-                                            }
-                                        }
-                                );
-                            }
-                        });
-                AlertDialog alert = builder.create();
-                alert.show();
-            }
-        });
+//        deleteButton.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(final View v) {
+//                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+//                builder
+//                        .setMessage("Are you sure want to delete the subcontractor?")
+//                        .setCancelable(true)
+//                        .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int id) {
+//                            }
+//                        })
+//                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int id) {
+//
+//                                subcontractor.delete(
+//                                        new TLJsonHttpResponseHandler(v.getContext()) {
+//                                            @Override
+//                                            public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+//                                                Log.d(">>>>>>>>>>>>>>>>>>>> JSONResponse", jsonResponse.toString());
+//
+//                                                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+//                                                builder
+//                                                        .setMessage("Subcontractor successfuly deleted.")
+//                                                        .setCancelable(false)
+//                                                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+//                                                            public void onClick(DialogInterface dialog, int id) {
+//                                                                onBackPressed();
+//                                                            }
+//                                                        });
+//                                                AlertDialog alert = builder.create();
+//                                                alert.show();
+//                                            }
+//
+//                                            @Override
+//                                            public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
+//                                                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+//                                                builder
+//                                                        .setMessage("Error deleting subcontractor, try again.")
+//                                                        .setCancelable(false)
+//                                                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+//                                                            public void onClick(DialogInterface dialog, int id) {
+//                                                            }
+//                                                        });
+//                                                AlertDialog alert = builder.create();
+//                                                alert.show();
+//                                            }
+//                                        }
+//                                );
+//                            }
+//                        });
+//                AlertDialog alert = builder.create();
+//                alert.show();
+//            }
+//        });
 
 
         // show soft keyboard automagically
@@ -158,7 +172,7 @@ public class SubcontractorDetails extends AppCompatActivity {
             coiExpiresAtTextFeild.setText(new DateTime(subcontractor.getCoiExpiresAt()).toString(TLConstants.shortDateFormat));
         }
 
-        coiExpiresAtTextFeild .setOnClickListener(new View.OnClickListener() {
+        coiExpiresAtTextFeild.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (subcontractor.getCoiExpiresAt() == null) {
@@ -224,10 +238,46 @@ public class SubcontractorDetails extends AppCompatActivity {
 
         imageView = (ImageView) findViewById(R.id.user_subcontractor_activity_subcontractor_details_imageView);
 
+        subcontractor.downloadCOI(new AsyncHttpResponseHandler() {
+            //            @Override
+//            public void onFailure(int statusCode, Header[] headers, byte[] responseBytes, Throwable throwable) {
+//                Log.d("FileAsyncHttpResponseHandler", file.getPath() + " failure");
+//                if (file.exists()) {
+//                    file.delete();
+//                }
+//            }
+//
+//            @Override
+//            public void onSuccess(int statusCode, Header[] headers, File response) {
+//                Log.d("FileAsyncHttpResponseHandler", file.getPath() + " success");
+//                imageView.setImageBitmap(BitmapFactory.decodeByteArray(responseBytes , 0, responseBytes.length));
+//            }
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] imageAsBytes) {
+                try {
+                    imageView.setImageBitmap(BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length));
+                    imageView.refreshDrawableState();
+                } catch (Throwable e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+            }
+
+
+        });
+
+
         downloadButton = (Button) findViewById(R.id.user_subcontractor_activity_subcontractor_details_downloadButton);
         photoButton = (Button) findViewById(R.id.user_subcontractor_activity_subcontractor_details_photoButton);
 
 
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
 

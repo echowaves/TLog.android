@@ -60,7 +60,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="5dp"
+        android:layout_margin="10dp"
         android:background="@drawable/rounded_edittext"
         android:hint="name"
         android:padding="5dip"
@@ -72,7 +72,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="5dp"
+        android:layout_margin="10dp"
         android:background="@drawable/rounded_green_button"
         android:color="@android:color/holo_blue_bright"
         android:padding="5dip"
@@ -86,7 +86,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="5dp"
+        android:layout_margin="10dp"
         android:background="@drawable/rounded_edittext"
         android:hint="COI expiration date"
         android:padding="5dip"
@@ -96,7 +96,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="5dp"
+        android:layout_margin="10dp"
         >
 
         <ImageView
