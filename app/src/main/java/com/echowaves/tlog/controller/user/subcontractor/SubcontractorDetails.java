@@ -35,6 +35,9 @@ import com.echowaves.tlog.util.TLUtil;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.leo.simplearcloader.ArcConfiguration;
+import com.leo.simplearcloader.SimpleArcDialog;
+import com.leo.simplearcloader.SimpleArcLoader;
 import com.localytics.android.Localytics;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.FileAsyncHttpResponseHandler;
@@ -76,6 +79,8 @@ public class SubcontractorDetails extends AppCompatActivity {
      */
     private GoogleApiClient client;
 
+    SimpleArcDialog mDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +90,8 @@ public class SubcontractorDetails extends AppCompatActivity {
         setContentView(R.layout.user_subcontractor_activity_subcontractor_details);
         this.context = this;
         this.activity = this;
+
+        mDialog = new SimpleArcDialog(this);
 
         subcontractor = (TLSubcontractor) TLApplicationContextProvider.getContext().getCurrentActivityObject();
 
@@ -238,6 +245,15 @@ public class SubcontractorDetails extends AppCompatActivity {
 
         imageView = (ImageView) findViewById(R.id.user_subcontractor_activity_subcontractor_details_imageView);
 
+        ArcConfiguration configuration = new ArcConfiguration(context);
+        configuration.setLoaderStyle(SimpleArcLoader.STYLE.SIMPLE_ARC);
+
+        configuration.setText("Loading...");
+
+
+        mDialog.setConfiguration(configuration);
+        mDialog.show();
+
         subcontractor.downloadCOI(new AsyncHttpResponseHandler() {
             //            @Override
 //            public void onFailure(int statusCode, Header[] headers, byte[] responseBytes, Throwable throwable) {
@@ -252,21 +268,30 @@ public class SubcontractorDetails extends AppCompatActivity {
 //                Log.d("FileAsyncHttpResponseHandler", file.getPath() + " success");
 //                imageView.setImageBitmap(BitmapFactory.decodeByteArray(responseBytes , 0, responseBytes.length));
 //            }
+
+
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] imageAsBytes) {
                 try {
                     imageView.setImageBitmap(BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length));
                     imageView.refreshDrawableState();
+
+                    mDialog.dismiss();
                 } catch (Throwable e) {
                     e.printStackTrace();
+                    mDialog.dismiss();
                 }
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
+                mDialog.dismiss();
             }
 
+            @Override
+            public void onProgress(long bytesWritten, long totalSize) {
+                //just a place holder to suppress excessive output
+            }
 
         });
 
