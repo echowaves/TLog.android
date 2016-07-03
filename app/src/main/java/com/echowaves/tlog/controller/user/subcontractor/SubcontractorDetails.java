@@ -389,8 +389,44 @@ public class SubcontractorDetails extends AppCompatActivity {
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
-            Bitmap mphoto = (Bitmap) data.getExtras().get("data");
-            imageView.setImageBitmap(mphoto);
+            final Bitmap mphoto = (Bitmap) data.getExtras().get("data");
+
+            ArcConfiguration configuration = new ArcConfiguration(context);
+            configuration.setLoaderStyle(SimpleArcLoader.STYLE.SIMPLE_ARC);
+
+            configuration.setText("Uploading COI...");
+
+
+            mDialog.setConfiguration(configuration);
+            mDialog.show();
+
+
+            subcontractor.uploadCOI(mphoto,
+                    new TLJsonHttpResponseHandler(context) {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+                            mDialog.dismiss();
+                            imageView.setImageBitmap(mphoto);
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
+                            mDialog.dismiss();
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                            builder
+                                    .setMessage("Failed to upload COI.")
+                                    .setCancelable(false)
+                                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                        }
+                                    });
+                            AlertDialog alert = builder.create();
+                            alert.show();
+                        }
+                    }
+            );
+
         }
     }
 
