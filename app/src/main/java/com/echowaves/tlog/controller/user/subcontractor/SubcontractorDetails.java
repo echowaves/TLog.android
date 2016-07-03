@@ -245,30 +245,19 @@ public class SubcontractorDetails extends AppCompatActivity {
 
         imageView = (ImageView) findViewById(R.id.user_subcontractor_activity_subcontractor_details_imageView);
 
-        ArcConfiguration configuration = new ArcConfiguration(context);
-        configuration.setLoaderStyle(SimpleArcLoader.STYLE.SIMPLE_ARC);
-
-        configuration.setText("Loading...");
-
-
-        mDialog.setConfiguration(configuration);
-        mDialog.show();
 
         subcontractor.downloadCOI(new AsyncHttpResponseHandler() {
-            //            @Override
-//            public void onFailure(int statusCode, Header[] headers, byte[] responseBytes, Throwable throwable) {
-//                Log.d("FileAsyncHttpResponseHandler", file.getPath() + " failure");
-//                if (file.exists()) {
-//                    file.delete();
-//                }
-//            }
-//
-//            @Override
-//            public void onSuccess(int statusCode, Header[] headers, File response) {
-//                Log.d("FileAsyncHttpResponseHandler", file.getPath() + " success");
-//                imageView.setImageBitmap(BitmapFactory.decodeByteArray(responseBytes , 0, responseBytes.length));
-//            }
+            @Override
+            public void onStart() {
+                ArcConfiguration configuration = new ArcConfiguration(context);
+                configuration.setLoaderStyle(SimpleArcLoader.STYLE.SIMPLE_ARC);
 
+                configuration.setText("Loading...");
+
+
+                mDialog.setConfiguration(configuration);
+                mDialog.show();
+            }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] imageAsBytes) {
@@ -286,6 +275,7 @@ public class SubcontractorDetails extends AppCompatActivity {
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 mDialog.dismiss();
+                downloadButton.setVisibility(View.GONE);
             }
 
             @Override
