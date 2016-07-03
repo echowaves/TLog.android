@@ -73,6 +73,9 @@ public class SubcontractorDetails extends AppCompatActivity {
 
     private Button downloadButton;
     private Button photoButton;
+
+    private static final int CAMERA_REQUEST = 1888;
+
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -252,7 +255,7 @@ public class SubcontractorDetails extends AppCompatActivity {
                 ArcConfiguration configuration = new ArcConfiguration(context);
                 configuration.setLoaderStyle(SimpleArcLoader.STYLE.SIMPLE_ARC);
 
-                configuration.setText("Loading...");
+                configuration.setText("Loading COI...");
 
 
                 mDialog.setConfiguration(configuration);
@@ -287,7 +290,18 @@ public class SubcontractorDetails extends AppCompatActivity {
 
 
         downloadButton = (Button) findViewById(R.id.user_subcontractor_activity_subcontractor_details_downloadButton);
+
+
+
         photoButton = (Button) findViewById(R.id.user_subcontractor_activity_subcontractor_details_photoButton);
+        photoButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(final View v) {
+                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent, CAMERA_REQUEST);
+            }
+        });
+
+
 
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -371,6 +385,15 @@ public class SubcontractorDetails extends AppCompatActivity {
 
 
     }
+
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
+            Bitmap mphoto = (Bitmap) data.getExtras().get("data");
+            imageView.setImageBitmap(mphoto);
+        }
+    }
+
 
     @Override
     public void onBackPressed() {
