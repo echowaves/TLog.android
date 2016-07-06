@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.echowaves.tlog.TLApplicationContextProvider;
+import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.FileAsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -15,16 +16,22 @@ import org.joda.time.Period;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.ByteArrayEntity;
 import cz.msebera.android.httpclient.entity.ContentType;
 import cz.msebera.android.httpclient.entity.StringEntity;
 import cz.msebera.android.httpclient.entity.mime.HttpMultipartMode;
 import cz.msebera.android.httpclient.entity.mime.MultipartEntityBuilder;
 import cz.msebera.android.httpclient.message.BasicHeader;
+import cz.msebera.android.httpclient.protocol.HTTP;
 
 /**
  * Created by dmitry on 3/29/16.
@@ -185,25 +192,38 @@ public class TLSubcontractor extends TLObject {
 
 
     public void uploadCOI(Bitmap image, JsonHttpResponseHandler responseHandler) {
-        Header[] headers = new Header[2];
-        headers[0] = new BasicHeader("Content-Type", JSON_CONTENT_TYPE);
-        headers[1] = new BasicHeader("Authorization", "Bearer " + TLUser.retreiveJwtFromLocalStorage());
-        MultipartEntityBuilder entityBuilder = MultipartEntityBuilder.create();
-        entityBuilder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.addHeader("Authorization", "Bearer " + TLUser.retreiveJwtFromLocalStorage());
+
+//        Header[] headers = new Header[1];
+//        headers[0] = new BasicHeader("Authorization", "Bearer " + TLUser.retreiveJwtFromLocalStorage());
+//        headers[1] = new BasicHeader("Content-Type", "multipart/form-data; boundary=unique-consistent-string");
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         image.compress(Bitmap.CompressFormat.PNG, 100, stream);
         byte[] byteArray = stream.toByteArray();
 
-        entityBuilder.addBinaryBody("coi", byteArray, ContentType.create("image/png"), this.getId().toString() + ".png" );
-//        entityBuilder.addTextBody("coi_expires_at", this.getCoiExpiresAt().toString() );
+        ByteArrayEntity entity= new ByteArrayEntity(byteArray);
+//        entity.setContentType("multipart/form-data; boundary=unique-consistent-string");
 
-        HTTP_CLIENT.post(
+        RequestParams params = new RequestParams();
+
+        params.put("coi", new ByteArrayInputStream(byteArray), this.getId().toString() + ".png", "image/png");
+        params.put("coi_expires_at", this.getCoiExpiresAt().toString());
+
+//        Map<String, ByteArrayInputStream> files = new HashMap<String, ByteArrayInputStream>();
+//        params.put("files", files); // url params: "files[]=pic.jpg&files[]=pic1.jpg"
+//        files.put("coi", new ByteArrayInputStream(byteArray));
+        params.setForceMultipartEntityContentType(true);
+        params.setUseJsonStreamer(true);
+
+
+        client.post(
                 TLApplicationContextProvider.getContext(),
-                getAbsoluteUrl("/subcontractors"),
-                headers,
-                entityBuilder.build(),
-                JSON_CONTENT_TYPE,
+                getAbsoluteUrl("/subcontractors/" + this.getId().toString() + "/coi_android"),
+                params,
+//                entity,
+//                "multipart/form-data; boundary=unique-consistent-string",
                 responseHandler);
 
     }
