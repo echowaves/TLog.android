@@ -97,3 +97,4 @@ public class TLApplicationContextProvider extends android.support.multidex.Multi
 //https://github.com/Kaopiz/android-segmented-control
 //https://github.com/codepath/android_guides/wiki/Using-an-ArrayAdapter-with-ListView
 //https://github.com/JoanZapata/android-iconify -- fontawesome
+//https://developer.android.com/training/camera/photobasics.html

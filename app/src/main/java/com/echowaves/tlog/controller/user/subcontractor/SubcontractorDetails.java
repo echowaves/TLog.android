@@ -7,32 +7,24 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Switch;
-import android.widget.TimePicker;
 
 import com.echowaves.tlog.R;
 import com.echowaves.tlog.TLApplicationContextProvider;
 import com.echowaves.tlog.TLConstants;
-import com.echowaves.tlog.controller.employee.Checkins;
-import com.echowaves.tlog.controller.user.employee.EmployeeActionCodes;
-import com.echowaves.tlog.controller.user.employee.Employees;
-import com.echowaves.tlog.model.TLEmployee;
 import com.echowaves.tlog.model.TLSubcontractor;
-import com.echowaves.tlog.model.TLUser;
 import com.echowaves.tlog.util.TLJsonHttpResponseHandler;
 import com.echowaves.tlog.util.TLUtil;
-import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.leo.simplearcloader.ArcConfiguration;
@@ -40,14 +32,14 @@ import com.leo.simplearcloader.SimpleArcDialog;
 import com.leo.simplearcloader.SimpleArcLoader;
 import com.localytics.android.Localytics;
 import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.FileAsyncHttpResponseHandler;
 
 import org.apache.commons.validator.GenericValidator;
 import org.joda.time.DateTime;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -74,7 +66,11 @@ public class SubcontractorDetails extends AppCompatActivity {
     private Button downloadButton;
     private Button photoButton;
 
-    private static final int CAMERA_REQUEST = 1888;
+//    private static final int CAPTURE_IMAGE_THUMB_ACTIVITY_REQUEST_CODE = 1888;
+    public static final int CAPTURE_IMAGE_FULLSIZE_ACTIVITY_REQUEST_CODE = 1777;
+
+    File currentImageFile;
+//    String mCurrentPhotoPath;
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -296,8 +292,7 @@ public class SubcontractorDetails extends AppCompatActivity {
         photoButton = (Button) findViewById(R.id.user_subcontractor_activity_subcontractor_details_photoButton);
         photoButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(final View v) {
-                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(cameraIntent, CAMERA_REQUEST);
+                dispatchTakePictureIntent();
             }
         });
 
@@ -387,9 +382,73 @@ public class SubcontractorDetails extends AppCompatActivity {
     }
 
 
+    private File createImageFile()  {
+        // Create an image file name
+//        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + subcontractor.getId() + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+
+        File image = null;
+        try {
+            image = File.createTempFile(
+                    imageFileName,  /* prefix */
+                    ".jpg",         /* suffix */
+                    storageDir      /* directory */
+            );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Save a file: path for use with ACTION_VIEW intents
+//        mCurrentPhotoPath = "file:" + image.getAbsolutePath();
+        return image;
+    }
+
+    private void dispatchTakePictureIntent() {
+        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+        currentImageFile = createImageFile();
+
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(currentImageFile));
+        startActivityForResult(intent, CAPTURE_IMAGE_FULLSIZE_ACTIVITY_REQUEST_CODE);
+
+    }
+
+    private static Bitmap decodeSampledBitmapFromFile(String path, int reqWidth, int reqHeight)
+    { // BEST QUALITY MATCH
+
+        //First decode with inJustDecodeBounds=true to check dimensions
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(path, options);
+
+        // Calculate inSampleSize, Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        options.inPreferredConfig = Bitmap.Config.RGB_565;
+        int inSampleSize = 1;
+
+        if (height > reqHeight)
+        {
+            inSampleSize = Math.round((float)height / (float)reqHeight);
+        }
+        int expectedWidth = width / inSampleSize;
+
+        if (expectedWidth > reqWidth)
+        {
+            //if(Math.round((float)width / (float)reqWidth) > inSampleSize) // If bigger SampSize..
+            inSampleSize = Math.round((float)width / (float)reqWidth);
+        }
+
+        options.inSampleSize = inSampleSize;
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+
+        return BitmapFactory.decodeFile(path, options);
+    }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
-            final Bitmap mphoto = (Bitmap) data.getExtras().get("data");
+        if (requestCode == CAPTURE_IMAGE_FULLSIZE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
 
             ArcConfiguration configuration = new ArcConfiguration(context);
             configuration.setLoaderStyle(SimpleArcLoader.STYLE.SIMPLE_ARC);
@@ -401,31 +460,48 @@ public class SubcontractorDetails extends AppCompatActivity {
             mDialog.show();
 
 
-            subcontractor.uploadCOI(mphoto,
-                    new TLJsonHttpResponseHandler(context) {
-                        @Override
-                        public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
-                            mDialog.dismiss();
-                            imageView.setImageBitmap(mphoto);
-                        }
+            Bitmap bitmap = decodeSampledBitmapFromFile(currentImageFile.getAbsolutePath(), 1000, 700);
+            imageView.setImageBitmap(bitmap);
 
-                        @Override
-                        public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
-                            mDialog.dismiss();
 
-                            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                            builder
-                                    .setMessage("Failed to upload COI.")
-                                    .setCancelable(false)
-                                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                        }
-                                    });
-                            AlertDialog alert = builder.create();
-                            alert.show();
+            try {
+                subcontractor.uploadCOI(currentImageFile,
+                        new TLJsonHttpResponseHandler(context) {
+                            @Override
+                            public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+                                mDialog.dismiss();
+                            }
+
+                            @Override
+                            public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
+                                mDialog.dismiss();
+
+                                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                                builder
+                                        .setMessage("Failed to upload COI.")
+                                        .setCancelable(false)
+                                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                            }
+                                        });
+                                AlertDialog alert = builder.create();
+                                alert.show();
+                            }
                         }
-                    }
-            );
+                );
+            } catch (FileNotFoundException e) {
+                Log.e("+++++++++++++++++++++++++++", e.toString(), e);
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder
+                        .setMessage("Failed to upload COI. File not found.")
+                        .setCancelable(false)
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
 
         }
     }

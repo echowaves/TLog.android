@@ -20,6 +20,7 @@ import org.json.JSONObject;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.HashMap;
@@ -192,30 +193,19 @@ public class TLSubcontractor extends TLObject {
     }
 
 
-    public void uploadCOI(Bitmap image, JsonHttpResponseHandler responseHandler) {
+    public void uploadCOI(File imageFile, JsonHttpResponseHandler responseHandler) throws FileNotFoundException {
         AsyncHttpClient client = new AsyncHttpClient();
         client.addHeader("Authorization", "Bearer " + TLUser.retreiveJwtFromLocalStorage());
 
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        image.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        byte[] byteArray = stream.toByteArray();
-        String imageEncoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
-
         RequestParams params = new RequestParams();
 
-        params.put("coi", imageEncoded);
+        params.put("coi", imageFile, this.getId() + ".jpg");
         params.put("coi_expires_at", this.getCoiExpiresAt().toString());
-
-//        Map<String, ByteArrayInputStream> files = new HashMap<String, ByteArrayInputStream>();
-//        params.put("files", files); // url params: "files[]=pic.jpg&files[]=pic1.jpg"
-//        files.put("coi", new ByteArrayInputStream(byteArray));
-        params.setForceMultipartEntityContentType(true);
-        params.setUseJsonStreamer(true);
 
 
         client.post(
                 TLApplicationContextProvider.getContext(),
-                getAbsoluteUrl("/subcontractors/" + this.getId().toString() + "/coi_android"),
+                getAbsoluteUrl("/subcontractors/" + this.getId().toString() + "/coi"),
                 params,
                 responseHandler);
 
