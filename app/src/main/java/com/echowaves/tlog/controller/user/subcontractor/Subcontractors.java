@@ -85,9 +85,6 @@ public class Subcontractors extends AppCompatActivity {
 
         subcontractors = new ArrayList<TLSubcontractor>();
 
-        // Create the adapter to convert the array to views
-        subcontractorsAdapter = new SubcontractorsAdapter(this, subcontractors);
-
 
         TLSubcontractor.loadAll(
                 new TLJsonHttpResponseHandler(context) {
@@ -128,6 +125,9 @@ public class Subcontractors extends AppCompatActivity {
                                 subcontractors.add(subcontractor);
 
                             }
+
+                            // Create the adapter to convert the array to views
+                            subcontractorsAdapter = new SubcontractorsAdapter(context, subcontractors);
 
                             listView.setAdapter(subcontractorsAdapter);
 
