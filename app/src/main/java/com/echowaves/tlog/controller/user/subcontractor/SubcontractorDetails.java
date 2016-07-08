@@ -385,19 +385,26 @@ public class SubcontractorDetails extends AppCompatActivity {
     private File createImageFile()  {
         // Create an image file name
 //        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + subcontractor.getId() + "_";
+        String imageFileName = subcontractor.getId() + ".png";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
 
-        File image = null;
+        File image = new File(storageDir + File.separator + imageFileName);
         try {
-            image = File.createTempFile(
-                    imageFileName,  /* prefix */
-                    ".jpg",         /* suffix */
-                    storageDir      /* directory */
-            );
+            image.createNewFile();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+//        File image = null;
+//        try {
+//            image = File.createTempFile(
+//                    imageFileName,  /* prefix */
+//                    ".jpg",         /* suffix */
+//                    storageDir      /* directory */
+//            );
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
         // Save a file: path for use with ACTION_VIEW intents
 //        mCurrentPhotoPath = "file:" + image.getAbsolutePath();
