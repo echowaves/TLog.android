@@ -1,16 +1,21 @@
 package com.echowaves.tlog.controller.user.subcontractor;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -68,7 +73,7 @@ public class SubcontractorDetails extends AppCompatActivity {
 
 //    private static final int CAPTURE_IMAGE_THUMB_ACTIVITY_REQUEST_CODE = 1888;
     public static final int CAPTURE_IMAGE_FULLSIZE_ACTIVITY_REQUEST_CODE = 1777;
-
+    public static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE =36264;
     File currentImageFile;
 //    String mCurrentPhotoPath;
 
@@ -94,7 +99,7 @@ public class SubcontractorDetails extends AppCompatActivity {
 
         subcontractor = (TLSubcontractor) TLApplicationContextProvider.getContext().getCurrentActivityObject();
 
-        Log.d(getClass().getName(), "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% " + subcontractor.getName());
+//        Log.d(getClass().getName(), "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% " + subcontractor.getName());
 
         backButton = (Button) findViewById(R.id.user_subcontractor_activity_subcontractor_details_backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -286,6 +291,11 @@ public class SubcontractorDetails extends AppCompatActivity {
 
 
         downloadButton = (Button) findViewById(R.id.user_subcontractor_activity_subcontractor_details_downloadButton);
+        downloadButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(final View v) {
+                dispatchSavePicture();
+            }
+        });
 
 
 
@@ -303,6 +313,8 @@ public class SubcontractorDetails extends AppCompatActivity {
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
+
+
 
 
     void saveButtonClicked(final View v) {
@@ -395,21 +407,100 @@ public class SubcontractorDetails extends AppCompatActivity {
             e.printStackTrace();
         }
 
-//        File image = null;
-//        try {
-//            image = File.createTempFile(
-//                    imageFileName,  /* prefix */
-//                    ".jpg",         /* suffix */
-//                    storageDir      /* directory */
-//            );
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
-        // Save a file: path for use with ACTION_VIEW intents
-//        mCurrentPhotoPath = "file:" + image.getAbsolutePath();
         return image;
     }
+
+    private void saveImage() {
+        Log.d("************************************ ", "saving image: " + "sub_" + subcontractor.getId() + ".png");
+        Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+        String savedImageURL = MediaStore.Images.Media
+                .insertImage(
+                        getContentResolver(),
+                        bitmap,
+                        "sub_" + subcontractor.getId() + ".png",
+                        "COI for subcontractor " + subcontractor.getName());
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder
+                .setMessage("Image Saved to galery: " + "sub_" + subcontractor.getId() + ".png")
+                .setCancelable(false)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    private void dispatchSavePicture() {
+
+
+// Here, thisActivity is the current activity
+        if (ContextCompat.checkSelfPermission(context,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder
+                        .setMessage("Please grant permission to write an image to the galery on your device.")
+                        .setCancelable(false)
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
+
+                // Show an expanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+            } else {
+                // No explanation needed, we can request the permission.
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        } else {
+            saveImage();
+        }
+
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+
+                    saveImage();
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
+    }
+
 
     private void dispatchTakePictureIntent() {
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
@@ -524,5 +615,6 @@ public class SubcontractorDetails extends AppCompatActivity {
         startActivity(subcontractors);
         return;
     }
+
 
 }

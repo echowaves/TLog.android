@@ -116,7 +116,7 @@ public class Subcontractors extends AppCompatActivity {
                                         );
 
 
-                                Log.d("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", jsonSubcontractor.getString("coi_expires_at"));
+//                                Log.d("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", jsonSubcontractor.getString("coi_expires_at"));
                                 if(!jsonSubcontractor.getString("coi_expires_at").equals("null")) {
                                     Date coi_expires_at = new DateTime(jsonSubcontractor.getString("coi_expires_at")).toDate();
                                     subcontractor.setCoiExpiresAt(coi_expires_at);

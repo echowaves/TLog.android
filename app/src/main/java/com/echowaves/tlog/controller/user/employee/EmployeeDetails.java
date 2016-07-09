@@ -63,7 +63,7 @@ public class EmployeeDetails extends AppCompatActivity {
 
         employee = (TLEmployee) TLApplicationContextProvider.getContext().getCurrentActivityObject();
 
-        Log.d(getClass().getName(), "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% " + employee.getName());
+//        Log.d(getClass().getName(), "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% " + employee.getName());
 
         backButton = (Button) findViewById(R.id.user_employee_activity_employee_details_backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
