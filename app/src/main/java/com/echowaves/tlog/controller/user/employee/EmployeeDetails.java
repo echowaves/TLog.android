@@ -26,7 +26,6 @@ import com.localytics.android.Localytics;
 
 import org.apache.commons.validator.GenericValidator;
 import org.joda.time.DateTime;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -166,7 +165,6 @@ public class EmployeeDetails extends AppCompatActivity {
                         });
                 AlertDialog alert = builder.create();
                 alert.show();
-
 
             }
         });
@@ -310,8 +308,8 @@ public class EmployeeDetails extends AppCompatActivity {
             isActiveSwitch.setChecked(false);
             checkinsButton.setVisibility(View.GONE);
         } else {
-            isActiveSwitch.setVisibility(View.VISIBLE);
-            checkinsButton.setVisibility(View.GONE);
+            isActiveSwitch.setChecked(true);
+            checkinsButton.setVisibility(View.VISIBLE);
         }
 
         if (employee.getSubcontractorId() == null) {
