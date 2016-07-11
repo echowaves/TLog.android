@@ -117,59 +117,71 @@ public class SubcontractorDetails extends AppCompatActivity {
 
 
         deleteButton = (Button) findViewById(R.id.user_subcontractor_activity_subcontractor_details_deleteButton);
-//        deleteButton.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(final View v) {
-//                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-//                builder
-//                        .setMessage("Are you sure want to delete the subcontractor?")
-//                        .setCancelable(true)
-//                        .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-//                            public void onClick(DialogInterface dialog, int id) {
-//                            }
-//                        })
-//                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-//                            public void onClick(DialogInterface dialog, int id) {
-//
-//                                subcontractor.delete(
-//                                        new TLJsonHttpResponseHandler(v.getContext()) {
-//                                            @Override
-//                                            public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
-//                                                Log.d(">>>>>>>>>>>>>>>>>>>> JSONResponse", jsonResponse.toString());
-//
-//                                                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-//                                                builder
-//                                                        .setMessage("Subcontractor successfuly deleted.")
-//                                                        .setCancelable(false)
-//                                                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-//                                                            public void onClick(DialogInterface dialog, int id) {
-//                                                                onBackPressed();
-//                                                            }
-//                                                        });
-//                                                AlertDialog alert = builder.create();
-//                                                alert.show();
-//                                            }
-//
-//                                            @Override
-//                                            public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
-//                                                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-//                                                builder
-//                                                        .setMessage("Error deleting subcontractor, try again.")
-//                                                        .setCancelable(false)
-//                                                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-//                                                            public void onClick(DialogInterface dialog, int id) {
-//                                                            }
-//                                                        });
-//                                                AlertDialog alert = builder.create();
-//                                                alert.show();
-//                                            }
-//                                        }
-//                                );
-//                            }
-//                        });
-//                AlertDialog alert = builder.create();
-//                alert.show();
-//            }
-//        });
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(final View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                builder
+                        .setMessage("Are you sure want to delete the subcontractor?")
+                        .setCancelable(true)
+                        .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                            }
+                        })
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+
+                                subcontractor.deleteCOI(new TLJsonHttpResponseHandler(
+                                                                v.getContext()) {
+                                                            @Override
+                                                            public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+                                                                Log.d(">>>>>>>>>>>>>>>>>>>> JSONResponse", jsonResponse.toString());
+
+                                                            }
+                                                        }
+                                );
+
+
+                                subcontractor.delete(
+                                        new TLJsonHttpResponseHandler(v.getContext()) {
+                                            @Override
+                                            public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+                                                Log.d(">>>>>>>>>>>>>>>>>>>> JSONResponse", jsonResponse.toString());
+
+                                                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                                                builder
+                                                        .setMessage("Subcontractor successfuly deleted.")
+                                                        .setCancelable(false)
+                                                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                                            public void onClick(DialogInterface dialog, int id) {
+                                                                onBackPressed();
+                                                            }
+                                                        });
+                                                AlertDialog alert = builder.create();
+                                                alert.show();
+                                            }
+
+                                            @Override
+                                            public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
+                                                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                                                builder
+                                                        .setMessage("Error deleting subcontractor, try again.")
+                                                        .setCancelable(false)
+                                                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                                            public void onClick(DialogInterface dialog, int id) {
+                                                            }
+                                                        });
+                                                AlertDialog alert = builder.create();
+                                                alert.show();
+                                            }
+                                        }
+                                );
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
+        });
 
 
         // show soft keyboard automagically
