@@ -122,10 +122,29 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="sub-contractor?" />
+                    android:layout_margin="0dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="sub-contractor?" />
+
+                    <Button
+                        android:id="@+id/user_employee_activity_employee_details_subcontractor_Button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:gravity="center_vertical|end"
+                        android:text="Subcontractor"
+                        android:textColor="@android:color/holo_blue_light"
+                        android:textSize="15dp" />
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/user_employee_activity_employee_details_sub_Text"
@@ -138,6 +157,7 @@
             </LinearLayout>
 
         </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -183,7 +203,7 @@
             android:id="@+id/user_employee_activity_employee_details_actionCodes_Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="5dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:gravity="center_vertical|start"
@@ -197,7 +217,7 @@
             android:id="@+id/user_employee_activity_employee_details_checkins_Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="5dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:gravity="center_vertical|end"

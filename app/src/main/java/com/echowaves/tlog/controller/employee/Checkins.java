@@ -159,9 +159,12 @@ public class Checkins extends AppCompatActivity {
                                     new TLEmployee(
                                             jsonEmployee.getInt("id"),
                                             jsonEmployee.getString("name"),
-                                            jsonEmployee.getString("email"),
-                                            jsonEmployee.getString("activation_code")
+                                            jsonEmployee.getString("email")
                                     );
+
+                            if(jsonEmployee.getString("activation_code") != null && !jsonEmployee.getString("activation_code").equals("null")) {
+                                employee.setActivationCode(jsonEmployee.getString("activation_code"));
+                            }
 
 
                             JSONArray jsonCheckins = (JSONArray) jsonResponse.get("checkins");

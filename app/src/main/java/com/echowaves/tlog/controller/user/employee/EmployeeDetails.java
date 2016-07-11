@@ -18,16 +18,20 @@ import com.echowaves.tlog.R;
 import com.echowaves.tlog.TLApplicationContextProvider;
 import com.echowaves.tlog.controller.employee.Checkins;
 import com.echowaves.tlog.model.TLEmployee;
+import com.echowaves.tlog.model.TLSubcontractor;
 import com.echowaves.tlog.model.TLUser;
 import com.echowaves.tlog.util.TLJsonHttpResponseHandler;
 import com.echowaves.tlog.util.TLUtil;
 import com.localytics.android.Localytics;
 
 import org.apache.commons.validator.GenericValidator;
+import org.joda.time.DateTime;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -36,7 +40,7 @@ public class EmployeeDetails extends AppCompatActivity {
     private Activity activity;
 
     private TLEmployee employee;
-
+    private TLSubcontractor subcontractor;
 
     private Button backButton;
     private Button deleteButton;
@@ -44,8 +48,9 @@ public class EmployeeDetails extends AppCompatActivity {
     private EditText nameTextFeild;
     private EditText emailTextField;
 
-    private Switch subContractorSwitch;
+    private Switch isSubContractorSwitch;
     private Switch isActiveSwitch;
+    private Button subcontractorNameButton;
 
     private Button saveButton;
     private Button actionCodesButton;
@@ -178,9 +183,8 @@ public class EmployeeDetails extends AppCompatActivity {
 //        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
 
-        subContractorSwitch = (Switch) findViewById(R.id.user_employee_activity_employee_details_sub_Switch);
-        subContractorSwitch.setChecked(employee.getSubcontractorId()!= null?true:false);
-        subContractorSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        isSubContractorSwitch = (Switch) findViewById(R.id.user_employee_activity_employee_details_sub_Switch);
+        isSubContractorSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 // do something, the isChecked will be
                 // true if the switch is in the On position
@@ -189,14 +193,12 @@ public class EmployeeDetails extends AppCompatActivity {
             }
         });
 
+
+        subcontractorNameButton = (Button) findViewById(R.id.user_employee_activity_employee_details_subcontractor_Button);
+
+
         isActiveSwitch = (Switch) findViewById(R.id.user_employee_activity_employee_details_active_Switch);
         isActiveSwitch.setChecked(employee.isActive());
-
-        if (employee.isActive()) {
-            this.checkinsButton.setVisibility(View.VISIBLE);
-        } else {
-            this.checkinsButton.setVisibility(View.INVISIBLE);
-        }
 
 
         isActiveSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -213,7 +215,7 @@ public class EmployeeDetails extends AppCompatActivity {
                                     try {
                                         String activationCode = jsonResponse.getString("activation_code");
                                         employee.setActivationCode(activationCode);
-                                    } catch(JSONException exception) {
+                                    } catch (JSONException exception) {
                                         Log.e("json exception", exception.toString());
                                     }
 
@@ -291,9 +293,68 @@ public class EmployeeDetails extends AppCompatActivity {
             }
         });
 
+        updateViews();
+
 
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        updateViews();
+    }
+
+    private void updateViews() {
+
+        if (employee.getActivationCode() == null) {
+            isActiveSwitch.setChecked(false);
+            checkinsButton.setVisibility(View.GONE);
+        } else {
+            isActiveSwitch.setVisibility(View.VISIBLE);
+            checkinsButton.setVisibility(View.GONE);
+        }
+
+        if (employee.getSubcontractorId() == null) {
+            isSubContractorSwitch.setChecked(false);
+            subcontractorNameButton.setVisibility(View.GONE);
+        } else {
+            isSubContractorSwitch.setChecked(true);
+            subcontractorNameButton.setVisibility(View.VISIBLE);
+
+            subcontractor = new TLSubcontractor(employee.getSubcontractorId());
+            subcontractor.load(
+                    new TLJsonHttpResponseHandler(context) {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+                            Log.d(">>>>>>>>>>>>>>>>>>>> JSONResponse", jsonResponse.toString());
+                            try {
+                                Log.d("----------------------------", "setting subcontractor");
+                                JSONObject subcontractorJson = jsonResponse.getJSONObject("subcontractor");
+                                subcontractor.setId(subcontractorJson.getInt("id"));
+                                subcontractor.setName(subcontractorJson.getString("name"));
+                                if (subcontractorJson.getString("coi_expires_at") != null && !subcontractorJson.getString("coi_expires_at").equals("null")) {
+
+                                    Log.d("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&", subcontractorJson.getString("coi_expires_at"));
+
+                                    Date coi_expires_at = new DateTime(subcontractorJson.getString("coi_expires_at")).toDate();
+                                    subcontractor.setCoiExpiresAt(coi_expires_at);
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            subcontractorNameButton.setText(subcontractor.getName());
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
+                            Log.e("Error loading sub", "error loading subcontractor");
+                        }
+                    });
+
+        }
+
+    }
 
     void saveButtonClicked(final View v) {
         TLUtil.hideKeyboard(activity);
@@ -323,7 +384,7 @@ public class EmployeeDetails extends AppCompatActivity {
 
             employee.setName(nameTextFeild.getText().toString());
             employee.setEmail(emailTextField.getText().toString());
-//            employee.setSubcontractor(subContractorSwitch.isChecked());
+//            employee.setSubcontractor(isSubContractorSwitch.isChecked());
 
             employee.update(
                     new TLJsonHttpResponseHandler(v.getContext()) {

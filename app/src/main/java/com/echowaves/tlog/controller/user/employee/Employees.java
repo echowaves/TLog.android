@@ -127,17 +127,22 @@ public class Employees extends AppCompatActivity {
                                         new TLEmployee(
                                                 jsonEmployee.getInt("id"),
                                                 jsonEmployee.getString("name"),
-                                                jsonEmployee.getString("email"),
-                                                jsonEmployee.getString("activation_code")
+                                                jsonEmployee.getString("email")
                                         );
+
+                                if(jsonEmployee.getString("activation_code") != null && !jsonEmployee.getString("activation_code").equals("null")) {
+                                    employee.setActivationCode(jsonEmployee.getString("activation_code"));
+                                    activeEmployees.add(employee);
+                                } else {
+                                    inactiveEmployees.add(employee);
+                                }
+
+                                if(jsonEmployee.getString("subcontractor_id") != null && !jsonEmployee.getString("subcontractor_id").equals("null")) {
+                                    employee.setSubcontractorId(jsonEmployee.getInt("subcontractor_id"));
+                                }
 
                                 allEmployees.add(employee);
 
-                                if(employee.isActive() == false) {
-                                    inactiveEmployees.add(employee);
-                                } else {
-                                    activeEmployees.add(employee);
-                                }
                             }
 
 

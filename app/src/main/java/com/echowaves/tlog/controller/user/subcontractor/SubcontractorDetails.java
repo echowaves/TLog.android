@@ -71,9 +71,9 @@ public class SubcontractorDetails extends AppCompatActivity {
     private Button downloadButton;
     private Button photoButton;
 
-//    private static final int CAPTURE_IMAGE_THUMB_ACTIVITY_REQUEST_CODE = 1888;
+    //    private static final int CAPTURE_IMAGE_THUMB_ACTIVITY_REQUEST_CODE = 1888;
     public static final int CAPTURE_IMAGE_FULLSIZE_ACTIVITY_REQUEST_CODE = 1777;
-    public static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE =36264;
+    public static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 36264;
     File currentImageFile;
 //    String mCurrentPhotoPath;
 
@@ -310,7 +310,6 @@ public class SubcontractorDetails extends AppCompatActivity {
         });
 
 
-
         photoButton = (Button) findViewById(R.id.user_subcontractor_activity_subcontractor_details_photoButton);
         photoButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(final View v) {
@@ -319,14 +318,10 @@ public class SubcontractorDetails extends AppCompatActivity {
         });
 
 
-
-
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
-
-
 
 
     void saveButtonClicked(final View v) {
@@ -406,7 +401,7 @@ public class SubcontractorDetails extends AppCompatActivity {
     }
 
 
-    private File createImageFile()  {
+    private File createImageFile() {
         // Create an image file name
 //        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = subcontractor.getId() + ".png";
@@ -523,8 +518,7 @@ public class SubcontractorDetails extends AppCompatActivity {
 
     }
 
-    private static Bitmap decodeSampledBitmapFromFile(String path, int reqWidth, int reqHeight)
-    { // BEST QUALITY MATCH
+    private static Bitmap decodeSampledBitmapFromFile(String path, int reqWidth, int reqHeight) { // BEST QUALITY MATCH
 
         //First decode with inJustDecodeBounds=true to check dimensions
         final BitmapFactory.Options options = new BitmapFactory.Options();
@@ -537,16 +531,14 @@ public class SubcontractorDetails extends AppCompatActivity {
         options.inPreferredConfig = Bitmap.Config.RGB_565;
         int inSampleSize = 1;
 
-        if (height > reqHeight)
-        {
-            inSampleSize = Math.round((float)height / (float)reqHeight);
+        if (height > reqHeight) {
+            inSampleSize = Math.round((float) height / (float) reqHeight);
         }
         int expectedWidth = width / inSampleSize;
 
-        if (expectedWidth > reqWidth)
-        {
+        if (expectedWidth > reqWidth) {
             //if(Math.round((float)width / (float)reqWidth) > inSampleSize) // If bigger SampSize..
-            inSampleSize = Math.round((float)width / (float)reqWidth);
+            inSampleSize = Math.round((float) width / (float) reqWidth);
         }
 
         options.inSampleSize = inSampleSize;

@@ -80,10 +80,10 @@ public class TLEmployee extends TLObject {
         this.email = email;
     }
 
-    public TLEmployee(Integer id, String name, String email, String activationCode) {
-        this(id, name, email);
-        this.activationCode = activationCode;
-    }
+//    public TLEmployee(Integer id, String name, String email, String activationCode) {
+//        this(id, name, email);
+//        this.activationCode = activationCode;
+//    }
 
 
     public static void storeActivationCodeLocally(String activationCode) {
