@@ -110,61 +110,7 @@ public class EmployeeDetails extends AppCompatActivity {
         deleteButton = (Button) findViewById(R.id.user_employee_activity_employee_details_deleteButton);
         deleteButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(final View v) {
-
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                builder
-                        .setMessage("Are you sure want to delete the employee?")
-                        .setCancelable(true)
-                        .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                            }
-                        })
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-
-                                employee.delete(
-                                        new TLJsonHttpResponseHandler(v.getContext()) {
-                                            @Override
-                                            public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
-                                                Log.d(">>>>>>>>>>>>>>>>>>>> JSONResponse", jsonResponse.toString());
-
-                                                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                                                builder
-                                                        .setMessage("Employee successfuly deleted.")
-                                                        .setCancelable(false)
-                                                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                                            public void onClick(DialogInterface dialog, int id) {
-                                                                onBackPressed();
-                                                            }
-                                                        });
-                                                AlertDialog alert = builder.create();
-                                                alert.show();
-
-
-                                            }
-
-                                            @Override
-                                            public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
-                                                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                                                builder
-                                                        .setMessage("Error deleting employee, try again.")
-                                                        .setCancelable(false)
-                                                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                                            public void onClick(DialogInterface dialog, int id) {
-                                                            }
-                                                        });
-                                                AlertDialog alert = builder.create();
-                                                alert.show();
-                                            }
-                                        }
-
-                                );
-
-                            }
-                        });
-                AlertDialog alert = builder.create();
-                alert.show();
+                deleteClicked(v);
 
             }
         });
@@ -182,12 +128,11 @@ public class EmployeeDetails extends AppCompatActivity {
 
 
         isSubContractorSwitch = (Switch) findViewById(R.id.user_employee_activity_employee_details_sub_Switch);
+        isSubContractorSwitch.setChecked(employee.getSubcontractorId() == null ? false : true);
+
         isSubContractorSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                // do something, the isChecked will be
-                // true if the switch is in the On position
-//                employee.setSubcontractorId(isChecked);
-                saveButtonClicked(buttonView);
+            public void onCheckedChanged(final CompoundButton v, boolean isChecked) {
+                isSubcontractorSwitched(isChecked);
             }
         });
 
@@ -201,99 +146,200 @@ public class EmployeeDetails extends AppCompatActivity {
 
         isActiveSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(final CompoundButton v, boolean isChecked) {
-                TLUtil.hideKeyboard(activity);
-                if (isChecked) {
-                    employee.activate(
-                            new TLJsonHttpResponseHandler(v.getContext()) {
-                                @Override
-                                public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
-                                    Log.d(">>>>>>>>>>>>>>>>>>>> JSONResponse", jsonResponse.toString());
-                                    checkinsButton.setVisibility(View.VISIBLE);
-
-                                    try {
-                                        String activationCode = jsonResponse.getString("activation_code");
-                                        employee.setActivationCode(activationCode);
-                                    } catch (JSONException exception) {
-                                        Log.e("json exception", exception.toString());
-                                    }
-
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                                    builder
-                                            .setMessage("Employee successfuly activated, activation email is sent.")
-                                            .setCancelable(false)
-                                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int id) {
-
-                                                }
-                                            });
-                                    AlertDialog alert = builder.create();
-                                    alert.show();
-
-                                }
-
-                                @Override
-                                public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                                    builder
-                                            .setMessage("Error activating employee, try again.")
-                                            .setCancelable(false)
-                                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int id) {
-                                                }
-                                            });
-                                    AlertDialog alert = builder.create();
-                                    alert.show();
-                                }
-                            }
-                    );
-                } else {
-                    employee.deactivate(
-                            new TLJsonHttpResponseHandler(v.getContext()) {
-                                @Override
-                                public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
-                                    Log.d(">>>>>>>>>>>>>>>>>>>> JSONResponse", jsonResponse.toString());
-                                    checkinsButton.setVisibility(View.INVISIBLE);
-
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                                    builder
-                                            .setMessage("Employee successfuly deactivated.")
-                                            .setCancelable(false)
-                                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int id) {
-
-                                                }
-                                            });
-                                    AlertDialog alert = builder.create();
-                                    alert.show();
-
-
-                                }
-
-                                @Override
-                                public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                                    builder
-                                            .setMessage("Error deactivating employee, try again.")
-                                            .setCancelable(false)
-                                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int id) {
-                                                }
-                                            });
-                                    AlertDialog alert = builder.create();
-                                    alert.show();
-                                }
-                            }
-                    );
-
-                }
-
-
+                isActiveSwitched(isChecked);
             }
         });
 
         updateViews();
+    }
+
+    private void deleteClicked(final View v) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+        builder
+                .setMessage("Are you sure want to delete the employee?")
+                .setCancelable(true)
+                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                    }
+                })
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        employee.delete(
+                                new TLJsonHttpResponseHandler(v.getContext()) {
+                                    @Override
+                                    public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+                                        Log.d(">>>>>>>>>>>>>>>>>>>> JSONResponse", jsonResponse.toString());
+
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                                        builder
+                                                .setMessage("Employee successfuly deleted.")
+                                                .setCancelable(false)
+                                                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                                    public void onClick(DialogInterface dialog, int id) {
+                                                        onBackPressed();
+                                                    }
+                                                });
+                                        AlertDialog alert = builder.create();
+                                        alert.show();
 
 
+                                    }
+
+                                    @Override
+                                    public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                                        builder
+                                                .setMessage("Error deleting employee, try again.")
+                                                .setCancelable(false)
+                                                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                                    public void onClick(DialogInterface dialog, int id) {
+                                                    }
+                                                });
+                                        AlertDialog alert = builder.create();
+                                        alert.show();
+                                    }
+                                }
+
+                        );
+
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    private void isSubcontractorSwitched(boolean isChecked) {
+        TLUtil.hideKeyboard(activity);
+        // do something, the isChecked will be
+
+        if (!isChecked) {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder
+                    .setMessage("Are you sure want to delete the employee from subcontractor?")
+                    .setCancelable(true)
+                    .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            updateViews();
+                        }
+                    })
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+
+
+                            employee.deleteFromSubcontractor(new TLJsonHttpResponseHandler(context) {
+                                                                 @Override
+                                                                 public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+                                                                     Log.d(">>>>>>>>>>>>>>>>>>>> JSONResponse", jsonResponse.toString());
+                                                                     subcontractorNameButton.setVisibility(View.GONE);
+                                                                     employee.setSubcontractorId(null);
+                                                                     updateViews();
+                                                                 }
+
+                                                                 @Override
+                                                                 public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
+                                                                     Log.e("EmployeeDetails", "error deleeting employee from subcontractor");
+                                                                 }
+                                                             }
+                            );
+
+                        }
+                    });
+            AlertDialog alert = builder.create();
+            alert.show();
+        } else {
+//            intent to pick subcontractor      PickSubcontractorViewController
+        }
+    }
+
+
+    private void isActiveSwitched(boolean isChecked) {
+        TLUtil.hideKeyboard(activity);
+        if (isChecked) {
+            employee.activate(
+                    new TLJsonHttpResponseHandler(context) {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+                            Log.d(">>>>>>>>>>>>>>>>>>>> JSONResponse", jsonResponse.toString());
+                            checkinsButton.setVisibility(View.VISIBLE);
+
+                            try {
+                                String activationCode = jsonResponse.getString("activation_code");
+                                employee.setActivationCode(activationCode);
+                            } catch (JSONException exception) {
+                                Log.e("json exception", exception.toString());
+                            }
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                            builder
+                                    .setMessage("Employee successfuly activated, activation email is sent.")
+                                    .setCancelable(false)
+                                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+
+                                        }
+                                    });
+                            AlertDialog alert = builder.create();
+                            alert.show();
+
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                            builder
+                                    .setMessage("Error activating employee, try again.")
+                                    .setCancelable(false)
+                                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                        }
+                                    });
+                            AlertDialog alert = builder.create();
+                            alert.show();
+                        }
+                    }
+            );
+        } else {
+            employee.deactivate(
+                    new TLJsonHttpResponseHandler(context) {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+                            Log.d(">>>>>>>>>>>>>>>>>>>> JSONResponse", jsonResponse.toString());
+                            checkinsButton.setVisibility(View.INVISIBLE);
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                            builder
+                                    .setMessage("Employee successfuly deactivated.")
+                                    .setCancelable(false)
+                                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+
+                                        }
+                                    });
+                            AlertDialog alert = builder.create();
+                            alert.show();
+
+
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                            builder
+                                    .setMessage("Error deactivating employee, try again.")
+                                    .setCancelable(false)
+                                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                        }
+                                    });
+                            AlertDialog alert = builder.create();
+                            alert.show();
+                        }
+                    }
+            );
+
+        }
     }
 
     @Override

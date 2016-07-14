@@ -256,4 +256,19 @@ public class TLEmployee extends TLObject {
                 responseHandler);
     }
 
+    public void deleteFromSubcontractor(JsonHttpResponseHandler responseHandler) {
+        Header[] headers = new Header[2];
+        headers[0] = new BasicHeader("Content-Type", JSON_CONTENT_TYPE);
+        headers[1] = new BasicHeader("Authorization", "Bearer " + TLUser.retreiveJwtFromLocalStorage());
+
+        HTTP_CLIENT.delete(
+                TLApplicationContextProvider.getContext(),
+                getAbsoluteUrl("/employees/" + this.getId().toString() + "/subcontractor"),
+                headers,
+                responseHandler);
+    }
+
+
+
+
 }
