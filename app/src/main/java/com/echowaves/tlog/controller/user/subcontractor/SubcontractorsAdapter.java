@@ -1,11 +1,7 @@
 package com.echowaves.tlog.controller.user.subcontractor;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,17 +9,14 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.echowaves.tlog.R;
-import com.echowaves.tlog.TLApplicationContextProvider;
 import com.echowaves.tlog.TLConstants;
 import com.echowaves.tlog.model.TLSubcontractor;
 import com.echowaves.tlog.util.TLJsonHttpResponseHandler;
 
 import org.joda.time.DateTime;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 import cz.msebera.android.httpclient.Header;
@@ -53,8 +46,6 @@ public class SubcontractorsAdapter extends ArrayAdapter<TLSubcontractor> {
     }
 
 
-
-
     @Override
     public View getView(int position, View view, ViewGroup parent) {
         // Get the data item for this position
@@ -69,7 +60,6 @@ public class SubcontractorsAdapter extends ArrayAdapter<TLSubcontractor> {
 
         // Populate the data into the template view using the data object
         name.setText(subcontractor.getName());
-
 
 
         final View subView = view;

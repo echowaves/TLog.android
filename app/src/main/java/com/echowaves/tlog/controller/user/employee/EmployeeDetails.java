@@ -17,6 +17,7 @@ import android.widget.Switch;
 import com.echowaves.tlog.R;
 import com.echowaves.tlog.TLApplicationContextProvider;
 import com.echowaves.tlog.controller.employee.Checkins;
+import com.echowaves.tlog.controller.user.subcontractor.SubcontractorDetails;
 import com.echowaves.tlog.model.TLEmployee;
 import com.echowaves.tlog.model.TLSubcontractor;
 import com.echowaves.tlog.model.TLUser;
@@ -138,6 +139,11 @@ public class EmployeeDetails extends AppCompatActivity {
 
 
         subcontractorNameButton = (Button) findViewById(R.id.user_employee_activity_employee_details_subcontractor_Button);
+        subcontractorNameButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(final View v) {
+                onSubcontractorNameButtonClicked();
+            }
+        });
 
 
         isActiveSwitch = (Switch) findViewById(R.id.user_employee_activity_employee_details_active_Switch);
@@ -151,6 +157,14 @@ public class EmployeeDetails extends AppCompatActivity {
         });
 
         updateViews();
+    }
+
+    private void onSubcontractorNameButtonClicked() {
+        TLApplicationContextProvider.getContext().setCurrentActivityObject(subcontractor);
+        TLApplicationContextProvider.getContext().setCurrentReturnActivity(EmployeeDetails.class);
+
+        Intent subcontractorDetails = new Intent(TLApplicationContextProvider.getContext(), SubcontractorDetails.class);
+        startActivity(subcontractorDetails);
     }
 
     private void deleteClicked(final View v) {

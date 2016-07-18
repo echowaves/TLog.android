@@ -55,6 +55,7 @@ import cz.msebera.android.httpclient.Header;
 public class SubcontractorDetails extends AppCompatActivity {
     private Context context;
     private Activity activity;
+    private Class returnActivity;
 
     private TLSubcontractor subcontractor;
 
@@ -90,6 +91,8 @@ public class SubcontractorDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Localytics.tagEvent("SubcontractorDetails");
+
+        returnActivity = TLApplicationContextProvider.getContext().getCurrentReturnActivity();
 
         setContentView(R.layout.user_subcontractor_activity_subcontractor_details);
         this.context = this;
@@ -613,7 +616,7 @@ public class SubcontractorDetails extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
-        Intent subcontractors = new Intent(TLApplicationContextProvider.getContext(), Subcontractors.class);
+        Intent subcontractors = new Intent(TLApplicationContextProvider.getContext(), returnActivity);
         subcontractors.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         subcontractors.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(subcontractors);

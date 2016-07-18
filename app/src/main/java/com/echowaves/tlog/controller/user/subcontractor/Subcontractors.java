@@ -62,6 +62,7 @@ public class Subcontractors extends AppCompatActivity {
         addButton = (Button) findViewById(R.id.user_subcontractor_activity_subcontractors_addButton);
         addButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(final View v) {
+                TLApplicationContextProvider.getContext().setCurrentReturnActivity(Subcontractors.class);
                 Intent subcontractorCreate = new Intent(TLApplicationContextProvider.getContext(), SubcontractorCreate.class);
                 startActivity(subcontractorCreate);
             }
@@ -141,6 +142,7 @@ public class Subcontractors extends AppCompatActivity {
                                     subcontractor = subcontractors.get(position);
 
                                     TLApplicationContextProvider.getContext().setCurrentActivityObject(subcontractor);
+                                    TLApplicationContextProvider.getContext().setCurrentReturnActivity(Subcontractors.class);
 
                                     Intent subcontractorDetails = new Intent(TLApplicationContextProvider.getContext(), SubcontractorDetails.class);
                                     startActivity(subcontractorDetails);
