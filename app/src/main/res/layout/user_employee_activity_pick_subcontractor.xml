@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/TLUserColor"
+    android:orientation="vertical"
+    tools:context="com.echowaves.tlog.controller.user.employee.PickSubcontractor">
+
+    <!-- Action Bar -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/abs__action_bar_default_height"
+        android:layout_marginBottom="10dip"
+        android:background="@color/TLNavColor">
+
+        <Button
+            android:id="@+id/user_employee_activity_pick_subcontractor_backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:background="@android:color/transparent"
+            android:padding="5dp"
+            android:text="&lt; back"
+            android:textAllCaps="false"
+            android:textColor="@android:color/holo_blue_light"
+            android:textSize="20sp" />
+
+
+        <TextView
+            android:id="@+id/user_employee_activity_pick_subcontractor_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="5dp"
+            android:minWidth="100dp"
+            android:padding="5dp"
+            android:text="subcontractors"
+            android:textColor="@color/TLTextColor"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/user_employee_activity_pick_subcontractor_pickButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:alpha="0.2"
+            android:background="@android:color/transparent"
+            android:clickable="false"
+            android:padding="5dp"
+            android:text="pick &gt;"
+            android:textAllCaps="false"
+            android:textColor="@android:color/holo_blue_light"
+            android:textSize="20sp" />
+
+    </RelativeLayout>
+
+    <AutoCompleteTextView
+        android:id="@+id/user_employee_activity_pick_subcontractor_autoCompleteTextView"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="5dp"
+        android:background="@drawable/rounded_edittext"
+        android:ems="10"
+        android:enabled="false"
+        android:hint="pick from the list"
+        android:inputType="text"
+        android:padding="5dip"
+        android:textSize="30dp">
+
+        <requestFocus />
+    </AutoCompleteTextView>
+
+
+    <ListView
+        android:id="@+id/user_employee_activity_pick_subcontractor_listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:layout_weight="50"
+        android:background="#ffffff"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp" />
+
+    <Button
+        android:id="@+id/user_employee_activity_pick_subcontractor_createButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@android:color/transparent"
+        android:padding="5dp"
+        android:text="create new subcontractor"
+        android:textAllCaps="false"
+        android:textColor="@android:color/holo_blue_light"
+        android:textSize="20sp" />
+
+</LinearLayout>

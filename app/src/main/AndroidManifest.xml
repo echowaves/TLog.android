@@ -59,6 +59,7 @@
         <activity android:name=".controller.user.employee.EmployeeCreate" />
         <activity android:name=".controller.user.employee.EmployeeDetails" />
         <activity android:name=".controller.user.employee.EmployeeActionCodes" />
+        <activity android:name=".controller.user.employee.PickSubcontractor"></activity>
         <activity android:name=".controller.employee.Checkins" />
         <activity android:name=".controller.employee.PickActionCode" />
         <activity android:name=".controller.employee.CheckinDetails" />
