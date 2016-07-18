@@ -31,11 +31,10 @@ import cz.msebera.android.httpclient.Header;
 public class PickSubcontractor extends AppCompatActivity {
     private Context context;
 
-    private TLEmployee employee;
 
 
     private Button backButton;
-    private TextView title;
+
     private AutoCompleteTextView actionCodeTextField;
 
     private ListView listView;
@@ -54,9 +53,6 @@ public class PickSubcontractor extends AppCompatActivity {
         setContentView(R.layout.user_employee_activity_pick_subcontractor);
 
         context = this;
-
-        employee = (TLEmployee) TLApplicationContextProvider.getContext().getCurrentActivityObject();
-
 
         backButton = (Button) findViewById(R.id.user_employee_activity_pick_subcontractor_backButton);
         backButton.setOnClickListener(new View.OnClickListener() {

@@ -264,6 +264,10 @@ public class EmployeeDetails extends AppCompatActivity {
             alert.show();
         } else {
 //            intent to pick subcontractor      PickSubcontractorViewController
+
+            TLApplicationContextProvider.getContext().setCurrentReturnActivity(EmployeeDetails.class);
+            Intent pickSubcontractor = new Intent(TLApplicationContextProvider.getContext(), PickSubcontractor.class);
+            startActivity(pickSubcontractor);
         }
     }
 
