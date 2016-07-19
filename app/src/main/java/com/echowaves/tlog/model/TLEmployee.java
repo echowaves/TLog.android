@@ -268,6 +268,27 @@ public class TLEmployee extends TLObject {
                 responseHandler);
     }
 
+    public void addToSubcontractor(TLSubcontractor subcontractor,
+                              JsonHttpResponseHandler responseHandler) {
+        try {
+            Header[] headers = new Header[2];
+            headers[0] = new BasicHeader("Content-Type", JSON_CONTENT_TYPE);
+            headers[1] = new BasicHeader("Authorization", "Bearer " + TLUser.retreiveJwtFromLocalStorage());
+            JSONObject jsonParams = new JSONObject();
+            StringEntity entity = new StringEntity(jsonParams.toString());
+
+            HTTP_CLIENT.post(
+                    TLApplicationContextProvider.getContext(),
+                    getAbsoluteUrl("/employees/" + this.getId().toString() + "/subcontractor/" + subcontractor.getId().toString()),
+                    headers,
+                    entity,
+                    JSON_CONTENT_TYPE,
+                    responseHandler);
+        } catch (UnsupportedEncodingException e) {
+            Log.e(this.getClass().getName(), e.toString());
+        }
+    }
+
 
 
 

@@ -8,7 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.echowaves.tlog.R;
-import com.echowaves.tlog.model.TLActionCode;
 import com.echowaves.tlog.model.TLSubcontractor;
 
 import java.util.ArrayList;

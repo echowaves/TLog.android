@@ -1,6 +1,9 @@
 package com.echowaves.tlog.controller.user.employee;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -9,13 +12,13 @@ import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.echowaves.tlog.R;
 import com.echowaves.tlog.TLApplicationContextProvider;
 import com.echowaves.tlog.model.TLEmployee;
 import com.echowaves.tlog.model.TLSubcontractor;
 import com.echowaves.tlog.util.TLJsonHttpResponseHandler;
+import com.echowaves.tlog.util.TLUtil;
 import com.localytics.android.Localytics;
 
 import org.joda.time.DateTime;
@@ -30,20 +33,20 @@ import cz.msebera.android.httpclient.Header;
 
 public class PickSubcontractor extends AppCompatActivity {
     private Context context;
-
+    private TLEmployee employee;
 
 
     private Button backButton;
+    private Button pickButton;
 
-    private AutoCompleteTextView actionCodeTextField;
+    private AutoCompleteTextView subcontractorTextField;
 
     private ListView listView;
 
     ArrayList<TLSubcontractor> subcontractors;
+    private TLSubcontractor selectedSubcontractor;
 
     EmployeeSubcontractorsAdapter employeeSubcontractorsAdapter;
-
-    ArrayList<TLSubcontractor> completionsSubcontractors;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,12 +57,15 @@ public class PickSubcontractor extends AppCompatActivity {
 
         context = this;
 
+        employee = (TLEmployee) TLApplicationContextProvider.getContext().getCurrentActivityObject();
+
         backButton = (Button) findViewById(R.id.user_employee_activity_pick_subcontractor_backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(final View v) {
                 onBackPressed();
             }
         });
+        pickButton = (Button) findViewById(R.id.user_employee_activity_pick_subcontractor_pickButton);
 
 //        title = (TextView) findViewById(R.id.user_employee_activity_pick_subcontractor_title);
 //        title.setText(employee.getName());
@@ -69,16 +75,16 @@ public class PickSubcontractor extends AppCompatActivity {
 
         loadSubcontractors();
 
-        actionCodeTextField = (AutoCompleteTextView) findViewById(R.id.user_employee_activity_pick_subcontractor_autoCompleteTextView);
-        actionCodeTextField.setThreshold(1);//will start working from first character
+        subcontractorTextField = (AutoCompleteTextView) findViewById(R.id.user_employee_activity_pick_subcontractor_autoCompleteTextView);
 
+        TLUtil.hideKeyboard(this);
 
     }
 
 
     private void loadSubcontractors() {
 // Attach the adapter to a ListView
-
+        final Activity that = this;
         subcontractors = new ArrayList<TLSubcontractor>();
 
         // Create the adapter to convert the array to views
@@ -108,12 +114,55 @@ public class PickSubcontractor extends AppCompatActivity {
                             }
 
                             listView.setAdapter(employeeSubcontractorsAdapter);
+                            TLUtil.hideKeyboard(that);
 
                             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                                    TLSubcontractor subcontractor = subcontractors.get(position);
+                                    selectedSubcontractor = subcontractors.get(position);
+
+                                    subcontractorTextField.setText(selectedSubcontractor.getName());
+
+                                    pickButton.setEnabled(true);
+                                    pickButton.setClickable(true);
+                                    pickButton.setAlpha(1.0f);
+
+                                    pickButton.setOnClickListener(new View.OnClickListener() {
+                                        public void onClick(final View v) {
+                                            employee.addToSubcontractor(
+                                                    selectedSubcontractor,
+                                                    new TLJsonHttpResponseHandler(context) {
+                                                        @Override
+                                                        public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+                                                            employee.setSubcontractorId(selectedSubcontractor.getId());
+                                                            onBackPressed();
+                                                        }
+
+
+                                                        @Override
+                                                        public void onFailure(int statusCode, Header[] headers, String
+                                                                responseBody, Throwable error) {
+                                                            employee.setSubcontractorId(null);
+                                                            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                                                            builder
+                                                                    .setMessage("Failed to pick a subcontractor, try again.")
+                                                                    .setCancelable(false)
+                                                                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                                                        public void onClick(DialogInterface dialog, int id) {
+
+                                                                        }
+                                                                    });
+                                                            AlertDialog alert = builder.create();
+                                                            alert.show();
+
+                                                        }
+                                                    }
+
+                                            );
+                                        }
+                                    });
+
 
                                 }
 

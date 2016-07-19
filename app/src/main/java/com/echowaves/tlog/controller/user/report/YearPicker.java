@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.echowaves.tlog.R;
-import com.echowaves.tlog.controller.employee.CheckinsAdapter;
 import com.echowaves.tlog.model.TLReport;
 import com.echowaves.tlog.util.TLJsonHttpResponseHandler;
 import com.localytics.android.Localytics;

@@ -14,7 +14,6 @@ import android.widget.ListView;
 
 import com.echowaves.tlog.R;
 import com.echowaves.tlog.TLApplicationContextProvider;
-
 import com.echowaves.tlog.model.TLSubcontractor;
 import com.echowaves.tlog.util.TLJsonHttpResponseHandler;
 import com.localytics.android.Localytics;

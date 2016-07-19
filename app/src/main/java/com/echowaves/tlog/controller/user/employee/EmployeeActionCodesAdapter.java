@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.echowaves.tlog.R;
 import com.echowaves.tlog.model.TLActionCode;
-import com.echowaves.tlog.model.TLEmployee;
 
 import java.util.ArrayList;
 

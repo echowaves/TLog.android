@@ -1,15 +1,10 @@
 package com.echowaves.tlog.model;
 
-import android.graphics.Bitmap;
 import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
 
 import com.echowaves.tlog.TLApplicationContextProvider;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.Base64;
-import com.loopj.android.http.FileAsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
@@ -18,23 +13,14 @@ import org.joda.time.Period;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import cz.msebera.android.httpclient.Header;
-import cz.msebera.android.httpclient.entity.ByteArrayEntity;
-import cz.msebera.android.httpclient.entity.ContentType;
 import cz.msebera.android.httpclient.entity.StringEntity;
-import cz.msebera.android.httpclient.entity.mime.HttpMultipartMode;
-import cz.msebera.android.httpclient.entity.mime.MultipartEntityBuilder;
 import cz.msebera.android.httpclient.message.BasicHeader;
-import cz.msebera.android.httpclient.protocol.HTTP;
 
 /**
  * Created by dmitry on 3/29/16.
@@ -201,7 +187,11 @@ public class TLSubcontractor extends TLObject {
         RequestParams params = new RequestParams();
 
         params.put("coi", imageFile, this.getId() + ".jpg");
-        params.put("coi_expires_at", this.getCoiExpiresAt().toString());
+        if(this.getCoiExpiresAt() == null) {
+            params.put("coi_expires_at", new Date().toString());
+        } else {
+            params.put("coi_expires_at", this.getCoiExpiresAt().toString());
+        }
 
 
         client.post(

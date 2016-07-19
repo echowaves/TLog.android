@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.echowaves.tlog.R;
 import com.echowaves.tlog.TLConstants;
 import com.echowaves.tlog.model.TLCheckin;
-import com.echowaves.tlog.model.TLEmployee;
 
 import org.joda.time.DateTime;
 

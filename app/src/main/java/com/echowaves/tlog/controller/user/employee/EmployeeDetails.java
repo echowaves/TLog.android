@@ -127,13 +127,28 @@ public class EmployeeDetails extends AppCompatActivity {
 //        nameTextFeild.requestFocus();
 //        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
-
         isSubContractorSwitch = (Switch) findViewById(R.id.user_employee_activity_employee_details_sub_Switch);
+        isSubContractorSwitch.setActivated(false);
         isSubContractorSwitch.setChecked(employee.getSubcontractorId() == null ? false : true);
 
         isSubContractorSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(final CompoundButton v, boolean isChecked) {
-                isSubcontractorSwitched(isChecked);
+            @Override
+            public void onCheckedChanged(CompoundButton button, boolean checked) {
+//                if(checked) {
+//                    button.setChecked(false);
+//                } else {
+//                    button.setChecked(true);
+//                }
+                updateViews();
+            }
+
+        });
+
+        isSubContractorSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+//                Log.d("++++++++++++++++++++++++++++++++", "switched: " + isChecked);
+                isSubcontractorSwitched();
             }
         });
 
@@ -223,12 +238,11 @@ public class EmployeeDetails extends AppCompatActivity {
         alert.show();
     }
 
-    private void isSubcontractorSwitched(boolean isChecked) {
+    private void isSubcontractorSwitched() {
         TLUtil.hideKeyboard(activity);
         // do something, the isChecked will be
 
-        if (!isChecked) {
-
+        if(isSubContractorSwitch.isChecked()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder
                     .setMessage("Are you sure want to delete the employee from subcontractor?")
@@ -266,7 +280,11 @@ public class EmployeeDetails extends AppCompatActivity {
 //            intent to pick subcontractor      PickSubcontractorViewController
 
             TLApplicationContextProvider.getContext().setCurrentReturnActivity(EmployeeDetails.class);
+            TLApplicationContextProvider.getContext().setCurrentActivityObject(employee);
             Intent pickSubcontractor = new Intent(TLApplicationContextProvider.getContext(), PickSubcontractor.class);
+//            pickSubcontractor.setFlags(pickSubcontractor.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY); // Adds the FLAG_ACTIVITY_NO_HISTORY flag
+//            pickSubcontractor.setFlags(pickSubcontractor.getFlags() | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
             startActivity(pickSubcontractor);
         }
     }

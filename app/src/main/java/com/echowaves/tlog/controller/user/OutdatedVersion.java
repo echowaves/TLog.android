@@ -1,7 +1,7 @@
 package com.echowaves.tlog.controller.user;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.echowaves.tlog.R;
 import com.localytics.android.Localytics;

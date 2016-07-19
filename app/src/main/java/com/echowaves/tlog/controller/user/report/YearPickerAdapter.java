@@ -11,7 +11,6 @@ import android.widget.Button;
 
 import com.echowaves.tlog.R;
 import com.echowaves.tlog.TLApplicationContextProvider;
-import com.echowaves.tlog.controller.user.employee.EmployeeDetails;
 
 import java.util.ArrayList;
 

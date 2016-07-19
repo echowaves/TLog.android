@@ -13,8 +13,6 @@ import android.widget.TextView;
 import com.echowaves.tlog.R;
 import com.echowaves.tlog.TLApplicationContextProvider;
 
-import org.joda.time.DateTime;
-import org.joda.time.Months;
 import org.joda.time.YearMonth;
 
 import java.util.ArrayList;

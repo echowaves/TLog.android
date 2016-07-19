@@ -1,19 +1,10 @@
 package com.echowaves.tlog.model;
 
-import android.content.SharedPreferences;
-import android.util.Log;
-
 import com.echowaves.tlog.TLApplicationContextProvider;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.UnsupportedEncodingException;
-
 import cz.msebera.android.httpclient.Header;
-import cz.msebera.android.httpclient.entity.StringEntity;
 import cz.msebera.android.httpclient.message.BasicHeader;
 
 /**

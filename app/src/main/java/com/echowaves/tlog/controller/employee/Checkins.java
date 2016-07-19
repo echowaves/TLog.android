@@ -25,8 +25,6 @@ import com.echowaves.tlog.model.TLUser;
 import com.echowaves.tlog.util.TLJsonHttpResponseHandler;
 import com.localytics.android.Localytics;
 
-import net.danlew.android.joda.JodaTimeAndroid;
-
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.json.JSONArray;
