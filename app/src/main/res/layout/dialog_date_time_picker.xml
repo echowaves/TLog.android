@@ -11,8 +11,8 @@
         android:layout_height="0dp"
         android:layout_weight="4"
         android:calendarViewShown="false"
-        android:spinnersShown="true"
-        android:datePickerMode="spinner" />
+        android:datePickerMode="spinner"
+        android:spinnersShown="true" />
 
     <TimePicker
         android:id="@+id/dialog_date_time_picker_time"

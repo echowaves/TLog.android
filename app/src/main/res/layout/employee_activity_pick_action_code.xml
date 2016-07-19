@@ -47,15 +47,15 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:alpha="0.2"
             android:background="@android:color/transparent"
+            android:clickable="false"
             android:padding="5dp"
             android:text="checkin &gt;"
             android:textAllCaps="false"
             android:textColor="@android:color/holo_blue_light"
-            android:textSize="20sp"
-            android:alpha="0.2"
-            android:clickable="false"
-            android:layout_marginRight="10dp" />
+            android:textSize="20sp" />
 
     </RelativeLayout>
 

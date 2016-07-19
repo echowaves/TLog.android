@@ -88,16 +88,15 @@
         android:layout_gravity="center_horizontal"
         android:layout_margin="10dp"
         android:background="@drawable/rounded_edittext"
+        android:focusable="false"
         android:hint="COI expiration date"
         android:padding="5dip"
-        android:focusable="false"
         android:textSize="30dp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        >
+        android:layout_margin="10dp">
 
         <ImageView
             android:id="@+id/user_subcontractor_activity_subcontractor_details_imageView"

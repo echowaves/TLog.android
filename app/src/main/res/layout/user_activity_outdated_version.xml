@@ -10,12 +10,12 @@
     tools:context="com.echowaves.tlog.controller.user.OutdatedVersion">
 
     <TextView
+        android:id="@+id/user_activity_outdated_version_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="You are running an outdated version of the TLog app. Upgrade in the app strore and try again."
-        android:id="@+id/user_activity_outdated_version_textView"
-        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:gravity="center" />
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:text="You are running an outdated version of the TLog app. Upgrade in the app strore and try again."
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 </RelativeLayout>
