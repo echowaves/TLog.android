@@ -64,28 +64,26 @@ public class TLApplicationContextProvider extends android.support.multidex.Multi
 
         Iconify.with(new FontAwesomeModule());
 
-
-        TLUser.checkApiVersion(new TLJsonHttpResponseHandler(context) {
-                                   @Override
-                                   public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
-                                       try {
-
-                                           String apiVersion = jsonResponse.getString("version");
-
-//                                           if (!API_VERSION.equals(apiVersion)) {
-//                                               Intent outdatedVersion = new Intent(TLApplicationContextProvider.getContext(), OutdatedVersion.class);
-//                                               outdatedVersion.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                                               startActivity(outdatedVersion);
+//        TLUser.checkApiVersion(new TLJsonHttpResponseHandler(context) {
+//                                   @Override
+//                                   public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+//                                       try {
 //
-//                                           }
-
-                                       } catch (JSONException exception) {
-                                           Log.e(getClass().getName(), exception.toString());
-                                       }
-                                   }
-                               }
-        );
-
+//                                           String apiVersion = jsonResponse.getString("version");
+//
+////                                           if (!API_VERSION.equals(apiVersion)) {
+////                                               Intent outdatedVersion = new Intent(TLApplicationContextProvider.getContext(), OutdatedVersion.class);
+////                                               outdatedVersion.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+////                                               startActivity(outdatedVersion);
+////
+////                                           }
+//
+//                                       } catch (JSONException exception) {
+//                                           Log.e(getClass().getName(), exception.toString());
+//                                       }
+//                                   }
+//                               }
+//        );
     }
 
 

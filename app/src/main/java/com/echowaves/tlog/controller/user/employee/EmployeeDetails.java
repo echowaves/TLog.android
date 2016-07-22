@@ -481,7 +481,6 @@ public class EmployeeDetails extends AppCompatActivity {
                                     });
                             AlertDialog alert = builder.create();
                             alert.show();
-
                         }
 
                         @Override
