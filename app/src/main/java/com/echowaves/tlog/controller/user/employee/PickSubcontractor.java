@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.widget.ListView;
 
 import com.echowaves.tlog.R;
 import com.echowaves.tlog.TLApplicationContextProvider;
+import com.echowaves.tlog.controller.user.subcontractor.SubcontractorCreate;
 import com.echowaves.tlog.model.TLEmployee;
 import com.echowaves.tlog.model.TLSubcontractor;
 import com.echowaves.tlog.util.TLJsonHttpResponseHandler;
@@ -38,6 +40,7 @@ public class PickSubcontractor extends AppCompatActivity {
 
     private Button backButton;
     private Button pickButton;
+    private Button createButton;
 
     private AutoCompleteTextView subcontractorTextField;
 
@@ -66,6 +69,14 @@ public class PickSubcontractor extends AppCompatActivity {
             }
         });
         pickButton = (Button) findViewById(R.id.user_employee_activity_pick_subcontractor_pickButton);
+
+        createButton = (Button) findViewById(R.id.user_employee_activity_pick_subcontractor_createButton);
+        createButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(final View v) {
+                Intent subcontractorCreate = new Intent(TLApplicationContextProvider.getContext(), SubcontractorCreate.class);
+                startActivity(subcontractorCreate);
+            }
+        });
 
 //        title = (TextView) findViewById(R.id.user_employee_activity_pick_subcontractor_title);
 //        title.setText(employee.getName());
@@ -186,6 +197,13 @@ public class PickSubcontractor extends AppCompatActivity {
 
         );
 
+    }
+
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        loadSubcontractors();
     }
 
 
