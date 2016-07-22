@@ -106,6 +106,7 @@ public class SignIn extends AppCompatActivity {
         signUpButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
                 Intent signUp = new Intent(TLApplicationContextProvider.getContext(), SignUp.class);
+
                 startActivity(signUp);
             }
         });

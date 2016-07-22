@@ -33,7 +33,6 @@ public class SignUp extends AppCompatActivity {
     private EditText passwordConfirmTextField;
     private Button signUpButton;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,6 +115,8 @@ public class SignUp extends AppCompatActivity {
 
 
                                                         Intent menu = new Intent(TLApplicationContextProvider.getContext(), Menu.class);
+                                                        menu.addFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
+
                                                         startActivity(menu);
                                                     } catch (JSONException e) {
                                                         e.printStackTrace();

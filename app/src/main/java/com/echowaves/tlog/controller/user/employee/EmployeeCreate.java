@@ -108,6 +108,8 @@ public class EmployeeCreate extends AppCompatActivity {
                                     TLApplicationContextProvider.getContext().setCurrentActivityObject(employee);
 
                                     Intent employeeDetails = new Intent(TLApplicationContextProvider.getContext(), EmployeeDetails.class);
+//                                    employeeDetails.addFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
+
                                     startActivity(employeeDetails);
 
 
@@ -127,7 +129,6 @@ public class EmployeeCreate extends AppCompatActivity {
                                     alert.show();
                                 }
                             }
-
                     );
 
                 } else { // validation failed

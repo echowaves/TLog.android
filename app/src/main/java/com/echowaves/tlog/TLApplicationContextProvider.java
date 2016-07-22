@@ -40,20 +40,8 @@ public class TLApplicationContextProvider extends android.support.multidex.Multi
         return context;
     }
 
-
     //this is used to pass parameters between intents
     private static Object currentActivityObject;
-    private static Class currentReturnActivity;
-
-
-    public static Class getCurrentReturnActivity() {
-        return currentReturnActivity;
-    }
-
-    public static void setCurrentReturnActivity(Class currentReturnActivity) {
-        TLApplicationContextProvider.currentReturnActivity = currentReturnActivity;
-    }
-
 
     public void setCurrentActivityObject(Object o) {
         currentActivityObject = o;
@@ -84,12 +72,12 @@ public class TLApplicationContextProvider extends android.support.multidex.Multi
 
                                            String apiVersion = jsonResponse.getString("version");
 
-                                           if (!API_VERSION.equals(apiVersion)) {
-                                               Intent outdatedVersion = new Intent(TLApplicationContextProvider.getContext(), OutdatedVersion.class);
-                                               outdatedVersion.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                               startActivity(outdatedVersion);
-
-                                           }
+//                                           if (!API_VERSION.equals(apiVersion)) {
+//                                               Intent outdatedVersion = new Intent(TLApplicationContextProvider.getContext(), OutdatedVersion.class);
+//                                               outdatedVersion.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                                               startActivity(outdatedVersion);
+//
+//                                           }
 
                                        } catch (JSONException exception) {
                                            Log.e(getClass().getName(), exception.toString());

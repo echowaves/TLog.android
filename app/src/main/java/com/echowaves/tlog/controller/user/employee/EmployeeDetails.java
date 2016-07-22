@@ -176,7 +176,6 @@ public class EmployeeDetails extends AppCompatActivity {
 
     private void onSubcontractorNameButtonClicked() {
         TLApplicationContextProvider.getContext().setCurrentActivityObject(subcontractor);
-        TLApplicationContextProvider.getContext().setCurrentReturnActivity(EmployeeDetails.class);
 
         Intent subcontractorDetails = new Intent(TLApplicationContextProvider.getContext(), SubcontractorDetails.class);
         startActivity(subcontractorDetails);
@@ -279,7 +278,6 @@ public class EmployeeDetails extends AppCompatActivity {
         } else {
 //            intent to pick subcontractor      PickSubcontractorViewController
 
-            TLApplicationContextProvider.getContext().setCurrentReturnActivity(EmployeeDetails.class);
             TLApplicationContextProvider.getContext().setCurrentActivityObject(employee);
             Intent pickSubcontractor = new Intent(TLApplicationContextProvider.getContext(), PickSubcontractor.class);
 //            pickSubcontractor.setFlags(pickSubcontractor.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY); // Adds the FLAG_ACTIVITY_NO_HISTORY flag
@@ -528,12 +526,13 @@ public class EmployeeDetails extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
-        Intent employees = new Intent(TLApplicationContextProvider.getContext(), Employees.class);
-        employees.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        employees.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        startActivity(employees);
+//        Intent employees = new Intent(TLApplicationContextProvider.getContext(), Employees.class);
+////        employees.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+////        employees.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//        startActivity(employees);
 
-        return;
+//        return;
+        finish();
     }
 
 }

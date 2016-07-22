@@ -311,14 +311,14 @@ public class Checkins extends AppCompatActivity {
 
         TLEmployee.clearActivationCodeFromLocalStorage();
 
-        if(TLUser.isUserLogin() == false) {
-            Intent signIn = new Intent(TLApplicationContextProvider.getContext(), SignIn.class);
-            signIn.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            signIn.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            startActivity(signIn);
-        } else {
+//        if(TLUser.isUserLogin() == false) {
+//            Intent signIn = new Intent(TLApplicationContextProvider.getContext(), SignIn.class);
+////            signIn.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+////            signIn.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//            startActivity(signIn);
+//        } else {
             finish();
-        }
+//        }
 
         return;
     }

@@ -38,12 +38,10 @@
         <activity android:name=".controller.user.SignIn">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter android:label="tlog">
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <!-- Accepts URIs that begin with "tlog://employees” -->
@@ -71,5 +69,4 @@
         <activity android:name=".controller.user.subcontractor.SubcontractorDetails"></activity>
         <activity android:name=".controller.user.subcontractor.SubcontractorCreate"></activity>
     </application>
-
 </manifest>
