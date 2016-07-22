@@ -115,7 +115,7 @@ public class SignUp extends AppCompatActivity {
 
 
                                                         Intent menu = new Intent(TLApplicationContextProvider.getContext(), Menu.class);
-                                                        menu.addFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
+//                                                        menu.addFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
 
                                                         startActivity(menu);
                                                     } catch (JSONException e) {

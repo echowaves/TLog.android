@@ -94,8 +94,7 @@ public class SubcontractorCreate extends AppCompatActivity {
                                     TLApplicationContextProvider.getContext().setCurrentActivityObject(subcontractor);
 
                                     Intent subcontractorDetails = new Intent(TLApplicationContextProvider.getContext(), SubcontractorDetails.class);
-                                    subcontractorDetails.addFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
-
+//                                    subcontractorDetails.addFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
                                     startActivity(subcontractorDetails);
                                 }
 

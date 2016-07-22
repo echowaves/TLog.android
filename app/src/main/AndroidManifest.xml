@@ -50,11 +50,13 @@
                     android:scheme="tlog" />
             </intent-filter>
         </activity>
-        <activity android:name=".controller.user.SignUp" />
+        <activity android:name=".controller.user.SignUp"
+            android:noHistory="true"/>
         <activity android:name=".controller.user.Menu" />
         <activity android:name=".controller.user.employee.Employees" />
         <activity android:name=".controller.user.report.YearPicker" />
-        <activity android:name=".controller.user.employee.EmployeeCreate" />
+        <activity android:name=".controller.user.employee.EmployeeCreate"
+            android:noHistory="true"/>
         <activity android:name=".controller.user.employee.EmployeeDetails" />
         <activity android:name=".controller.user.employee.EmployeeActionCodes" />
         <activity android:name=".controller.user.employee.PickSubcontractor"></activity>
@@ -67,6 +69,7 @@
         <activity android:name=".controller.user.OutdatedVersion"></activity>
         <activity android:name=".controller.user.subcontractor.Subcontractors"></activity>
         <activity android:name=".controller.user.subcontractor.SubcontractorDetails"></activity>
-        <activity android:name=".controller.user.subcontractor.SubcontractorCreate"></activity>
+        <activity android:name=".controller.user.subcontractor.SubcontractorCreate"
+            android:noHistory="true"></activity>
     </application>
 </manifest>
