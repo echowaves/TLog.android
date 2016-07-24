@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -38,12 +39,14 @@ import com.leo.simplearcloader.SimpleArcLoader;
 import com.localytics.android.Localytics;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.validator.GenericValidator;
 import org.joda.time.DateTime;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -279,7 +282,13 @@ public class SubcontractorDetails extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] imageAsBytes) {
                 try {
-                    imageView.setImageBitmap(BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length));
+
+
+//                    Bitmap bitmap = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
+                    Bitmap bitmap = TLSubcontractor.scaleDown(imageAsBytes);
+
+
+                    imageView.setImageBitmap(bitmap);
                     imageView.refreshDrawableState();
 
                     mDialog.dismiss();
@@ -519,36 +528,6 @@ public class SubcontractorDetails extends AppCompatActivity {
 
     }
 
-    private static Bitmap decodeSampledBitmapFromFile(String path, int reqWidth, int reqHeight) { // BEST QUALITY MATCH
-
-        //First decode with inJustDecodeBounds=true to check dimensions
-        final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(path, options);
-
-        // Calculate inSampleSize, Raw height and width of image
-        final int height = options.outHeight;
-        final int width = options.outWidth;
-        options.inPreferredConfig = Bitmap.Config.RGB_565;
-        int inSampleSize = 1;
-
-        if (height > reqHeight) {
-            inSampleSize = Math.round((float) height / (float) reqHeight);
-        }
-        int expectedWidth = width / inSampleSize;
-
-        if (expectedWidth > reqWidth) {
-            //if(Math.round((float)width / (float)reqWidth) > inSampleSize) // If bigger SampSize..
-            inSampleSize = Math.round((float) width / (float) reqWidth);
-        }
-
-        options.inSampleSize = inSampleSize;
-
-        // Decode bitmap with inSampleSize set
-        options.inJustDecodeBounds = false;
-
-        return BitmapFactory.decodeFile(path, options);
-    }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_FULLSIZE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
@@ -563,7 +542,34 @@ public class SubcontractorDetails extends AppCompatActivity {
             mDialog.show();
 
 
-            Bitmap bitmap = decodeSampledBitmapFromFile(currentImageFile.getAbsolutePath(), 1000, 700);
+            Bitmap bitmap = null;
+            try {
+                bitmap = TLSubcontractor.scaleDown(FileUtils.readFileToByteArray(currentImageFile));
+//                byte[] bytes = FileUtils.readFileToByteArray(currentImageFile);
+//                bitmap =  BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            ExifInterface exif = null;
+            try {
+                exif = new ExifInterface(currentImageFile.getAbsolutePath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION,
+                    ExifInterface.ORIENTATION_UNDEFINED);
+
+            bitmap = TLSubcontractor.fixOrientation(bitmap, orientation);
+            try {
+                FileOutputStream out = new FileOutputStream(currentImageFile);
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
             imageView.setImageBitmap(bitmap);
 
 

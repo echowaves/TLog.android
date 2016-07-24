@@ -1,5 +1,11 @@
 package com.echowaves.tlog.model;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
+import android.media.ExifInterface;
+import android.os.Build;
 import android.util.Log;
 
 import com.echowaves.tlog.TLApplicationContextProvider;
@@ -15,8 +21,11 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
+
+import javax.microedition.khronos.opengles.GL10;
 
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
@@ -240,6 +249,73 @@ public class TLSubcontractor extends TLObject {
                 headers,
                 new RequestParams(),
                 responseHandler);
+    }
+
+
+
+    public static Bitmap scaleDown(byte[] bytes) { //}, int reqWidth, int reqHeight) { // BEST QUALITY MATCH
+
+        Bitmap bitmap =  BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+
+        int maxSize = 2048;
+        int height = 0;
+        int width = 0;
+        int inHeight = bitmap.getHeight();
+        int inWidth = bitmap.getWidth();
+        if(inWidth > inHeight) { // photo is landscape
+            height =  (inHeight * maxSize) / inWidth;
+            width = maxSize;
+        } else { // photo is portrait
+            height = maxSize;
+            width =  (inWidth  * maxSize) / inHeight;
+        }
+
+        Bitmap bitmapResized = Bitmap.createScaledBitmap(bitmap, width, height, true);
+
+        return bitmapResized;
+    }
+
+    public static Bitmap fixOrientation(Bitmap bitmap, int orientation) {
+
+        Matrix matrix = new Matrix();
+        switch (orientation) {
+            case ExifInterface.ORIENTATION_NORMAL:
+                return bitmap;
+            case ExifInterface.ORIENTATION_FLIP_HORIZONTAL:
+                matrix.setScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_180:
+                matrix.setRotate(180);
+                break;
+            case ExifInterface.ORIENTATION_FLIP_VERTICAL:
+                matrix.setRotate(180);
+                matrix.postScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_TRANSPOSE:
+                matrix.setRotate(90);
+                matrix.postScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_90:
+                matrix.setRotate(90);
+                break;
+            case ExifInterface.ORIENTATION_TRANSVERSE:
+                matrix.setRotate(-90);
+                matrix.postScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_270:
+                matrix.setRotate(-90);
+                break;
+            default:
+                return bitmap;
+        }
+        try {
+            Bitmap bmRotated = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+            bitmap.recycle();
+            return bmRotated;
+        } catch (OutOfMemoryError e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }

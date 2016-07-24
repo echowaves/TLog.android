@@ -43,7 +43,7 @@ dependencies {
     compile 'com.joanzapata.iconify:android-iconify-fontawesome:2.2.2'
     compile 'net.danlew:android.joda:2.9.3'
     compile 'com.leo.simplearcloader:simplearcloader:1.0.+'
-
+    compile 'commons-io:commons-io:2.4'
 }
 
 
