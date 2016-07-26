@@ -10,9 +10,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.Switch;
 
 import com.echowaves.tlog.R;
 import com.echowaves.tlog.TLApplicationContextProvider;
@@ -48,8 +48,8 @@ public class EmployeeDetails extends AppCompatActivity {
     private EditText nameTextFeild;
     private EditText emailTextField;
 
-    private Switch isSubContractorSwitch;
-    private Switch isActiveSwitch;
+    private CheckBox isSubContractorSwitch;
+    private CheckBox isActiveSwitch;
     private Button subcontractorNameButton;
 
     private Button saveButton;
@@ -127,7 +127,7 @@ public class EmployeeDetails extends AppCompatActivity {
 //        nameTextFeild.requestFocus();
 //        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
-        isSubContractorSwitch = (Switch) findViewById(R.id.user_employee_activity_employee_details_sub_Switch);
+        isSubContractorSwitch = (CheckBox) findViewById(R.id.user_employee_activity_employee_details_sub_Switch);
         isSubContractorSwitch.setActivated(false);
         isSubContractorSwitch.setChecked(employee.getSubcontractorId() == null ? false : true);
 
@@ -161,7 +161,7 @@ public class EmployeeDetails extends AppCompatActivity {
         });
 
 
-        isActiveSwitch = (Switch) findViewById(R.id.user_employee_activity_employee_details_active_Switch);
+        isActiveSwitch = (CheckBox) findViewById(R.id.user_employee_activity_employee_details_active_Switch);
         isActiveSwitch.setChecked(employee.isActive());
 
 
@@ -241,7 +241,7 @@ public class EmployeeDetails extends AppCompatActivity {
         TLUtil.hideKeyboard(activity);
         // do something, the isChecked will be
 
-        if(isSubContractorSwitch.isChecked()) {
+        if (isSubContractorSwitch.isChecked()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder
                     .setMessage("Are you sure want to delete the employee from subcontractor?")

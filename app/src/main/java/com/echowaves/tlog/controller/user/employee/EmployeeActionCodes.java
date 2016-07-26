@@ -1,6 +1,8 @@
 package com.echowaves.tlog.controller.user.employee;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -35,6 +37,7 @@ public class EmployeeActionCodes extends AppCompatActivity {
 
 
     private Button backButton;
+    private Button doneButton;
     private TextView title;
     private AutoCompleteTextView actionCodeTextField;
 
@@ -60,6 +63,13 @@ public class EmployeeActionCodes extends AppCompatActivity {
 
         backButton = (Button) findViewById(R.id.user_employee_activity_employee_action_codes_backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(final View v) {
+                onBackPressed();
+            }
+        });
+
+        doneButton = (Button) findViewById(R.id.user_employee_activity_employee_action_codes_doneButton);
+        doneButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(final View v) {
                 onBackPressed();
             }
@@ -193,21 +203,39 @@ public class EmployeeActionCodes extends AppCompatActivity {
 
                             listView.setAdapter(employeeActionCodesAdapter);
 
-
                             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                                    TLActionCode actionCode = null;
-                                    actionCode = actionCodes.get(position);
+                                    final TLActionCode actionCode = actionCodes.get(position);
+
+
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                                    builder
+                                            .setMessage("Sure want to delete the employee action code?")
+                                            .setCancelable(true)
+                                            .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                }
+                                            })
+                                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
 
 //                                    delete action code here
-                                    employee.deleteActionCode(actionCode, new TLJsonHttpResponseHandler(context) {
-                                        @Override
-                                        public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
-                                            loadActionCodes();
-                                        }
-                                    });
+                                                    employee.deleteActionCode(actionCode, new TLJsonHttpResponseHandler(context) {
+                                                        @Override
+                                                        public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+                                                            loadActionCodes();
+                                                        }
+                                                    });
+
+
+                                                }
+                                            });
+                                    AlertDialog alert = builder.create();
+                                    alert.show();
+
+
                                 }
 
                             });

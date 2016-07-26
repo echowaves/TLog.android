@@ -111,11 +111,12 @@
             android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
-            <Switch
+            <CheckBox
                 android:id="@+id/user_employee_activity_employee_details_sub_Switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#c62020" />
+                android:backgroundTint="#c62020"
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -164,7 +165,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <Switch
+            <CheckBox
                 android:id="@+id/user_employee_activity_employee_details_active_Switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -228,4 +229,5 @@
             android:textSize="20dp" />
 
     </LinearLayout>
+
 </LinearLayout>
