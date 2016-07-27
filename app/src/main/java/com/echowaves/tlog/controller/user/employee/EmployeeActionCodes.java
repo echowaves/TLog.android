@@ -37,7 +37,6 @@ public class EmployeeActionCodes extends AppCompatActivity {
 
 
     private Button backButton;
-    private Button doneButton;
     private TextView title;
     private AutoCompleteTextView actionCodeTextField;
 
@@ -63,13 +62,6 @@ public class EmployeeActionCodes extends AppCompatActivity {
 
         backButton = (Button) findViewById(R.id.user_employee_activity_employee_action_codes_backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(final View v) {
-                onBackPressed();
-            }
-        });
-
-        doneButton = (Button) findViewById(R.id.user_employee_activity_employee_action_codes_doneButton);
-        doneButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(final View v) {
                 onBackPressed();
             }
