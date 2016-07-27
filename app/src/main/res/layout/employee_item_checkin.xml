@@ -42,7 +42,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="top"
             android:layout_weight="1"
+            android:ellipsize="none"
+            android:lines="1"
             android:padding="5dip"
+            android:singleLine="true"
             android:text="duration"
             android:textSize="12sp" />
 
