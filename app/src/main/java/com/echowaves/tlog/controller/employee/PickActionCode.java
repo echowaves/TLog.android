@@ -123,64 +123,6 @@ public class PickActionCode extends AppCompatActivity {
         });
 
 
-        actionCodeTextField.addTextChangedListener(new TextWatcher() {
-
-            public void afterTextChanged(Editable s) {
-            }
-
-            public void beforeTextChanged(CharSequence s, int start,
-                                          int count, int after) {
-            }
-
-            public void onTextChanged(CharSequence s, int start,
-                                      int before, int count) {
-
-                TLActionCode.autoComplete(s.toString(),
-                        new TLJsonHttpResponseHandler(context) {
-                            @Override
-                            public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
-                                try {
-                                    JSONArray jsonActionCodes = (JSONArray) jsonResponse.get("actionCodes");
-                                    employeesActionCodes = new ArrayList<TLActionCode>();
-
-                                    for (int i = 0; i < jsonActionCodes.length(); i++) {
-                                        JSONObject jsonActionCode = jsonActionCodes.getJSONObject(i);
-                                        TLActionCode actionCode =
-                                                new TLActionCode(
-                                                        jsonActionCode.getInt("id"),
-                                                        jsonActionCode.getString("code"),
-                                                        jsonActionCode.getString("description")
-                                                );
-                                        // Create the adapter to convert the array to views
-                                        employeesActionCodes.add(actionCode);
-
-                                    }
-
-
-                                    actionCodeAdapter = new PickActionCodeAdapter(context, employeesActionCodes);
-                                    listView.setAdapter(actionCodeAdapter);
-
-                                } catch (
-                                        JSONException exception
-                                        )
-
-                                {
-                                    Log.e(getClass().getName(), exception.toString());
-                                }
-
-                            }
-
-
-                            @Override
-                            public void onFailure(int statusCode, Header[] headers, String
-                                    responseBody, Throwable error) {
-                            }
-                        }
-
-                );
-            }
-        });
-
 
         TLActionCode.allActionCodesForEmployee(employee,
                 new TLJsonHttpResponseHandler(context) {
@@ -206,6 +148,64 @@ public class PickActionCode extends AppCompatActivity {
                             if (employeesActionCodes.size() > 0) {
                                 actionCodeTextField.setEnabled(false);
                                 actionCodeTextField.setHint("pick from the list");
+                            } else {
+                                actionCodeTextField.addTextChangedListener(new TextWatcher() {
+
+                                    public void afterTextChanged(Editable s) {
+                                    }
+
+                                    public void beforeTextChanged(CharSequence s, int start,
+                                                                  int count, int after) {
+                                    }
+
+                                    public void onTextChanged(CharSequence s, int start,
+                                                              int before, int count) {
+
+                                        TLActionCode.autoComplete(s.toString(),
+                                                new TLJsonHttpResponseHandler(context) {
+                                                    @Override
+                                                    public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+                                                        try {
+                                                            JSONArray jsonActionCodes = (JSONArray) jsonResponse.get("actionCodes");
+                                                            employeesActionCodes = new ArrayList<TLActionCode>();
+
+                                                            for (int i = 0; i < jsonActionCodes.length(); i++) {
+                                                                JSONObject jsonActionCode = jsonActionCodes.getJSONObject(i);
+                                                                TLActionCode actionCode =
+                                                                        new TLActionCode(
+                                                                                jsonActionCode.getInt("id"),
+                                                                                jsonActionCode.getString("code"),
+                                                                                jsonActionCode.getString("description")
+                                                                        );
+                                                                // Create the adapter to convert the array to views
+                                                                employeesActionCodes.add(actionCode);
+
+                                                            }
+
+
+                                                            actionCodeAdapter = new PickActionCodeAdapter(context, employeesActionCodes);
+                                                            listView.setAdapter(actionCodeAdapter);
+
+                                                        } catch (
+                                                                JSONException exception
+                                                                )
+
+                                                        {
+                                                            Log.e(getClass().getName(), exception.toString());
+                                                        }
+
+                                                    }
+
+
+                                                    @Override
+                                                    public void onFailure(int statusCode, Header[] headers, String
+                                                            responseBody, Throwable error) {
+                                                    }
+                                                }
+
+                                        );
+                                    }
+                                });
                             }
 
 
